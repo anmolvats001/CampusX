@@ -1,1 +1,21 @@
 @import "tailwindcss";
+@import "@flaticon/flaticon-uicons/css/all/all";
+
+html::-webkit-scrollbar, body::-webkit-scrollbar,.scroller::-webkit-scrollbar {
+  display: none;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 0%;
+}
+@keyframes moveX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(0.25rem); } /* moves 1 unit (~4px) */
+}
