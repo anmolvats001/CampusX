@@ -3,16 +3,16 @@ import WhyCampusConnect from '../components/WhyCampusConnect'
 
 const Home = () => {
   return (
-    <div className='w:[100%] overflow-x-hidden h-fit py-20 '>
+    <div className='w:[100%] overflow-x-hidden h-fit py-20 pt-36'>
       <div>
-        <h1 className='capitalize font-extrabold text-7xl text-center [word-spacing:-0.2rem] text-blue-600 '>Welcome to Campus <br /><span className=' transform inline-block animate-[moveX_1.2s_ease-in-out_infinite]'>Connect</span></h1>
-        <h3 className='mt-11 text-lg font-semibold text-center text-gray-500 italic'>Speak up without fear - your feedback stays anonymous.<br/>
+        <h1 className='capitalize font-extrabold text-7xl text-center [word-spacing:-0.2rem] text-[#EDE3C8] '>Welcome to Campus <br /><span className=' transform inline-block animate-[moveX_1.2s_ease-in-out_infinite]'>Connect</span></h1>
+        <h3 className='mt-11 text-lg font-semibold text-center text-[#C4B998] italic'>Speak up without fear - your feedback stays anonymous.<br/>
 We connect students and management securely and transparently.</h3>
-<div className='flex justify-center mt-9 text-xl '><button className='rounded-full bg-blue-600 px-3 text-white font-bold py-1'>Explore compalints
+<div className='flex justify-center mt-9 text-xl '><button className='rounded-full bg-[#7F0909] px-3 text-[#EDE3C8] font-bold py-1'>Explore compalints
   </button></div>
       </div>
       <div className='px-36  mt-20'>
-        <p className='text-center capitalize font-bold text-blue-300 text-3xl mt-9'>Your voice matters- let's fix ABES Together</p>
+        <p className='text-center capitalize font-bold text-[#EDE3C8] text-3xl mt-9'>Your voice matters- let's fix ABES Together</p>
         <hr  className='my-6 text-gray-300 mb-9'/>
         <div className='flex flex-col gap-12'>
           <div className='flex items-center '>

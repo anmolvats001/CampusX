@@ -19,3 +19,16 @@ body {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(0.25rem); } /* moves 1 unit (~4px) */
 }
+.active{
+  background-color:#D4AF37;
+  border-radius: 20px;
+  padding-left:6px;
+  padding-right:6px;
+  display: flex;
+  align-items: center;
+  color:#000000;
+}
+body{
+    background: radial-gradient(#2B2B2B, #1A1A1A);
+
+}

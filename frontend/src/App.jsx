@@ -4,13 +4,15 @@ import NavBar from './components/NavBar'
 import Home from './pages/Home'
 import Footer from './components/Footer'
 import Login from './pages/Login'
+import About from './pages/About'
 
 const App = () => {
   return (
     <div>
       <Routes>
         <Route path='/' element={<><NavBar/><Home/> <Footer/> </>}/>
-        <Route path='/login' element={<Login/>}/>
+        <Route path='/login' element={<><NavBar/><Login/> <Footer/> </>}/>
+        <Route path='/about' element={<><NavBar/><About/> <Footer/> </>}/>
         <Route path='/dashboard'element={<></>}/>
       </Routes>
     </div>
