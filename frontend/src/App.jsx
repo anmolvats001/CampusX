@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import Footer from './components/Footer'
 import Login from './pages/Login'
 import About from './pages/About'
+import Team from './pages/Team'
+import Contact from './pages/Contact'
 
 const App = () => {
   return (
@@ -13,6 +15,8 @@ const App = () => {
         <Route path='/' element={<><NavBar/><Home/> <Footer/> </>}/>
         <Route path='/login' element={<><NavBar/><Login/> <Footer/> </>}/>
         <Route path='/about' element={<><NavBar/><About/> <Footer/> </>}/>
+        <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
+        <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
         <Route path='/dashboard'element={<></>}/>
       </Routes>
     </div>
