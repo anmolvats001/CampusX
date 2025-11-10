@@ -12,27 +12,27 @@ We connect students and management securely and transparently.</h3>
   </button></div>
       </div>
       <div className='px-36  mt-20'>
-        <p className='text-center capitalize font-bold text-[#EDE3C8] text-3xl mt-9'>Your voice matters- let's fix ABES Together</p>
-        <hr  className='my-6 text-gray-300 mb-9'/>
+        <p className='text-center capitalize font-bold text-[#EDE3C8] text-3xl mt-9'>Your voice matters- let's fix ABES Together 🔊</p>
+        <hr  className='my-6 text-[#B38B59] mb-9'/>
         <div className='flex flex-col gap-12'>
           <div className='flex items-center '>
             <div className='rounded-full overflow-hidden z-10'><img className='w-44 h-44 object-cover rounded-full' src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000" alt="" /></div>
-            <div className='border-4 rounded-2xl w-[75%] h-25 relative right-11 bg-stone-400'></div>
+            <div className='border-2 border-[#946B2D] rounded-2xl w-[75%] h-36 relative right-11 '></div>
         </div>
         <div className='flex items-center relative left-20'>
             
-            <div className='border-4 rounded-2xl w-[75%] h-25 relative left-11 bg-stone-400'></div>
+            <div className='border-2 border-[#946B2D] rounded-2xl w-[75%] h-36 relative left-11 '></div>
             <div className='rounded-full overflow-hidden z-10'><img className='w-44 h-44 object-cover rounded-full' src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000" alt="" /></div>
         </div>
         <div className='flex items-center '>
             <div className='rounded-full overflow-hidden z-10'><img className='w-44 h-44 object-cover rounded-full' src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&fm=jpg&q=60&w=3000" alt="" /></div>
-            <div className='border-4 rounded-2xl w-[75%] h-25 relative right-11 bg-stone-400'></div>
+            <div className='border-2 border-[#946B2D] rounded-2xl w-[75%] h-36 relative right-11 '></div>
         </div>
         </div>
       </div>
       <div className='px-36  mt-20'>
-        <p className='text-center  font-bold text-3xl mt-9 text-blue-300'><span className='text-5xl'>W</span>hy <span className='text-5xl'>C</span>ampus <span className='text-5xl'>C</span>onnect</p>
-        <hr  className='my-6 text-gray-300 mb-9'/>
+        <p className='text-center  font-bold text-3xl mt-9 text-[#EDE3C8]'><span className='text-5xl'>W</span>hy <span className='text-5xl'>C</span>ampus <span className='text-5xl'>C</span>onnect 🤔❓</p>
+        <hr  className='my-6 text-[#946B2D] mb-9'/>
       </div>
       <div><WhyCampusConnect/></div>
     </div>
