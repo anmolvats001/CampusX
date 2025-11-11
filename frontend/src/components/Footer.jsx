@@ -3,7 +3,7 @@ import logo from '../assets/logo.png';  // if this file is inside src/
 
 const Footer = () => {
   return (
-    <footer className='w-full bg-[#2B2B2B] border-t-2 border-t-[#B38B59] h-20 relative top-14 px-16 text-white font-sans'>
+    <footer className='w-full bg-[#2b2b2b] border-t-2 border-t-[#B38B59] h-20 relative top-14 px-16 text-white font-sans'>
      
       <div className='flex gap-7 items-center'>
         <img className='w-20 object-cover' src={logo} alt="" />

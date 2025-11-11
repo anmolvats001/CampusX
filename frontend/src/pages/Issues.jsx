@@ -77,7 +77,7 @@ const Issues = () => {
             {
                 data.map((e,i)=>{
                    return  <div className='w-[40%] h-44 border-2 border-amber-200'>
-
+                    
                    </div>
                 })
             }

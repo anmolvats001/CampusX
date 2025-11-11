@@ -1,24 +1,69 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import logo from '../assets/logo.png';  // if this file is inside src/
+import logo from '../assets/logo.png';
 
 const NavBar = () => {
-  const navigate=useNavigate();
-  const login=()=>{
+  const navigate = useNavigate();
+
+  const login = () => {
     navigate("/login");
-  }
-  const navigator =()=>{
-    navigate("/")
-  }
+  };
+  const navigator = () => {
+    navigate("/");
+  };
+
   return (
-    <div className='bg-[#2B2B2B] w-full h-16 items-center flex justify-between px-12 font-semibold text-[#EDE3C8] fixed z-90 border-b-2 border-b-[#B38B59] rounded-b-2xl'>
-      <div className=' rounded-full overflow-hidden'><img onClick={navigator} src={logo} className='rounded-full w-20' alt="" /></div>
-      <div className='flex gap-16 '>
-        <div className='flex justify-between gap-8'><NavLink to={"/"}>Home</NavLink><NavLink to={"/issues"}>Issues</NavLink><NavLink to={"/team"}>Our Team</NavLink><NavLink to={"/contact"}>Contact Us</NavLink><NavLink to={"/about"}>About</NavLink></div>
-      <div className='flex w-fit justify-between '><button className='rounded-2xl bg-[#B38B59] hover:bg-[#D4AF37] hover:text-[#000000] hover:cursor-pointer text-[#1A1A1A] font-semibold px-5 py-1' onClick={login}>Login</button></div>
+    <div className='bg-white w-full h-16 flex items-center justify-between px-12 font-medium text-[#1E293B] fixed top-0 z-50 shadow-[0_2px_10px_rgba(0,0,0,0.05)] transition-all duration-300 border-b border-gray-100'>
+      <div className='flex items-center gap-3 cursor-pointer' onClick={navigator}>
+        <img src={logo} className='w-12 h-12 rounded-full object-cover hover:scale-105 transition-transform duration-300' alt="logo" />
+        <h1 className='text-2xl font-bold text-[#2563EB] tracking-tight'>Campus Connect</h1>
+      </div>
+
+      <div className='flex items-center gap-10'>
+        <div className='flex gap-8 text-[1.05rem]'>
+          <NavLink
+            to={"/"}
+            className='hover:text-[#2563EB] font-semibold transition-all duration-300'
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to={"/issues"}
+            className='hover:text-[#2563EB] font-semibold transition-all duration-300'
+          >
+            Issues
+          </NavLink>
+          <NavLink
+            to={"/team"}
+            className='hover:text-[#2563EB] font-semibold transition-all duration-300'
+          >
+            Our Team
+          </NavLink>
+          <NavLink
+            to={"/contact"}
+            className='hover:text-[#2563EB] font-semibold transition-all duration-300'
+          >
+            Contact Us
+          </NavLink>
+          <NavLink
+            to={"/about"}
+            className='hover:text-[#2563EB] font-semibold transition-all duration-300'
+          >
+            About
+          </NavLink>
+        </div>
+
+        <div>
+          <button
+            onClick={login}
+            className='ml-6 rounded-full  from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#1E40AF] text-white px-6 py-2 font-semibold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300'
+          >
+            Login
+          </button>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
