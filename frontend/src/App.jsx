@@ -7,7 +7,8 @@ import Login from './pages/Login'
 import About from './pages/About'
 import Team from './pages/Team'
 import Contact from './pages/Contact'
-
+import Issues from './pages/Issues'
+import {ToastContainer,toast}from "react-toastify"
 const App = () => {
   return (
     <div>
@@ -17,8 +18,10 @@ const App = () => {
         <Route path='/about' element={<><NavBar/><About/> <Footer/> </>}/>
         <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
+        <Route path='/issues' element={<><NavBar/><Issues/> <Footer/> </>}/>
         <Route path='/dashboard'element={<></>}/>
       </Routes>
+       <ToastContainer position="top-center" autoClose={3000} />
     </div>
   )
 }

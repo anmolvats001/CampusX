@@ -4,7 +4,7 @@ const Contact = () => {
   return (
     <div className='w-full h-fit px-20 pt-28 flex justify-center '>
       <div className='border-2 px-4 py-6 w-[60%] rounded-2xl border-[#B38B59]'>
-        <h1 className='text-center text-[#EDE3C8] text-3xl  font-extrabold'>Contact info 📞</h1>
+        <h1 className='text-center uppercase text-[#EDE3C8] text-3xl  font-extrabold'>Contact info 📞</h1>
          <p class="text-center my-6 border-b-2 border-b-[#B38B59]  text-[#d9d2bc] rounded-2xl ">
     Have questions, suggestions, or found an issue on campus? <br /> 
     We’d love to hear from you! Reach out using the details below.
