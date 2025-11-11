@@ -22,7 +22,7 @@ const Login = () => {
         </div>
         <div className='mt-3'>
           {
-            sign ? <div className='flex justify-center gap-1.5 '><span>Already have an account ❓ </span><p onClick={change} className='text-blue-500 hover:cursor-pointer'>login</p></div>:
+            !sign ? <div className='flex justify-center gap-1.5 '><span>Already have an account ❓ </span><p onClick={change} className='text-blue-500 hover:cursor-pointer'>login</p></div>:
             <div className='flex justify-center gap-1.5'><span>New User ❓ </span><p onClick={change} className='text-blue-500 hover:cursor-pointer'>SignIn</p></div>
           }
         </div>

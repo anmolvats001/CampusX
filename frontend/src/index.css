@@ -28,12 +28,12 @@ body{
 
 }
 h1, h2, .logo {
-  font-family: 'Cinzel Decorative', serif;
+  font-family:'Playfair Display', serif;
   letter-spacing: 1px;
 }
 
 body,p {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Poppins', sans-serif;
 }
 .sha{
     box-shadow: 0 0 20px rgba(179, 139, 89, 0.3);
