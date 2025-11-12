@@ -6,7 +6,7 @@ const Login = () => {
 
   return (
     <div className='w-full h-screen flex justify-center items-center bg-[#F4F5F7]'>
-      <div className='bg-gray-800 w-[30%] px-8 py-10 rounded-2xl border border-[#3B82F6] shadow-2xl text-[#EAEAEA]'>
+      <div className='bg-gray-800 w-[40%] px-8 py-10 rounded-2xl border border-[#3B82F6] shadow-2xl text-[#EAEAEA]'>
         <p className='text-center text-3xl font-bold text-[#60A5FA] mb-8'>
           🔐 Please {!sign ? <span>Sign</span> : <span>Login</span>} In
         </p>
