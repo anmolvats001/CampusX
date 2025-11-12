@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { AppContext } from '../Context/context'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import logo from '../assets/logo.png';
 
 const Issues = () => {
     const {user}=useContext(AppContext);
@@ -72,12 +73,26 @@ const Issues = () => {
   return (
     <div className='w-full h-fit  pt-16 flex justify-center '>
       <div className=' px-11 py-6 w-full  rounded-2xl'>
-        <h1 className='text-center text-[#EDE3C8] text-3xl  font-extrabold'>⚠️ ISSUES</h1>
-        <div className='flex flex-wrap gap-11 w-full'>
+        <div className='w-full flex justify-center'>
+            <div className='flex gap-2 items-center'>
+                <img src={logo} className='w-20' alt="" />
+                <h1 className='text-center text-[#080601] text-3xl  font-extrabold'>ISSUGRAM</h1>
+            </div>
+        </div>
+        <div className='flex flex-col gap-7 w-full items-center py-12'>
             {
                 data.map((e,i)=>{
-                   return  <div className='w-[40%] h-44 border-2 border-amber-200'>
-                    
+                   return  <div className='h-96 border-2 border-gray-500 rounded-2xl w-[80%]'>
+                    <div className='flex gap-2.5 px-6 py-2 items-center'><img src={logo} className='w-16 rounded-full' alt="" />
+                    <div>
+                        <h1 className='font-bold text-lg'>Anmol vats</h1>
+                        <p className='text-[10px]'>(CSE)</p>
+                    </div>
+                    </div>
+                    <div>
+                        <div className='w-full px-7'><img className='h-72 w-48 object-cover' src={e.image} alt="" /></div>
+                        <div></div>
+                    </div>
                    </div>
                 })
             }
