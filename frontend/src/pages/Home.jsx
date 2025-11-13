@@ -36,10 +36,10 @@ const Home = () => {
                 alt=""
               />
             </div>
-            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:right-11 bg-[#F8FAFC] shadow-sm"></div>
+            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:right-11 bg-[#F8FAFC] shadow-sm px-20 pt-4 text-lg font-[18px]">"Struggling for water shouldn’t be part of student life. When taps run dry or systems fail, it affects everyone. Don’t wait for change — start it with CampusConnect and report water issues directly to your faculty today."</div>
           </div>
           <div className="flex flex-col md:flex-row items-center md:justify-end">
-            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:left-11 bg-[#F8FAFC] shadow-sm"></div>
+            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:left-11 bg-[#F8FAFC] shadow-sm">"Delays or confusion in the administration office shouldn’t hold students back. Raise your concerns on CampusConnect and help build a smoother, more transparent system for every student."</div>
             <div className="rounded-full overflow-hidden z-10 mt-6 md:mt-0">
               <img
                 className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-[#2563EB]"
@@ -56,7 +56,7 @@ const Home = () => {
                 alt=""
               />
             </div>
-            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:right-11 bg-[#F8FAFC] shadow-sm"></div>
+            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:right-11 bg-[#F8FAFC] shadow-sm">"Strong campuses start with strong infrastructure. If you see something broken or unsafe, don’t ignore it — be the change and report it through your voice on CampusConnect to make your campus better for everyone."</div>
           </div>
         </div>
       </div>

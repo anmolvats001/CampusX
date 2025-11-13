@@ -10,7 +10,7 @@ const Footer = () => {
         <p className='font-bold text-xl relative left-5 top-4 text-blue-50'>CONTACT US</p>
         <div className='text-[18px] flex flex-col gap-6 mt-7 p-3 text-amber-100'>
           <div className='flex gap-5 items-center'>
-            <h3 className='font-semibold text-black'>Email :</h3>
+            <h3 className='font-semibold text-gray-400'>Email :</h3>
             <a
               href='mailto:campusconnect0611@gmail.com'
               className='hover:text-[#1D4ED8] transition-all duration-200'
@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
 
           <div className='flex gap-5 items-center'>
-            <h3 className='font-semibold text-black'>Mobile :</h3>
+            <h3 className='font-semibold text-gray-400'>Mobile :</h3>
             <a
               href='tel:+917983704504'
               className='hover:text-[#1D4ED8] transition-all duration-200'
@@ -30,24 +30,24 @@ const Footer = () => {
           </div>
 
           <div className='flex gap-5'>
-            <h3 className='font-semibold text-black'>Address :</h3>
+            <h3 className='font-semibold text-gray-400'>Address :</h3>
             <h4 className='leading-relaxed'>
               19th KM Stone , NH-09 Ghaziabad (UP) <br /> PIN - 201009
             </h4>
           </div>
 
           <div className='flex gap-5 items-center'>
-            <h3 className='font-semibold text-black'>Follow us :</h3>
+            <h3 className='font-semibold text-gray-400'>Follow us :</h3>
             <div className='flex gap-4 text-[#5673c2]'>
-              <a href='' className='hover:text-black transition-all duration-200'>
+              <a href='' className='hover:text-gray-400 transition-all duration-200'>
                 Instagram
               </a>
               |
-              <a href='' className='hover:text-black transition-all duration-200'>
+              <a href='' className='hover:text-gray-400 transition-all duration-200'>
                 Facebook
               </a>
               |
-              <a href='' className='hover:text-black transition-all duration-200'>
+              <a href='' className='hover:text-gray-400 transition-all duration-200'>
                 LinkedIn
               </a>
             </div>
