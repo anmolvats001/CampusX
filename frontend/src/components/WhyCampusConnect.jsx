@@ -4,7 +4,7 @@ const WhyCampusConnect = () => {
   return (
     <div className='px-36 mt-20 w-full'>
       <div className='flex overflow-x-scroll gap-32 scroller pb-6 w-full'>
-        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300'>
+        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white  rounded-2xl p-5 hover:shadow-xl transition-all duration-300 shadow-lg hover:scale-110'>
           <img
             className='w-28 h-28 object-cover rounded-full border-4 border-[#2563EB] shadow-md'
             src='https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&fm=jpg&q=60&w=3000'
@@ -18,7 +18,7 @@ const WhyCampusConnect = () => {
           </h3>
         </div>
 
-        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300'>
+        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300  hover:scale-110'>
           <img
             className='w-28 h-28 object-cover rounded-full border-4 border-[#2563EB] shadow-md'
             src='https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&fm=jpg&q=60&w=3000'
@@ -32,7 +32,7 @@ const WhyCampusConnect = () => {
           </h3>
         </div>
 
-        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300'>
+        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300  hover:scale-110'>
           <img
             className='w-28 h-28 object-cover rounded-full border-4 border-[#2563EB] shadow-md'
             src='https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&fm=jpg&q=60&w=3000'
@@ -46,7 +46,7 @@ const WhyCampusConnect = () => {
           </h3>
         </div>
 
-        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300'>
+        <div className='shrink-0 w-80 h-80 flex flex-col gap-3 items-center bg-white shadow-lg rounded-2xl p-5 hover:shadow-xl transition-all duration-300  hover:scale-110'>
           <img
             className='w-28 h-28 object-cover rounded-full border-4 border-[#2563EB] shadow-md'
             src='https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&fm=jpg&q=60&w=3000'
