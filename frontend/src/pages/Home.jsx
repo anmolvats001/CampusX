@@ -1,6 +1,7 @@
 import React from 'react'
 import WhyCampusConnect from '../components/WhyCampusConnect'
-
+import DrinkingWater from '../assets/DrinkingWater.png';
+import Administrativeblock from "../assets/Administrativeblock.png"
 const Home = () => {
   return (
     <div className="w-full overflow-x-hidden h-fit py-20 pt-36 bg-[#FFFFFF] text-[#1E293B]">
@@ -31,32 +32,42 @@ const Home = () => {
           <div className="flex flex-col md:flex-row items-center">
             <div className="rounded-full overflow-hidden z-10 mb-6 md:mb-0">
               <img
-                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-[#2563EB]"
-                src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000"
+                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-[3px] border-black"
+                src={DrinkingWater}
                 alt=""
               />
             </div>
-            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:right-11 bg-[#F8FAFC] shadow-sm px-20 pt-4 text-lg font-[18px]">"Struggling for water shouldn’t be part of student life. When taps run dry or systems fail, it affects everyone. Don’t wait for change — start it with CampusConnect and report water issues directly to your faculty today."</div>
+            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-20 md:h-24 relative md:right-11 bg-[#F8FAFC] shadow-sm px-20 pr-11 text-lg font-serif italic  text-justify rounded-r-full">Struggling for water shouldn’t be part of student life. When taps run dry or systems fail, it affects everyone. Don’t wait for change — start it with CampusConnect and report water issues directly to your faculty today.</div>
           </div>
           <div className="flex flex-col md:flex-row items-center md:justify-end">
-            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:left-11 bg-[#F8FAFC] shadow-sm">"Delays or confusion in the administration office shouldn’t hold students back. Raise your concerns on CampusConnect and help build a smoother, more transparent system for every student."</div>
+            <div className="border-2 border-[#E2E8F0] rounded-l-full w-full md:w-[75%] h-20 md:h-24 relative md:left-11 bg-[#F8FAFC] shadow-sm pl-11 pr-20 text-lg font-serif italic  text-justify">Delays or confusion in the administration office shouldn’t hold students back. Raise your concerns on CampusConnect and help build a smoother, more transparent and responsive system for every student.</div>
             <div className="rounded-full overflow-hidden z-10 mt-6 md:mt-0">
               <img
-                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-[#2563EB]"
-                src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000"
+                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-[3px] border-black"
+                src={Administrativeblock}
                 alt=""
               />
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center">
-            <div className="rounded-full overflow-hidden z-10 mb-6 md:mb-0">
+            <div className="rounded-full overflow-hidden z-10 mt-6 md:mt-0">
               <img
-                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-4 border-[#2563EB]"
-                src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000"
+                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-[3px] border-black"
+                src={Administrativeblock}
                 alt=""
               />
             </div>
-            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-28 md:h-32 relative md:right-11 bg-[#F8FAFC] shadow-sm">"Strong campuses start with strong infrastructure. If you see something broken or unsafe, don’t ignore it — be the change and report it through your voice on CampusConnect to make your campus better for everyone."</div>
+            <div className="border-2 border-[#E2E8F0] rounded-2xl w-full md:w-[75%] h-20 md:h-24 relative md:right-11 bg-[#F8FAFC] shadow-sm px-20 pr-11 text-lg font-serif italic  text-justify rounded-r-full">Strong campuses start with strong infrastructure. If you see something broken or unsafe, don’t ignore it — be the change and report it through your voice on CampusConnect to make your campus better for everyone.</div>
+          </div>
+          <div className="flex flex-col md:flex-row items-center md:justify-end">
+            <div className="border-2 border-[#E2E8F0] rounded-l-full w-full md:w-[75%] h-20 md:h-24 relative md:left-11 bg-[#F8FAFC] shadow-sm pl-11 pr-20 text-lg font-serif italic  text-justify">Delays or confusion in the administration office shouldn’t hold students back. Raise your concerns on CampusConnect and help build a smoother, more transparent and responsive system for every student.</div>
+            <div className="rounded-full overflow-hidden z-10 mt-6 md:mt-0">
+              <img
+                className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-[3px] border-black"
+                src={Administrativeblock}
+                alt=""
+              />
+            </div>
           </div>
         </div>
       </div>
