@@ -40,10 +40,10 @@ const NavBar = () => {
             Our Team
           </NavLink>
           <NavLink
-            to={"/report"}
+            to={"/help"}
             className='hover:text-[#2563EB] font-semibold transition-all duration-300'
           >
-            Report
+            Help
           </NavLink>
         </div>
 

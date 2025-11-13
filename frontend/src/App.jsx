@@ -8,8 +8,9 @@ import About from './pages/About'
 import Team from './pages/Team'
 import Contact from './pages/Contact'
 import Issues from './pages/Issues'
-import Report from './pages/Report'
+import Report from './pages/Help'
 import {ToastContainer,toast}from "react-toastify"
+import Help from './pages/Help'
 const App = () => {
   return (
     <div>
@@ -20,7 +21,7 @@ const App = () => {
         <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
         <Route path='/issues' element={<><NavBar/><Issues/> <Footer/> </>}/>
-        <Route path='/report' element={<><NavBar/><Report/> <Footer/> </>}/>
+        <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
         <Route path='/dashboard'element={<></>}/>
       </Routes>
        <ToastContainer position="top-center" autoClose={3000} />
