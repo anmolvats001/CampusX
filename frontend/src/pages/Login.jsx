@@ -8,7 +8,7 @@ const Login = () => {
     <div className='w-full h-screen flex justify-center items-center bg-[#F4F5F7]'>
       <div className='bg-gray-800 w-[40%] px-8 py-10 rounded-2xl border border-[#3B82F6] shadow-2xl text-[#EAEAEA]'>
         <p className='text-center text-3xl font-bold text-[#60A5FA] mb-8'>
-          🔐 Please {!sign ? <span>Sign</span> : <span>Login</span>} In
+          🔐 Please {!sign ? <span>Sign Up</span> : <span>Login</span>}
         </p>
 
         <div className='mt-4 flex flex-col items-center gap-6'>
@@ -45,7 +45,7 @@ const Login = () => {
         <div className='flex justify-center w-full pt-8'>
           {!sign ? (
             <button className='bg-[#3B82F6] text-white rounded-2xl px-6 py-2 hover:bg-[#2563EB] font-semibold transition-all duration-200'>
-              Sign In
+              Sign Up
             </button>
           ) : (
             <button className='bg-[#3B82F6] text-white rounded-2xl px-6 py-2 hover:bg-[#2563EB] font-semibold transition-all duration-200'>
@@ -66,7 +66,7 @@ const Login = () => {
             <div className='text-sm'>
               <span>New User ❓ </span>
               <p onClick={change} className='text-[#60A5FA] hover:underline cursor-pointer inline'>
-                Sign In
+                Sign Up
               </p>
             </div>
           )}

@@ -64,10 +64,21 @@ const About = () => {
         <div className="w-full flex justify-center pt-8">
           <h1 className="font-extrabold text-3xl ">🏫 ABOUT</h1>
         </div>
+        <div className=" flex justify-center py-12 font-[350] text-lg">
+          <div className="w-[70%] flex flex-col gap-7 items-center">
+            <div>Campus Connect is a digital platform created to make our college a better and more responsive place for everyone. It allows students to easily report any issues they notice on campus — whether it’s a 💧 leaking tap, 🧹 poor hygiene, broken furniture, or any other maintenance problem. Every complaint submitted is sent directly to the concerned faculty or department for quick action.</div>
+          <div>
+            Students can also track the status of their complaints 📊 — from submission to recognition and resolution — ensuring full transparency. Faculty members can review, update, and mark issues as ✅ solved once the problem is fixed.
+          </div>
+          <div>
+            Our goal is to build a cleaner, safer, and more connected campus through open communication and teamwork between students and staff. 🤝
+          </div>
+          </div>
+        </div>
         <div className="flex flex-col gap-7 w-full items-center py-12">
           {data.map((e, i) => {
             return (
-              <div className="h-96  transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-102 rounded-4xl w-[80%]  relative hover:bg-gray-400 hover:text-white">
+              <div className="h-96  transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-102 rounded-4xl w-[80%]  relative">
                 <div className="flex gap-2.5 px-6 py-2 items-center">
                   
                   <div>
