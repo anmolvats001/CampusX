@@ -5,6 +5,7 @@ import Administrativeblock from "../assets/Administrativeblock.png"
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { data } from 'react-router-dom';
+import IssuesAddressed from '../components/IssuesAddressed';
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
@@ -121,6 +122,16 @@ const Home = () => {
       </div>
       <div className="px-6 md:px-36 mt-24">
         <p className="text-center font-bold text-3xl md:text-4xl mt-9 text-[#1E293B]">
+          <span className="text-[#2563EB] text-5xl">I</span>ssues{" "}
+          <span className="text-[#2563EB] text-5xl">C</span>overed ⚠️{" "}
+        </p>
+        <hr className="my-6 border-[#E5E7EB] mb-9" />
+      </div>
+      <div>
+        <IssuesAddressed/>
+      </div>
+      <div className="px-6 md:px-36 mt-24">
+        <p className="text-center font-bold text-3xl md:text-4xl mt-9 text-[#1E293B]">
           <span className="text-[#2563EB] text-5xl">W</span>hy{" "}
           <span className="text-[#2563EB] text-5xl">C</span>ampus{" "}
           <span className="text-[#2563EB] text-5xl">C</span>onnect 🤔❓
@@ -130,6 +141,7 @@ const Home = () => {
       <div className="px-6">
         <WhyCampusConnect />
       </div>
+      
     </div>
   )
 }

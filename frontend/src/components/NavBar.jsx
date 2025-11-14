@@ -28,7 +28,7 @@ const NavBar = () => {
             Home
           </NavLink>
           <NavLink
-            to={"/issues"}
+            to={"/issues/home"}
             className='hover:text-[#2563EB] font-semibold transition-all duration-300'
           >
             Issues

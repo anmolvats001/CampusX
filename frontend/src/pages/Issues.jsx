@@ -7,7 +7,9 @@ import logo from "../assets/logo.png";
 const Issues = () => {
 
   return (
-    <div></div>
+    <div>
+       
+    </div>
   );
 };
 

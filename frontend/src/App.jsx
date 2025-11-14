@@ -11,6 +11,8 @@ import Issues from './pages/Issues'
 import Report from './pages/Help'
 import {ToastContainer,toast}from "react-toastify"
 import Help from './pages/Help'
+import MainPage from './pages/MainPage'
+import IssueNavBar from './components/IssueNavBar'
 const App = () => {
   return (
     <div>
@@ -20,9 +22,10 @@ const App = () => {
         <Route path='/about' element={<><NavBar/><About/> <Footer/> </>}/>
         <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
-        <Route path='/issues' element={<><NavBar/><Issues/> <Footer/> </>}/>
+        <Route path='/issues'>
+        <Route path='home'element={<><IssueNavBar/><MainPage/></>}/>
+        </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
-        <Route path='/dashboard'element={<></>}/>
       </Routes>
        <ToastContainer position="top-center" autoClose={3000} />
     </div>
