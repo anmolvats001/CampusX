@@ -13,6 +13,8 @@ import {ToastContainer,toast}from "react-toastify"
 import Help from './pages/Help'
 import MainPage from './pages/MainPage'
 import IssueNavBar from './components/IssueNavBar'
+import IssueAdder from './components/IssueAdder'
+import Sider from './components/Sider'
 const App = () => {
   return (
     <div>
@@ -23,7 +25,7 @@ const App = () => {
         <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
         <Route path='/issues'>
-        <Route path='home'element={<><IssueNavBar/><MainPage/></>}/>
+        <Route path='home'element={<><IssueNavBar/><Sider/><MainPage/><IssueAdder/></>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>
