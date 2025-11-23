@@ -11,7 +11,7 @@ import { NavLink, useLocation } from "react-router-dom";
 const Sider = () => {
 
   return (
-    <div className="w-[20%] h-full left-0 z-11 bg-black py-3 flex pl-5 pt-6 fixed border-r-[1px] border-r-gray-900 issues-page">
+    <div className="w-[20%] h-full left-0 z-99 bg-black py-3 flex pl-5 pt-6 fixed border-r-[1px] border-r-gray-900 issues-page">
       <div>
         <div className="flex gap-2 items-center"><img className='w-14' src={campus} alt="" /><p className="font-semibold italic text-white text-3xl">
           Issugram

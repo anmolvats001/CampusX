@@ -15,6 +15,8 @@ import MainPage from './pages/MainPage'
 import IssueNavBar from './components/IssueNavBar'
 import IssueAdder from './components/IssueAdder'
 import Sider from './components/Sider'
+import Data from './components/Data'
+import IssuesLayout from './pages/IssueLayout'
 const App = () => {
   return (
     <div>
@@ -24,9 +26,11 @@ const App = () => {
         <Route path='/about' element={<><NavBar/><About/> <Footer/> </>}/>
         <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
-        <Route path='/issues'>
-        <Route path='home'element={<><Sider/><MainPage/><IssueAdder/></>}/>
-        </Route>
+        <Route path="/issues" element={<IssuesLayout />}>
+           <Route path="home" element={<MainPage />} />
+          <Route path="data" element={<Data />} />
+          </Route>
+
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>
        <ToastContainer position="top-center" autoClose={3000} />
