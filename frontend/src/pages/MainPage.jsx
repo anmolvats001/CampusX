@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MediaScroller from '../components/MediaScroller'
 import video from "../assets/video.mp4"
 import redo from "../assets/redo.png"
 import comment from "../assets/comments.png"
 import IssueNavBar from '../components/IssueNavBar'
+import { useNavigate } from 'react-router-dom'
 
 const MainPage = () => {
+  const navigate=useNavigate();
+  useEffect(()=>{
 
+  },[])
   const data = [
     {
       name: "Anmol Vats",
@@ -119,7 +123,9 @@ const MainPage = () => {
       <IssueNavBar />
 
       {data.map((e, i) => (
-        <div key={i} className="w-[35%] h-fit text-white">
+        <div key={i} className="w-[35%] h-fit text-white" onClick={()=>{
+          navigate(`/issues/info/${i+1}`);
+        }}>
 
           <div className="w-full h-fit py-3 flex items-center gap-3">
             <img

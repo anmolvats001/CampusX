@@ -17,6 +17,7 @@ import IssueAdder from './components/IssueAdder'
 import Sider from './components/Sider'
 import Data from './components/Data'
 import IssuesLayout from './pages/IssueLayout'
+import Info from './pages/Info'
 const App = () => {
   return (
     <div>
@@ -28,9 +29,9 @@ const App = () => {
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
         <Route path="/issues" element={<IssuesLayout />}>
            <Route path="home" element={<MainPage />} />
-          <Route path="data" element={<Data />} />
-          </Route>
-
+           <Route path="data" element={<Data />} />
+           <Route path='info/:id'element={<Info/>}/>
+        </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>
        <ToastContainer position="top-center" autoClose={3000} />

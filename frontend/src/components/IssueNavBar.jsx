@@ -14,7 +14,7 @@ const IssueNavBar = () => {
    await gsap.from(zoomer.current,{
       scale:0,
       opacity:0,
-      duration:1.2,
+      duration:0.8,
       display:"block"
     })
     navigate("/issues/data")

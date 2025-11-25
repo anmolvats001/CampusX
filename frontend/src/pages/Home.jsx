@@ -54,10 +54,10 @@ const Home = () => {
   },[])
   return (
     <div className="w-full overflow-x-hidden h-fit py-20 pt-36 bg-[#FFFFFF] text-[#1E293B]">
-      <div>
+      <div className='bg-[url(C:\VsCodeProgram\Campus-connect\Project-1\frontend\src\assets\bg.jpeg)] bg-cover bg-center'>
         <h1 className="capitalize font-extrabold text-6xl md:text-7xl text-center [word-spacing:-0.1rem] text-[#1E293B]" ref={mainheading}>
           Welcome to Campus <br />
-          <span className="text-[#2563EB] transform inline-block animate-[moveX_1.2s_ease-in-out_infinite]">
+          <span className="text-[#2563EB] transform inline-block ">
             Connect
           </span>
         </h1>
