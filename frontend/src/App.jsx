@@ -13,7 +13,6 @@ import {ToastContainer,toast}from "react-toastify"
 import Help from './pages/Help'
 import MainPage from './pages/MainPage'
 import IssueNavBar from './components/IssueNavBar'
-import IssueAdder from './components/IssueAdder'
 import Sider from './components/Sider'
 import Data from './components/Data'
 import IssuesLayout from './pages/IssueLayout'

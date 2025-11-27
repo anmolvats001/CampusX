@@ -5,6 +5,8 @@ import Administrativeblock from "../assets/Administrativeblock.png"
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { data } from 'react-router-dom';
+import bg from "../assets/bg.jpeg";
+
 import IssuesAddressed from '../components/IssuesAddressed';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,25 +55,42 @@ const Home = () => {
     });
   },[])
   return (
-    <div className="w-full overflow-x-hidden h-fit py-20 pt-36 bg-[#FFFFFF] text-[#1E293B]">
-      <div className='bg-[url(C:\VsCodeProgram\Campus-connect\Project-1\frontend\src\assets\bg.jpeg)] bg-cover bg-center'>
-        <h1 className="capitalize font-extrabold text-6xl md:text-7xl text-center [word-spacing:-0.1rem] text-[#1E293B]" ref={mainheading}>
-          Welcome to Campus <br />
-          <span className="text-[#2563EB] transform inline-block ">
-            Connect
-          </span>
-        </h1>
-        <h3 className="mt-10 text-lg md:text-xl font-medium text-center text-[#64748B] italic" ref={data}>
-          Speak up without fear — your feedback stays anonymous.
-          <br />
-          We connect students and management securely and transparently.
-        </h3>
-        <div className="flex justify-center mt-10 text-lg">
-          <button className="rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] transition-all duration-300 px-6 py-2 font-semibold text-white shadow-sm hover:shadow-md">
-            Explore Complaints
-          </button>
-        </div>
-      </div>
+    <div className="w-full overflow-x-hidden h-fit py-20 pt-16 bg-[#FFFFFF] text-[#1E293B]">
+      <div
+  className="relative bg-cover bg-center"
+  style={{ backgroundImage: `url(${bg})` }}
+>
+  {/* Overlay with opacity */}
+  <div className="absolute inset-0 bg-black/40"></div>
+
+  <div className="relative z-10 px-4 py-20">
+    <p
+      className="capitalize font-extrabold text-6xl md:text-7xl text-center [word-spacing:-0.1rem] text-white"
+      ref={mainheading}
+    >
+      Welcome to Campus <br />
+      <span className="text-[#2563EB] inline-block">
+        Connect
+      </span>
+    </p>
+
+    <p
+      className="mt-10 text-lg md:text-xl font-medium text-center text-gray-300 italic"
+      ref={data}
+    >
+      Speak up without fear — your feedback stays anonymous.
+      <br />
+      We connect students and management securely and transparently.
+    </p>
+
+    <div className="flex justify-center mt-10 text-lg">
+      <button className="rounded-full bg-[#2563EB] hover:bg-[#1D4ED8] transition-all duration-300 px-6 py-2 font-semibold text-white shadow-sm hover:shadow-md">
+        Explore Complaints
+      </button>
+    </div>
+  </div>
+</div>
+
       <div className="px-6 md:px-36 mt-20">
         <p className="text-center capitalize font-bold text-[#1E293B] text-2xl md:text-3xl mt-9">
           Your voice matters — let's fix ABES together 🔊

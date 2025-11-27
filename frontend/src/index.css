@@ -1,26 +1,33 @@
 @import "tailwindcss";
 @import "@flaticon/flaticon-uicons/css/all/all";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 html::-webkit-scrollbar, 
 body::-webkit-scrollbar,
 .scroller::-webkit-scrollbar {
   display: none;
 }
 
-html, body {
+html, body ,#root{
   height: 100%;
   margin: 0;
   background-color: #FFFFFF;
   color: #1E293B;
 }
-
+.opensans {
+  font-family: "Open Sans", sans-serif;
+}
+.outfit {
+  font-family: "Outfit", sans-serif;
+}
+.sansation {
+  font-family: "Sansation", sans-serif;
+}
 body {
-  font-family: 'Inter', sans-serif;
+  font-family:"Open Sans", sans-serif;
 }
 
 h1, h2, .logo {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Sansation", sans-serif;
   letter-spacing: 0.5px;
   color: #1E293B;
 }
@@ -56,10 +63,26 @@ button:hover {
   50% { transform: translateX(0.25rem); }
 }
 .issues-page .active {
-  all: unset;       
-  color: white;     
-  font-weight:800;
+  all: unset;            
+  font-weight:900;
   display: flex;
   gap: 10px;
-  font-size:18px
+  font-size:20px
+}
+.light{
+  background-color: white;
+  color: black;
+}
+.dark{
+  background-color: black;
+  color: white;
+}
+.pos{
+  top: -70px;
+}
+.issues-nav .active {
+  all: unset;           
+  font-weight:600;
+  text-decoration: underline;
+  font-size:15px
 }

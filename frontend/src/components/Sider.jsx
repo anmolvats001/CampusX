@@ -1,51 +1,62 @@
-import React from "react";
-import home from "../assets/house-blank.png";
-import search from "../assets/search.png";
-import compass from "../assets/compass-alt.png";
-import video from "../assets/play-alt.png";
-import add from "../assets/add.png";
-import campus from "../assets/campus.png"
-import setting from "../assets/settings.png"
+import { useContext } from "react";
+import { AppContext } from "../Context/context";
+import campusxwhite from "../assets/campusxwhite.png"
+import campusxblack from "../assets/campusxblack.png"
+import home from "../assets/house-blank.png"
+import search from "../assets/search.png"
 import profile from "../assets/user.png"
-import { NavLink, useLocation } from "react-router-dom";
+import setting from "../assets/settings.png"
+import { NavLink } from "react-router-dom";
 const Sider = () => {
+  const {dark}=useContext(AppContext);
+  console.log(dark);
+  return(
+    <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800"}>
+      <div className=" h-full relative">
+        <img className="absolute pos right-10" src={!dark ?campusxblack :campusxwhite} alt="" />
+        <div className="absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page">
+          <NavLink to={"/issues/home"} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
+          <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
+          <div>
+            <div className="group">
 
-  return (
-    <div className="w-[20%] h-full left-0 z-99 bg-black py-3 flex pl-5 pt-6 fixed border-r-[1px] border-r-gray-900 issues-page">
-      <div>
-        <div className="flex gap-2 items-center"><img className='w-14' src={campus} alt="" /><p className="font-semibold italic text-white text-3xl">
-          Issugram
-        </p></div>
-        <div className="mt-14 px-2 flex flex-col justify-between w-full h-[80%]">
-          <div className="flex flex-col gap-12">
-            <NavLink  to={"/issues/home"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={home} alt="" /> <p className="text-white text-[18px]">Home</p>
-          </NavLink>
-          <NavLink  to={"/issues/search"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={search} alt="" /> <p className="text-white text-[18px]">Search</p>
-          </NavLink>
-          <NavLink  to={"/issues/explore"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={compass} alt="" /> <p className="text-white text-[18px]">Explore</p>
-          </NavLink>
-          <NavLink  to={"/issues/videos"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={video} alt="" /> <p className="text-white text-[18px]">Videos</p>
-          </NavLink>
-           <NavLink  to={"/issues/create"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={add} alt="" /> <p className="text-white text-[18px]">Create</p>
-          </NavLink>
+  <div className="flex gap-1 items-center cursor-pointer">
+    {dark 
+      ? <i className="fi fi-sr-play text-white"></i>
+      : <i className="fi fi-sr-play"></i>
+    }
+    <p>Sort By</p>
+  </div>
+
+  <div
+    className="
+      flex flex-col gap-3 text-lg text-gray-500 ml-6
+      max-h-0 overflow-hidden
+      opacity-0
+      transition-all duration-300 ease-in-out
+      group-hover:max-h-40
+      group-hover:opacity-100
+      group-hover:my-2
+    "
+  >
+    <div className="hover:text-gray-300">water</div>
+    <div className="hover:text-gray-300">administration</div>
+    <div className="hover:text-gray-300">building</div>
+    <div className="hover:text-gray-300">safety</div>
+  </div>
+</div>
+
+
           </div>
-          <div className="flex flex-col  gap-8">
-            <NavLink  to={"/issues/profile"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={profile} alt="" /> <p className="text-white text-[18px]">Profile</p>
-          </NavLink>
-          <NavLink  to={"/issues/setting"}  className={`flex gap-2 items-center text-2xl  `}    >
-            <img className="w-6" src={setting} alt="" /> <p className="text-white text-[18px]">Setting</p>
-          </NavLink>
-          </div>
+          <NavLink to={"/issues/profile"} className="flex gap-1">{dark ?<i class="fi fi-sr-user text-white"></i>:<i class="fi fi-sr-user"></i>} <p>Profile</p></NavLink>
+          <NavLink to={"/issues/setting"} className="flex gap-1">{dark ?<i class="fi fi-sr-settings text-white"></i>:<i class="fi fi-sr-settings"></i>} <p>setting</p></NavLink>
         </div>
+        <div className="absolute bottom-6 px-4 py-3 flex border-[1px] border-gray-800 rounded-2xl"><div>
+          <div className="flex gap-1.5"><img src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" className="rounded-full w-10 object-cover" alt="" /><div><p className="bold ">Anmol Vats</p><p className="text-[8px] text-gray-500">(CSE)</p></div><div className="h-full flex items-center mt-3"> {dark?<i class="fi fi-br-angle-small-right text-white"></i>:<i class="fi fi-br-angle-small-right"></i>}</div></div>
+          </div></div>
       </div>
     </div>
-  );
+  )
 };
 
 export default Sider;
