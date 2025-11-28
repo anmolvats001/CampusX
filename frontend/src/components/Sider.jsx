@@ -25,7 +25,7 @@ const Sider = () => {
       ? <i className="fi fi-sr-play text-white"></i>
       : <i className="fi fi-sr-play"></i>
     }
-    <p>Sort By</p>
+    <p>Filter</p>
   </div>
 
   <div

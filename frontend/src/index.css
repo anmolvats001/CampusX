@@ -86,3 +86,7 @@ button:hover {
   text-decoration: underline;
   font-size:15px
 }
+@keyframes scroll {
+  0% { transform: translateX(0);}
+  100% { transform: translateX(-50%);}
+}

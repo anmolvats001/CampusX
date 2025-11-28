@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { data } from 'react-router-dom';
 import bg from "../assets/bg.jpeg";
-
+import feedback from "../assets/feedback.jpg"
 import IssuesAddressed from '../components/IssuesAddressed';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +14,19 @@ const Home = () => {
   const mainheading=useRef();
   const contentbox=useRef();
   const data=useRef();
+  const feedbackscroll=useRef();
+  function scrollleft(){
+    gsap.to(feedbackscroll.current,{
+      scrollright:100
+    })
+  }
+  function scrollright(){
+    gsap.to(feedbackscroll.current,{
+      x:100,
+      duration:2,
+
+    })
+  }
   useEffect(()=>{
    let tl=gsap.timeline();
     tl.from(mainheading.current,{
@@ -160,7 +173,22 @@ const Home = () => {
       <div className="px-6">
         <WhyCampusConnect />
       </div>
-      
+      <div className="px-6 md:px-36 mt-24">
+        <p className="text-center font-bold text-3xl md:text-4xl mt-9 text-[#1E293B]">
+          <span className="text-[#2563EB] text-5xl">V</span>aluable{" "}
+          <span className="text-[#2563EB] text-5xl">F</span>eedbacks{" "}
+        </p>
+        <hr className="my-6 border-[#E5E7EB] mb-9" />
+      </div>
+      <div className='w-full relative'>
+        <i className="fi fi-br-angle-left absolute left-12 top-32 text-2xl font-bold" onClick={scrollleft}></i>
+        <i className="fi fi-bs-angle-right absolute right-12 top-32 text-2xl font-bold" onClick={scrollright}></i>
+        <div className='flex scroller h-[100%] flex overflow-x-scroll ' ref={feedbackscroll}>
+        <img src={feedback} alt="" className=' shrink-0 h-80 object-contain w-full' />
+        <img src={feedback} alt="" className=' shrink-0 h-80 object-contain w-full' />
+
+      </div>
+      </div>
     </div>
   )
 }

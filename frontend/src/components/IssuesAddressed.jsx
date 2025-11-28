@@ -1,40 +1,41 @@
 import React from "react";
 import water from "../assets/waterDroplet.png";
 import building from "../assets/building.png";
-import image from "../assets/image.png"
-import computer from "../assets/computer.png"
-import safety from "../assets/safety.jpg"
+import image from "../assets/image.png";
+import computer from "../assets/computer.png";
+import safety from "../assets/safety.jpg";
+
+const list = [
+  { src: water, title: "Water Issues" },
+  { src: image, title: "Administration Issues" },
+  { src: building, title: "Building Issues" },
+  { src: computer, title: "Technical Issues" },
+  { src: safety, title: "Safety Issues" },
+];
+
 const IssuesAddressed = () => {
   return (
     <div className="px-36 mt-20 w-full">
-      <div className=" pb-6 w-full">
-        <div>
-            <div className="flex justify-between">
-                <div className="flex flex-col w-60 h-64 shadow-xl rounded-3xl">
-            <img src={water} alt="" className="h-56"/>
-            <p className="font-semibold text-2xl text-center">Water Issues</p>
-        </div>
-          <div className="flex flex-col w-60 h-64 shadow-xl rounded-3xl">
-            <img src={image} alt="" className="h-48 object-contain"/>
-            <p className="font-semibold text-2xl text-center">Administration Issues</p>
-        </div>
+      <div className="relative overflow-hidden w-full pb-6">
+      
+        <div className="flex whitespace-nowrap animate-[scroll_20s_linear_infinite]">
+          
+          
+          {list.map((item, i) => (
+            <div key={i} className="shrink-0 flex flex-col items-center mx-10">
+              <img src={item.src} className="h-40 w-40 rounded-full shadow-2xl" />
+              <p className="font-semibold text-2xl text-center">{item.title}</p>
             </div>
-        <div className="w-full flex justify-center">
-            <div className="flex flex-col w-60 h-64 shadow-xl rounded-3xl">
-            <img src={building} alt="" className="h-56"/>
-            <p className="font-semibold text-2xl text-center">Building Issues</p>
-        </div>
-        </div>
-        <div className="flex justify-between">
-                <div className="flex flex-col w-60 h-64 shadow-xl rounded-3xl">
-            <img src={computer} alt="" className="h-56"/>
-            <p className="font-semibold text-2xl text-center">Technical Issues</p>
-        </div>
-          <div className="flex flex-col w-60 h-64 shadow-xl rounded-3xl">
-            <img src={safety} alt="" className="h-48 object-contain"/>
-            <p className="font-semibold text-2xl text-center">Safety Issues</p>
-        </div>
+          ))}
+
+          {/* Duplicate List for seamless loop */}
+          {list.map((item, i) => (
+            <div key={`dup-${i}`} className="shrink-0 flex flex-col items-center mx-10">
+              <img src={item.src} className="h-40 w-40 rounded-full shadow-2xl" />
+              <p className="font-semibold text-2xl text-center">{item.title}</p>
             </div>
+          ))}
+
         </div>
       </div>
     </div>
