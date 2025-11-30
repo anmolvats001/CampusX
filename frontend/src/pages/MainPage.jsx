@@ -1,8 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/context";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const { dark } = useContext(AppContext);
+const [on,seton]=useState(false);
+const [onfile,setOnFile]=useState(null);
  useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -378,7 +381,7 @@ const data = [
     <div
       className={`${
         dark ? "dark" : "light"
-      } h-screen w-[100%] border border-gray-800 `}
+      } h-screen w-[100%] border border-gray-800 relative`}
     >
       <div className="overflow-y-scroll w-full scroller h-full relative">
         <div className=" h-fit flex items-center pt-20 flex-col gap-14">
@@ -412,6 +415,7 @@ const data = [
                         <div className="max-h-[500px]">
                           <img
                             src={e.files[0].src}
+onClick={()=>{seton(true);setOnFile(e.files[0].src)}}
                             className="h-full w-full object-cover rounded-xl"
                             alt={`Attached image for ${e.title}`}
                           />
@@ -424,6 +428,7 @@ const data = [
                             <div key={j}>
                               <img
                                 src={a.src}
+onClick={()=>{seton(true);setOnFile(a.src)}}
                                 className="w-full max-h-full object-cover rounded-xl"
                                 alt={`Attached image ${j+1} for ${e.title}`}
                               />
@@ -437,6 +442,7 @@ const data = [
                           <div className="col-span-2">
                             <img
                               src={e.files[0].src}
+onClick={()=>{seton(true);setOnFile(e.files[0].src)}}
                               className="w-full h-full object-cover rounded-xl"
                               alt={`Attached image 1 for ${e.title}`}
                             />
@@ -444,11 +450,13 @@ const data = [
                           <div className="grid grid-rows-2 gap-1">
                             <img
                               src={e.files[1].src}
+onClick={()=>{seton(true);setOnFile(e.files[1].src)}}
                               className="w-full h-full object-cover rounded-xl"
                               alt={`Attached image 2 for ${e.title}`}
                             />
                             <img
                               src={e.files[2].src}
+onClick={()=>{seton(true);setOnFile(e.files[2].src)}}
                               className="w-full h-full object-cover rounded-xl"
                               alt={`Attached image 3 for ${e.title}`}
                             />
@@ -462,6 +470,7 @@ const data = [
                             <div key={k} className="h-[250px]">
                               <img
                                 src={a.src}
+onClick={()=>{seton(true);setOnFile(a.src)}}
                                 className="w-full h-full object-cover rounded-xl"
                                 alt={`Attached image ${k+1} for ${e.title}`}
                               />
@@ -501,8 +510,14 @@ const data = [
         !dark ? "bg-black text-white" : "bg-white text-black"
       } text-4xl font-bold`}>+</p></div>
       </div>
+{
+  on&&<><div className="absolute w-[80%] bg-black  z-100 h-full left-16 top-0 px-4 py-2.5 flex justify-center items-center">
+    <img src={onfile} className="w-full h-fit max-h-[80%] object-cover" alt="" />
+    <div className="absolute top-9 rounded-full  right-6 bg-black text-white"onClick={()=>seton(false)}><i class="fi fi-br-cross-small"></i></div>
+  </div>
+<div className="absolute w-screen left-[-57%] z-99 h-full top-0 bg-black opacity-70  " onClick={()=>seton(false)}></div></>
+}
     </div>
   );
 };
-
 export default MainPage;
