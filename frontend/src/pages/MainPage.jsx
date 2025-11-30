@@ -3,7 +3,7 @@ import { AppContext } from "../Context/context";
 import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
-  const { dark } = useContext(AppContext);
+  const { dark,setcommvis ,timeAgo} = useContext(AppContext);
 const [on,seton]=useState(false);
 const [onfile,setOnFile]=useState(null);
  useEffect(() => {
@@ -12,27 +12,7 @@ const [onfile,setOnFile]=useState(null);
       behavior: "instant"
     });
   }, []);
-  const timeAgo = (dateString) => {
-    const now = new Date();
-    const past = new Date(dateString);
-    const diffMs = now - past;
-    const diffSec = Math.floor(diffMs / 1000);
-    const diffMin = Math.floor(diffSec / 60);
-    const diffHr = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHr / 24);
-
-    if (diffSec < 60) return "Just now";
-    if (diffMin < 60) return `${diffMin} min ago`;
-    if (diffHr < 24) return `${diffHr} hr ago`;
-    if (diffDay === 1) return "Yesterday";
-
-    return past.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
-
+  
 const data = [
     {
       name: "Anmol Vats",
@@ -481,7 +461,7 @@ onClick={()=>{seton(true);setOnFile(a.src)}}
                     </div>
                   </div>
 <div className="flex px-11 mt-5 gap-8"><div className={(dark?"text-gray-500":"text-gray-700") +" flex cursor-pointer items-center rounded-3xl hover:text-red-800 "+(e.liked&&"text-red-800")}><i class="fi fi-ss-social-network"></i> <p className="text-xs">{e.likes}</p></div>
-<div className={(dark?"text-gray-500":"text-gray-700") +" flex items-center rounded-3xl gap-1 cursor-pointer hover:text-blue-500"}>
+<div className={(dark?"text-gray-500":"text-gray-700") +" flex items-center rounded-3xl gap-1 cursor-pointer hover:text-blue-500"} onClick={()=>setcommvis(true)}>
     <i className="fi fi-ts-comment-dots text-sm"></i> <p className="text-sm">{e.comments}</p>
 </div>
 <div
@@ -513,9 +493,9 @@ onClick={()=>{seton(true);setOnFile(a.src)}}
 {
   on&&<><div className="absolute w-[80%] bg-black  z-100 h-full left-16 top-0 px-4 py-2.5 flex justify-center items-center">
     <img src={onfile} className="w-full h-fit max-h-[80%] object-cover" alt="" />
-    <div className="absolute top-9 rounded-full  right-6 bg-black text-white"onClick={()=>seton(false)}><i class="fi fi-br-cross-small"></i></div>
+    <div className="absolute top-9 rounded-full  right-6 bg-black text-white cursor-pointer"onClick={()=>{seton(false); setcommvis(false)}}><i class="fi fi-br-cross-small"></i></div>
   </div>
-<div className="absolute w-screen left-[-57%] z-99 h-full top-0 bg-black opacity-70  " onClick={()=>seton(false)}></div></>
+<div className="absolute w-screen left-[-57%] z-99 h-full top-0 bg-black opacity-70  " onClick={()=>{seton(false);setcommvis(false)}}></div></>
 }
     </div>
   );
