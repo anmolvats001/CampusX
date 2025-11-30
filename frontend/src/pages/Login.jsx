@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 const Login = () => {
   const [sign, setSign] = useState(false);
   const [otpverify, setotpverify] = useState(false);
+  const [who,setWho]=useState("student");
   const emaildata = useRef();
   const mainpart=useRef();
   const sidepart=useRef();
@@ -50,6 +51,11 @@ const moveleft = () => {
                 Welcome {!sign ? "Back" : <>To Campus <br /> Connect</>}
               </p>
               <p className="text-gray-500 text-sm">Enter the credentials to access your account</p>
+              {
+              !sign&&<div className='flex'><p className={(who=="student"?"bg-blue-600 text-white":"bg-white")+' rounded-l-full border-r-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("student")}>Student</p>
+              <p className={(who=="incharge"?"bg-blue-600 text-white":"bg-white")+'  border-r-1  px-3 py-1.5 cursor-pointer'}onClick={()=>setWho("incharge")}>Incharge</p>
+              <p className={(who=="admin"?"bg-blue-600 text-white":"bg-white")+' rounded-r-full border-l-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("admin")}>Admin</p></div>
+              }
             </div>
 
             <div className="flex flex-col gap-4 w-72">
@@ -57,21 +63,21 @@ const moveleft = () => {
               {sign && (
                 <div className="flex flex-col gap-1">
                   
-                  <input id="name" type="text" placeholder='Enter Name' className="border focus:outline-0 px-2 py-1 rounded" />
+                  <input id="name" type="text" placeholder='Create Username' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
                 </div>
               )}
 
-              <div className="flex flex-col gap-1">
+             {who=="student"&& <div className="flex flex-col gap-1">
               
-                <input id="admno" type="text" placeholder='Enter Addmission No.' className="border focus:outline-0 px-2 py-1 rounded" />
-              </div>
+                <input id="admno" type="text" placeholder='Enter Addmission No.' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+              </div>}
 
-              {sign && (
+              {(sign || who=="incharge"||who=="admin") && (
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2 relative">
-                    <input id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded w-full" />
+                    <input id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded-2xl w-full" />
                     <button
-                      className="px-3 py-1 bg-blue-500 text-white  absolute right-[-70px]"
+                      className={(!sign&&" hidden")+" px-3 py-1 bg-blue-500 text-white  absolute right-[-70px]"}
                       onClick={() => {
                         if (emaildata.current.value !== "") setotpverify(true);
                         else toast.error("Enter valid Email");
@@ -84,7 +90,7 @@ const moveleft = () => {
                   {otpverify && (
                     <div className="flex flex-col gap-1 mt-2">
                       
-                      <input id="otp" type="number" placeholder='Enter the OTP' className="border focus:outline-0 px-2 py-1 rounded" />
+                      <input id="otp" type="number" placeholder='Enter the OTP' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
                     </div>
                   )}
                 </div>
@@ -92,7 +98,7 @@ const moveleft = () => {
 
               <div className="flex flex-col gap-1">
                
-                <input id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded" />
+                <input id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
               </div>
             </div>
 
@@ -111,7 +117,7 @@ const moveleft = () => {
             <p className="text-2xl capitalize font-bold text-center text-white">
               your campus . your voice . <br /> our responsibility
             </p>
-            <p className="font-semibold text-white text-center">
+            <p className="font-semibold text-white text-center capitalize">
               submit concerns and track resolution- all <br /> you one place
             </p>
             <img src={login} alt="" className="w-[40%] h-[60%] object-cover border-4 border-white rounded-3xl" />

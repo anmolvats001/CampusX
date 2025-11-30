@@ -57,7 +57,10 @@ button:hover {
   background-color: #1D4ED8;
   transform: translateY(-1px);
 }
-
+.cave-in-right {
+  border-top-right-radius: 50px; /* Adjust radius to match shadow offset */
+  border-bottom-right-radius: 50px; 
+}
 @keyframes moveX {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(0.25rem); }

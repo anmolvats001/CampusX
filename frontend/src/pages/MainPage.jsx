@@ -497,7 +497,7 @@ const data = [
         </div>
 <div className={`${
         !dark ? "bg-black text-white" : "bg-white text-black"
-      }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full`}><p className={`${
+      }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full cursor-pointer`}><p className={`${
         !dark ? "bg-black text-white" : "bg-white text-black"
       } text-4xl font-bold`}>+</p></div>
       </div>
