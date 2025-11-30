@@ -52,9 +52,9 @@ const moveleft = () => {
               </p>
               <p className="text-gray-500 text-sm">Enter the credentials to access your account</p>
               {
-              !sign&&<div className='flex'><p className={(who=="student"?"bg-blue-600 text-white":"bg-white")+' rounded-l-full border-r-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("student")}>Student</p>
+              !sign&&<div className='flex justify-center'><div className='border-1 rounded-l-full rounded-r-full flex w-fit'><p className={(who=="student"?"bg-blue-600 text-white":"bg-white")+' rounded-l-full border-r-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("student")}>Student</p>
               <p className={(who=="incharge"?"bg-blue-600 text-white":"bg-white")+'  border-r-1  px-3 py-1.5 cursor-pointer'}onClick={()=>setWho("incharge")}>Incharge</p>
-              <p className={(who=="admin"?"bg-blue-600 text-white":"bg-white")+' rounded-r-full border-l-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("admin")}>Admin</p></div>
+              <p className={(who=="admin"?"bg-blue-600 text-white":"bg-white")+' rounded-r-full border-l-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("admin")}>Admin</p></div></div>
               }
             </div>
 
@@ -118,7 +118,7 @@ const moveleft = () => {
               your campus . your voice . <br /> our responsibility
             </p>
             <p className="font-semibold text-white text-center capitalize">
-              submit concerns and track resolution- all <br /> you one place
+              submit concerns and track resolution- all <br /> in one place
             </p>
             <img src={login} alt="" className="w-[40%] h-[60%] object-cover border-4 border-white rounded-3xl" />
           </div>
