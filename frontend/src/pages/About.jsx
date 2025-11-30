@@ -5,6 +5,12 @@ import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
 
 const About = () => {
+   useEffect(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "instant"
+      });
+    }, []);
     const { user } = useContext(AppContext);
   const data = [
     {

@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Team = () => {
+   useEffect(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "instant"
+      });
+    }, []);
   const faculty = [
     { name: "Dr. M. R. Panda" },
     { name: "Dr. Mohit Rastogi" },

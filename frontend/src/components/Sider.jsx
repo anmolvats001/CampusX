@@ -17,6 +17,8 @@ const Sider = () => {
         <div className="absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer">
           <NavLink to={"/issues/home"} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
           <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
+           <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-ss-add text-white"></i>:<i class="fi fi-ss-add"></i>} <p>Report</p></NavLink>
+         
           <div>
             <div className="group">
 

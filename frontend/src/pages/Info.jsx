@@ -7,6 +7,12 @@ const Info = () => {
     const [data,setData]=useState({});
     const [mainImage,setMainImage]=useState();
     const [comments,setComments]=useState([]);
+     useEffect(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "instant"
+        });
+      }, []);
     useEffect(()=>{
        let val={
               name: "Anmol Vats",

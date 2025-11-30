@@ -1,17 +1,14 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../Context/context";
 
 const MainPage = () => {
   const { dark } = useContext(AppContext);
-  const isWithin24Hours = (dateString) => {
-    const published = new Date(dateString);
-    const now = new Date();
-
-    const diffMs = now - published;
-    const diffHours = diffMs / (1000 * 60 * 60);
-
-    return diffHours;
-  };
+ useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant"
+    });
+  }, []);
   const timeAgo = (dateString) => {
     const now = new Date();
     const past = new Date(dateString);
@@ -381,15 +378,16 @@ const data = [
     <div
       className={`${
         dark ? "dark" : "light"
-      } h-screen w-[100%] border border-gray-800`}
+      } h-screen w-[100%] border border-gray-800 `}
     >
-      <div className="overflow-y-scroll scroller h-full">
+      <div className="overflow-y-scroll w-full scroller h-full relative">
         <div className=" h-fit flex items-center pt-20 flex-col gap-14">
           {data.map((e, i) => {
             return (
               <div key={i} className="w-full border-gray-800 border-1 rounded-2xl h-fit  px-3.5 py-2.5">
                 <div className="flex flex-col gap-2">
-                  <div className="flex gap-2 px-2.5 ">
+                  <div className="flex justify-between">
+    <div className="flex gap-2 px-2.5 ">
                     <img
                       src={e.profile}
                       className="w-10 h-10 object-cover rounded-full "
@@ -403,6 +401,8 @@ const data = [
                       {timeAgo(e.publishedOn)}
                     </p>
                   </div>
+<p className={(e.resolved?"text-green-500":"text-red-500")+" font-semibold text-xs  mr-16"}>{e.resolved?"Resolved":"Pending"}</p>
+</div>
                   <div className=" px-9  ">
                     <p className={dark?"text-[15px] text-gray-200":"text-[15px] text-gray-900"}>{e.data}</p>
                   </div>
@@ -475,12 +475,31 @@ const data = [
 <div className={(dark?"text-gray-500":"text-gray-700") +" flex items-center rounded-3xl gap-1 cursor-pointer hover:text-blue-500"}>
     <i className="fi fi-ts-comment-dots text-sm"></i> <p className="text-sm">{e.comments}</p>
 </div>
+<div
+  className={
+    (dark ? "text-gray-500" : "text-gray-700") +
+    " group flex items-center rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative"
+  }
+>
+  <i className="fi fi-tr-heart-partner-handshake"></i>
+  <p className="text-sm">{e.comments}</p>
+
+  <div className="absolute px-3 py-1 bottom-8 left-6 bg-white rounded shadow hidden group-hover:block">
+    agree
+  </div>
+</div>
+
 <div className={(dark?"text-gray-500":"text-gray-700") +" flex items-center rounded-3xl cursor-pointer hover:text-green-700 gap-1"}><i className="fi fi-rr-share-square text-sm"></i><p className="text-xs">share</p></div></div>
                 </div>
               </div>
             );
           })}
         </div>
+<div className={`${
+        !dark ? "bg-black text-white" : "bg-white text-black"
+      }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full`}><p className={`${
+        !dark ? "bg-black text-white" : "bg-white text-black"
+      } text-4xl font-bold`}>+</p></div>
       </div>
     </div>
   );
