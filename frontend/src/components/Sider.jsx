@@ -52,11 +52,36 @@ const Sider = () => {
           </div>
           <NavLink to={"/issues/profile"} className="flex gap-1">{dark ?<i class="fi fi-sr-user text-white"></i>:<i class="fi fi-sr-user"></i>} <p>Profile</p></NavLink>
           <NavLink to={"/issues/setting"} className="flex gap-1">{dark ?<i class="fi fi-sr-settings text-white"></i>:<i class="fi fi-sr-settings"></i>} <p>setting</p></NavLink>
-        </div>
-        <div className="absolute bottom-6 px-4 py-3 flex border-[1px] border-gray-800 rounded-2xl"><div>
-          <div className="flex gap-1.5 cursor-pointer"><img src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" className="rounded-full w-10 object-cover" alt="" /><div><p className="bold ">Anmol Vats</p><p className="text-[8px] text-gray-500">(CSE)</p></div><div className="h-full flex items-center mt-3"> {dark?<i class="fi fi-br-angle-small-right text-white"></i>:<i class="fi fi-br-angle-small-right"></i>}</div></div>
-          </div></div>
-      </div>
+        </div><div className="absolute bottom-6 px-4 py-3 flex border border-gray-800 rounded-2xl group">
+  <div className="flex gap-1.5 cursor-pointer items-center">
+    <img 
+      src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" 
+      className="rounded-full w-10 object-cover" 
+      alt="" 
+    />
+
+    <div>
+      <p className="bold">Anmol Vats</p>
+      <p className="text-[8px] text-gray-500">(CSE)</p>
+    </div>
+
+    <div className="h-full flex items-center">
+      {dark ? (
+        <i className="fi fi-br-angle-small-right text-white"></i>
+      ) : (
+        <i className="fi fi-br-angle-small-right"></i>
+      )}
+    </div>
+  </div>
+
+  <div
+    className={`${!dark?"dark":"light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}
+  >
+    <div className="cursor-pointer hover:opacity-80">View Profile</div>
+    <div className="cursor-pointer hover:opacity-80 text-red-800">Logout</div>
+  </div>
+</div>
+</div>
     </div>
   )
 };

@@ -157,7 +157,7 @@ const handleInput = () => {
       <div className="flex h-full w-screen overflow-y-hidden relative">
         <Sider />
         <div className="w-[45%]">
-          <IssueNavBar />
+          
           <Outlet />{" "}
         </div>
 
