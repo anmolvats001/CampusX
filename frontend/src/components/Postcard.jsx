@@ -75,8 +75,8 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
       {/* DROPDOWN */}
       {isOpen && (
         <div className={(dark ? "dark" : "light") + " absolute right-3 top-10 w-24 rounded-2xl shadow p-2"}>
-          <p className="cursor-pointer hover:bg-gray-800 p-1">Edit</p>
-          <p className="cursor-pointer hover:bg-gray-800 p-1 text-red-900">Delete</p>
+          <p className="cursor-pointer hover:bg-gray-900 p-1">Edit</p>
+          <p className="cursor-pointer hover:bg-gray-900 p-1 text-red-900">Delete</p>
         </div>
       )}
     </div>
