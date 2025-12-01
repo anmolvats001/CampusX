@@ -6,7 +6,7 @@ import IssueNavBar from "../components/IssueNavBar";
 import { AppContext } from "../Context/context";
 
 const IssuesLayout = () => {
-  const { commvisible, setcommvis, dark,timeAgo } = useContext(AppContext);
+  const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark} = useContext(AppContext);
   const textareaRef = useRef();
 
 const handleInput = () => {
@@ -153,15 +153,16 @@ const handleInput = () => {
   }
 ]
   return (
+    <div className="w-screen h-screen">
+    <div onClick={()=>{dark?setDark(false):setDark(true)}} className={'fixed bottom-9 right-5 rounded-full  px-4 text-2xl py-3 z-100'}>{dark?<i class="fi fi-ss-moon-stars white text-white"></i>:<i class="fi fi-sr-sun text-yellow-600 text-3xl"></i>}</div>
     <div className="h-screen fixed overflow-y-hidden">
+      
       <div className="flex h-full w-screen overflow-y-hidden relative">
         <Sider />
-        <div className="w-[45%]">
           
           <Outlet />{" "}
-        </div>
 
-        <RightSider />
+        {!profileon&& <RightSider/>}
         {commvisible && (
           <>
             <div
@@ -287,6 +288,7 @@ const handleInput = () => {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 };

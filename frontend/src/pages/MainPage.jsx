@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/context";
 import { useNavigate } from "react-router-dom";
+import IssueNavBar from "../components/IssueNavBar";
 
 const MainPage = () => {
   const { dark, setcommvis, timeAgo } = useContext(AppContext);
@@ -360,8 +361,9 @@ const MainPage = () => {
     <div
       className={`${
         dark ? "dark" : "light"
-      } h-screen w-[100%] border border-gray-800 relative`}
+      } h-screen w-[45%] border border-gray-800 relative`}
     >
+      <IssueNavBar />
            {" "}
       <div className="overflow-y-scroll w-full scroller h-full relative">
                {" "}

@@ -20,7 +20,7 @@ const RightSider = () => {
   ]
   return (
    <div className={(dark ? "dark":"light") +" h-full w-[30%] border-[1px] border-gray-800 relative "}>
-    <div onClick={()=>{dark?setDark(false):setDark(true)}} className={'absolute bottom-9 right-5 rounded-full  px-4 text-2xl py-3 '}>{dark?<i class="fi fi-ss-moon-stars white "></i>:<i class="fi fi-sr-sun text-yellow-600 text-3xl"></i>}</div>
+    
     <div className='pt-10 px-4'>
       <div className='py-2.5 px-3.5 outfit border-1 border-gray-800 rounded-3xl'>
         <p className='text-2xl  font-semibold'>What's happening ?</p>

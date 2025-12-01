@@ -11,6 +11,15 @@ export const AppProvider = ({ children }) => {
   const [commvisible,setcommvis]=useState(false);
   const [comment,setcomment]=useState([]);
   const [userData,setUserData]=useState({});
+  const [profileon, setProfileOn] = useState(() => {
+  const saved = localStorage.getItem("profileon");
+  return saved ? JSON.parse(saved) : false;
+});
+
+useEffect(() => {
+  localStorage.setItem("profileon", JSON.stringify(profileon));
+}, [profileon]);
+
   useEffect(()=>{
     setUserData({
       name:"Anmol Vats",
@@ -144,7 +153,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn}}>
       {children}
     </AppContext.Provider>
   );

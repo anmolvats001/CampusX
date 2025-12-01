@@ -8,7 +8,7 @@ import profile from "../assets/user.png"
 import setting from "../assets/settings.png"
 import { NavLink } from "react-router-dom";
 const Sider = () => {
-  const {dark}=useContext(AppContext);
+  const {dark,setProfileOn}=useContext(AppContext);
   console.log(dark);
   return(
     <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 "}>
@@ -50,7 +50,7 @@ const Sider = () => {
 
 
           </div>
-          <NavLink to={"/issues/profile"} className="flex gap-1">{dark ?<i class="fi fi-sr-user text-white"></i>:<i class="fi fi-sr-user"></i>} <p>Profile</p></NavLink>
+          <NavLink to={"/issues/profile"} onClick={()=>setProfileOn(true)} className="flex gap-1">{dark ?<i class="fi fi-sr-user text-white"></i>:<i class="fi fi-sr-user" ></i>} <p>Profile</p></NavLink>
           <NavLink to={"/issues/setting"} className="flex gap-1">{dark ?<i class="fi fi-sr-settings text-white"></i>:<i class="fi fi-sr-settings"></i>} <p>setting</p></NavLink>
         </div><div className="absolute bottom-6 px-4 py-3 flex border border-gray-800 rounded-2xl group">
   <div className="flex gap-1.5 cursor-pointer items-center">
