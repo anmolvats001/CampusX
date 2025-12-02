@@ -95,7 +95,13 @@ useEffect(() => {
                 <PostCard key={i} e={e} dark={dark} openMenuId={openMenuId}
           setOpenMenuId={setOpenMenuId}
           index={i}/>
+          
               ))}
+              <div
+      className={`${dark ? "bg-gray-700" : "bg-gray-500"} 
+      border border-gray-800 
+      w-[300px] h-[300px] rounded-2xl flex justify-center items-center relative opacity-40`}
+    ><p className="text-5xl font-bold">+</p></div>
             </div>
             </div>
           ) : (
