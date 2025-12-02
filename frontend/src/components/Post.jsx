@@ -27,7 +27,7 @@ const Post = () => {
     setImages((prev) => [...prev, ...urls]);
   };
 
-  let maxwords = 450;
+  let maxwords = 650;
   const findwords = (e) => {
     let val = e.target.value;
     let len = val.length;
@@ -85,7 +85,7 @@ const Post = () => {
               onChange={(e) => findwords(e)}
               name=""
               placeholder="Enter your thoughts ..."
-              className={`border-1 border-gray-800 rounded-xl focus:outline-none w-[90%] h-[100%] resize-none mt-3.5 pt-2 px-3 ${
+              className={`border-1 border-gray-800 rounded-xl focus:outline-none w-[90%] h-[100%] resize-none mt-3.5 pt-2 px-3 scroller ${
                 dark ? "text-gray-300" : "text-gray-800"
               }`}
               id=""

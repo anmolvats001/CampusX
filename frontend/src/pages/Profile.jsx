@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
-  const { dark, userData ,setProfileOn} = useContext(AppContext);
+  const { dark, userData ,setProfileOn,setPostVis} = useContext(AppContext);
   const [extend, setextend] = useState(false);
     const [openMenuId, setOpenMenuId] = useState(null);
 const bioRef = useRef(null);
@@ -100,7 +100,7 @@ useEffect(() => {
               <div
       className={`${dark ? "bg-gray-700" : "bg-gray-500"} 
       border border-gray-800 
-      w-[300px] h-[300px] rounded-2xl flex justify-center items-center relative opacity-40`}
+      w-[300px] h-[300px] rounded-2xl flex justify-center items-center relative opacity-40`} onClick={()=>setPostVis(true)}
     ><p className="text-5xl font-bold">+</p></div>
             </div>
             </div>
