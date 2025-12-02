@@ -67,12 +67,10 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
       {/* OPTIONS MENU BUTTON */}
       <div className="absolute right-3 top-3.5">
         <i
-          className="fi fi-bs-menu-dots-vertical cursor-pointer"
+          className="fi fi-bs-menu-dots-vertical cursor-pointer text-white"
           onClick={() => setOpenMenuId(isOpen ? null : index)}
         ></i>
       </div>
-
-      {/* DROPDOWN */}
       {isOpen && (
         <div className={(dark ? "dark" : "light") + " absolute right-3 top-10 w-24 rounded-2xl shadow p-2"}>
           <p className="cursor-pointer hover:bg-gray-900 p-1">Edit</p>

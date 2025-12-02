@@ -10,7 +10,7 @@ body::-webkit-scrollbar,
 html, body ,#root{
   height: 100%;
   margin: 0;
-  background-color:black;
+  /* background-color:black; */
   color: #1E293B;
 }
 .opensans {

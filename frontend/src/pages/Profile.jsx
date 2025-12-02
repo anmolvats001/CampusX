@@ -13,6 +13,7 @@ const [isLong, setIsLong] = useState(false);
 const navigate=useNavigate();
 useEffect(() => {
   const el = bioRef.current;
+  setProfileOn(true);
   if (el) {
     const style = window.getComputedStyle(el);
     const lineHeight = parseFloat(style.lineHeight);
@@ -39,7 +40,7 @@ useEffect(() => {
           <div className="flex gap-4 pt-7 px-7 items-center justify-between w-[90%]">
 
             <div className="flex gap-4 items-center">
-              <img src={userData.image} className="w-28 h-28 rounded-xl object-cover" alt="" />
+              <img src={userData.image} className="w-28 h-28 rounded-full object-cover" alt="" />
               <div>
                 <p className="text-xl font-bold">{userData.name}</p>
                 <p className={dark ? "text-gray-300" : "text-gray-800"}>
@@ -52,9 +53,9 @@ useEffect(() => {
             </div>
 
             <div
-              className={`bg-gray-700 rounded-2xl font-bold px-3 py-1 ${
+              className={`bg-gray-700 rounded-2xl font-bold px-3 cursor-pointer py-1 ${
                 !dark && "text-white"
-              } `}
+              } `} onClick={()=>{navigate("/issues/edit-profile")}}
             >
               Edit
             </div>

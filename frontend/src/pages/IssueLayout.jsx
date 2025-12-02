@@ -153,7 +153,7 @@ const handleInput = () => {
   }
 ]
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen bg-black">
     <div onClick={()=>{dark?setDark(false):setDark(true)}} className={'fixed bottom-9 right-5 rounded-full  px-4 text-2xl py-3 z-100'}>{dark?<i class="fi fi-ss-moon-stars white text-white"></i>:<i class="fi fi-sr-sun text-yellow-600 text-3xl"></i>}</div>
     <div className="h-screen fixed overflow-y-hidden">
       

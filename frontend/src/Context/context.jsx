@@ -11,14 +11,7 @@ export const AppProvider = ({ children }) => {
   const [commvisible,setcommvis]=useState(false);
   const [comment,setcomment]=useState([]);
   const [userData,setUserData]=useState({});
-  const [profileon, setProfileOn] = useState(() => {
-  const saved = localStorage.getItem("profileon");
-  return saved ? JSON.parse(saved) : false;
-});
-
-useEffect(() => {
-  localStorage.setItem("profileon", JSON.stringify(profileon));
-}, [profileon]);
+  const [profileon, setProfileOn] = useState(false);
 
   useEffect(()=>{
     setUserData({
@@ -31,6 +24,7 @@ useEffect(() => {
       branch:"CSE",
       posts:[ {
       name: "Riya Sharma",
+      dob: "2006-05-04",
       profile: "https://randomuser.me/api/portraits/women/21.jpg",
       publishedOn: "2025-01-09",
       resolved: false,

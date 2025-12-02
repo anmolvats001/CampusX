@@ -18,6 +18,7 @@ import Data from './components/Data'
 import IssuesLayout from './pages/IssueLayout'
 import Info from './pages/Info'
 import Profile from './pages/Profile'
+import EditProfile from './pages/EditProfile'
 const App = () => {
   return (
     <div>
@@ -32,6 +33,7 @@ const App = () => {
            <Route path="data" element={<Data />} />
            <Route path='info/:id'element={<Info/>}/>
            <Route path='profile' element={<Profile/>}/>
+           <Route path='edit-profile' element={<EditProfile/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>
