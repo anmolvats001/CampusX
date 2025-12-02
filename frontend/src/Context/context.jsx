@@ -12,7 +12,7 @@ export const AppProvider = ({ children }) => {
   const [comment,setcomment]=useState([]);
   const [userData,setUserData]=useState({});
   const [profileon, setProfileOn] = useState(false);
-  const [postvis,setPostVis]=useState(true);
+  const [postvis,setPostVis]=useState(false);
   useEffect(()=>{
     setUserData({
       name:"Anmol Vats",
