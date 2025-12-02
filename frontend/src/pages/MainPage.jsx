@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import IssueNavBar from "../components/IssueNavBar";
 
 const MainPage = () => {
-  const { dark, setcommvis, timeAgo } = useContext(AppContext);
+  const { dark, setcommvis, timeAgo,setPostVis } = useContext(AppContext);
   const [on, seton] = useState(false);
   const [onfile, setOnFile] = useState(null);
   useEffect(() => {
@@ -594,7 +594,7 @@ const MainPage = () => {
         <div
           className={`${
             !dark ? "bg-black text-white" : "bg-white text-black"
-          }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full cursor-pointer`}
+          }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full cursor-pointer`} onClick={()=>setPostVis(true)}
         >
           <p
             className={`${
@@ -614,14 +614,14 @@ const MainPage = () => {
               className="w-full h-fit max-h-[80%] object-cover"
               alt=""
             />
-            <div
-              className="absolute top-9 rounded-full  right-6 bg-black text-white cursor-pointer"
+                    <div
+              className="absolute top-9 rounded-full px-1 flex pt-0.5 right-6 text-white cursor-pointer"
               onClick={() => {
                 seton(false);
                 setcommvis(false);
               }}
             >
-              <i class="fi fi-br-cross-small"></i>
+              <i class={(dark?"text-white":"text-black")+" fi fi-br-cross-small"}></i>
             </div>
           </div>
           <div

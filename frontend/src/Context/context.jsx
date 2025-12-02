@@ -12,7 +12,7 @@ export const AppProvider = ({ children }) => {
   const [comment,setcomment]=useState([]);
   const [userData,setUserData]=useState({});
   const [profileon, setProfileOn] = useState(false);
-
+  const [postvis,setPostVis]=useState(true);
   useEffect(()=>{
     setUserData({
       name:"Anmol Vats",
@@ -147,7 +147,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis}}>
       {children}
     </AppContext.Provider>
   );
