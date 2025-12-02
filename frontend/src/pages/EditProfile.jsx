@@ -46,7 +46,7 @@ const EditProfile = () => {
                     <input type="text" className="text-xl rounded-lg font-bold border-1 border-gray-700 px-1.5  focus:outline-0 w-fit" value={userData.name} onChange={(e)=>setUserData(prev=>({...prev,name:e.target.value}))}/>
                 <input type='text' className={(dark ? "text-gray-300" : "text-gray-800")+" w-fit border-1 border-gray-700 px-1.5  focus:outline-0"}
                 value={userData.branch} onChange={(e)=>setUserData(prev=>({...prev,branch:e.target.value}))}/>
-                <textarea className="text-xs mt-2.5  text-gray-500 capitalize w-[500px]  border-1 border-gray-700 px-1.5  focus:outline-0 focus:text-white resize-none" value={userData.address} onChange={(e)=>setUserData(prev=>({...prev,address:e.target.value}))}>
+                <textarea className="text-xs mt-2.5  text-gray-500 capitalize w-[500px]  border-1 border-gray-700 px-1.5  focus:outline-0 focus:text-white resize-none scroller" value={userData.address} onChange={(e)=>setUserData(prev=>({...prev,address:e.target.value}))}>
                   
                 </textarea>
                 </div>
@@ -54,7 +54,8 @@ const EditProfile = () => {
             </div>
           </div>
        </div>
-       <div className='grid grid-cols-2 gap-4  px-8 pt-3'>
+       <div className="grid grid-cols-[150px_auto] gap-y-3 gap-x-2 px-8 pt-3">
+
         <div ><p className='text-lg font-semibold capitalize'>College :</p></div><input type="text" value={'ABES Engineering College'} className=" w-fit border-1 border-gray-700 px-1.5 rounded-lg  focus:outline-0" />
         <div ><p className='text-lg font-semibold capitalize'>Mobile No. :</p></div><input type="text"onChange={(e)=>setUserData(prev=>({...prev,mobile_no:e.target.value}))} value={userData.mobile_no} className=" w-fit border-1 border-gray-700 px-1.5 rounded-lg  focus:outline-0" />
         <div ><p className='text-lg font-semibold capitalize'>Email :</p></div><input type="text"onChange={(e)=>setUserData(prev=>({...prev,email:e.target.value}))} value={userData.email} className=" w-fit border-1 border-gray-700 px-1.5 rounded-lg  focus:outline-0" />
