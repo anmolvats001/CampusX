@@ -6,6 +6,7 @@ const Post = () => {
   const [words, setWords] = useState(0);
   const textref = useRef();
   const [images, setImages] = useState([]);
+  const [location,setLocation]=useState(null);
   const fileInputRef = useRef();
   const deleteimage = (index) => {
   setImages(prev => prev.filter((_, i) => i !== index));
@@ -116,23 +117,43 @@ const Post = () => {
             <select
               id=""
               className="capitalize  bg-gray-600 px-3 rounded-2xl w-24 flex justify-start focus:outline-none text-sm"
-            >
-              <option value="Block">Block</option>
+            onChange={(e)=>{console.log(e.target.value);setLocation(e.target.value)}}>
+              <option value="Block">location</option>
+              <option value="ground">ground</option>
               <option value="KC">KC</option>
               <option value="AB">AB</option>
               <option value="bhabha">bhabha</option>
               <option value="RJ">RJ</option>
             </select>
+            {
+              location!="ground"&&<select
+              id=""
+              className="capitalize  bg-gray-600 px-3 rounded-2xl  flex justify-start focus:outline-none text-sm"
+            >
+              <option value="0" >Floor</option>
+              <option value="1">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              {
+              (location==="KC"|| !location)&&<option value="4">4</option>}
+              { (location==="KC"|| !location)&&<option value="5">5</option>}
+             {  (location==="KC"|| !location)&&<option value="6">6</option>}
+              
+            </select>
+            }
             <select
               id=""
               className="capitalize  bg-gray-600 px-3 rounded-2xl  flex justify-start focus:outline-none text-sm"
             >
               <option value="Block">Problem</option>
-              <option value="KC">water</option>
-              <option value="AB">administration</option>
-              <option value="bhabha">hygiene</option>
-              <option value="RJ">security</option>
+              <option value="food">food</option>
+              <option value="water">water</option>
+              <option value="adminstration">administration</option>
+              <option value="hygiene">hygiene</option>
+              <option value="security">security</option>
             </select>
+            
           </div>
           <div className="flex gap-3.5 px-8 py-5">{images.map((e,i)=>(
             <div className="w-fit h-fit  relative"><div

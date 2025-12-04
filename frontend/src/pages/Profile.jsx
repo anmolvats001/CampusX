@@ -92,7 +92,7 @@ useEffect(() => {
               <div className="border-b-1 border-b-gray-800 items-center flex justify-center"><p className=" text-gray-400 text-xl font-bold pb-3.5  mr-36">Posts</p></div>
             <div className="flex gap-3 flex-wrap justify-start px-8 pb-10 mt-6">
               {userData.posts.map((e, i) => (
-                <PostCard key={i} e={e} dark={dark} openMenuId={openMenuId}
+                <PostCard key={i} e={e} dark={dark}  openMenuId={openMenuId}
           setOpenMenuId={setOpenMenuId}
           index={i}/>
           

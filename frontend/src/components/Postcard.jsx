@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../Context/context";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
-  const { setcommvis } = useContext(AppContext);
-
+  const { setcommvis ,setPostdata} = useContext(AppContext);
+  const navigate=useNavigate()
   const isOpen = openMenuId === index;
 
   return (
@@ -11,16 +12,16 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
       className={`${dark ? "bg-black" : "bg-white"} 
       px-1.5 py-0.5 border border-gray-800 
       w-[300px] h-[300px] rounded-2xl relative`}
-    >
+   >
       <img
         src={e.files[0].src}
         className="rounded-xl object-cover w-full h-[70%]"
-        alt=""
+        alt=""  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${index}`)}}
       />
 
-      <p className="line-clamp-2 text-sm text-gray-500 pt-1.5">{e.data}</p>
+      <p className="line-clamp-2 text-sm text-gray-500 pt-1.5"  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${index}`)}}>{e.data}</p>
 
-      <div className="flex mt-2 px-2 gap-8">
+      <div className="flex mt-2 px-2 gap-8"  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${index}`)}}>
         {/* Likes */}
         <div
           className={`${dark ? "text-gray-500" : "text-gray-700"} 

@@ -19,6 +19,7 @@ import IssuesLayout from './pages/IssueLayout'
 import Info from './pages/Info'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
+import PostData from './components/PostData'
 const App = () => {
   return (
     <div>
@@ -34,6 +35,7 @@ const App = () => {
            <Route path='info/:id'element={<Info/>}/>
            <Route path='profile' element={<Profile/>}/>
            <Route path='edit-profile' element={<EditProfile/>}/>
+           <Route path='post-data/:id' element={<PostData/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>

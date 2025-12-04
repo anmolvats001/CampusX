@@ -13,6 +13,8 @@ export const AppProvider = ({ children }) => {
   const [userData,setUserData]=useState({});
   const [profileon, setProfileOn] = useState(false);
   const [postvis,setPostVis]=useState(false);
+  const [filter,setFilter]=useState(null);
+  const [PostData,setPostdata]=useState({});
   useEffect(()=>{
     setUserData({
       name:"Anmol Vats",
@@ -147,7 +149,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata}}>
       {children}
     </AppContext.Provider>
   );

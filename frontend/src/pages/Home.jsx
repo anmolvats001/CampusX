@@ -157,7 +157,7 @@ function scrollright() {
           </div>
           <div className="flex flex-col md:flex-row items-center md:justify-end">
             <div className="border-2 border-[#E2E8F0] rounded-l-full w-full md:w-[75%] h-20 md:h-24 relative md:left-11 bg-[#F8FAFC] shadow-sm pl-11 pr-20 text-lg font-serif italic  text-justify text-content2">Delays or confusion in the administration office shouldn’t hold students back. Raise your concerns on CampusConnect and help build a smoother, more transparent and responsive system for every student.</div>
-            <div className="rounded-full overflow-hidden z-10 mt-6 md:mt-0"ref={targetRef}>
+            <div className="rounded-full overflow-hidden z-10 mt-6 md:mt-0">
               <img
                 className="w-40 h-40 md:w-44 md:h-44 object-cover rounded-full border-[3px] border-black"
                 src={Administrativeblock}
@@ -167,7 +167,7 @@ function scrollright() {
           </div>
         </div>
       </div>
-      <div className="px-6 md:px-36 mt-24" >
+      <div className="px-6 md:px-36 mt-24" ref={targetRef}>
         <p className="text-center font-bold text-3xl md:text-4xl mt-9 text-[#1E293B]">
           <span className="text-[#2563EB] text-5xl">I</span>ssues{" "}
           <span className="text-[#2563EB] text-5xl">C</span>overed ⚠️{" "}

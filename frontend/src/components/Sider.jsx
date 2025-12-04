@@ -8,7 +8,7 @@ import profile from "../assets/user.png"
 import setting from "../assets/settings.png"
 import { NavLink, useNavigate } from "react-router-dom";
 const Sider = () => {
-  const {dark,setProfileOn}=useContext(AppContext);
+  const {dark,setProfileOn,setFilter,setPostVis}=useContext(AppContext);
   const navigate=useNavigate();
   console.log(dark);
   return(
@@ -18,7 +18,7 @@ const Sider = () => {
         <div className="absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer">
           <NavLink to={"/issues/home"} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
           <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
-           <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-ss-add text-white"></i>:<i class="fi fi-ss-add"></i>} <p>Report</p></NavLink>
+           <div className="flex gap-1" onClick={()=>setPostVis(true)}>{dark ?<i class="fi fi-ss-add text-white"></i>:<i class="fi fi-ss-add"></i>} <p>Report</p></div>
          
           <div>
             <div className="group">
@@ -42,10 +42,12 @@ const Sider = () => {
       group-hover:my-2
     "
   >
-    <div className="hover:text-gray-300">water</div>
-    <div className="hover:text-gray-300">administration</div>
-    <div className="hover:text-gray-300">building</div>
-    <div className="hover:text-gray-300">safety</div>
+    <div className="hover:text-gray-300" onClick={()=>setFilter("all")}>All</div>
+    <div className="hover:text-gray-300" onClick={()=>setFilter("water")}>water</div>
+    <div className="hover:text-gray-300" onClick={()=>setFilter("administration")}>administration</div>
+    <div className="hover:text-gray-300" onClick={()=>setFilter("building")}>building</div>
+    <div className="hover:text-gray-300" onClick={()=>setFilter("safety")}>safety</div>
+     <div className="hover:text-gray-300" onClick={()=>setFilter("food")}>food</div>
   </div>
 </div>
 
