@@ -20,6 +20,7 @@ import Info from './pages/Info'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import PostData from './components/PostData'
+import Search from './pages/Search'
 const App = () => {
   return (
     <div>
@@ -36,6 +37,7 @@ const App = () => {
            <Route path='profile' element={<Profile/>}/>
            <Route path='edit-profile' element={<EditProfile/>}/>
            <Route path='post-data/:id' element={<PostData/>}/>
+           <Route path='search'element={<Search/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>
