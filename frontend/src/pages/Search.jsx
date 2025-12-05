@@ -7,9 +7,8 @@ const Search = () => {
   const [filteredData, setFilteredData] = useState([]);
  const find = (e) => {
   const value = e.target.value.toLowerCase();
-  if(value==="")setFilteredData([]);
- else  data && setFilteredData(data.filter(item => 
-    item.data.toLowerCase().includes(value)
+ data && setFilteredData(data.filter(item => 
+    item.name.toLowerCase().includes(value)
   ));
 };
 
