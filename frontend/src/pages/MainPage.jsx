@@ -7,7 +7,7 @@ import IssueContent from "../components/IssueContent";
 const MainPage = () => {
   const { dark, setcommvis, timeAgo,setPostVis ,filter,val,data} = useContext(AppContext);
   const [on, seton] = useState(false);
-  const [onfile, setOnFile] = useState(null);
+ 
   const [filteredData,setFilteredData]=useState(null);
   useEffect(() => {
     setcommvis(false)
