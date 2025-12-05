@@ -57,7 +57,7 @@ const Footer = () => {
       <div className='flex flex-col gap-3  pt-15 pr-60'>
         <p className='font-bold text-xl text-blue-50'>QUICK LINKS</p>
         <a href={"/"}>Home</a>
-        <a href={"/issues"}>Issues</a>
+        <a href={"/issues/home"}>Issues</a>
         <a href={"/about"}>About</a>
         <a href={"/report"}>Report</a>
       </div>

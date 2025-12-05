@@ -21,6 +21,8 @@ import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import PostData from './components/PostData'
 import Search from './pages/Search'
+import Setting from './pages/Setting'
+import ChangePasswod from './pages/ChangePasswod'
 const App = () => {
   return (
     <div>
@@ -35,9 +37,11 @@ const App = () => {
            <Route path="data" element={<Data />} />
            <Route path='info/:id'element={<Info/>}/>
            <Route path='profile' element={<Profile/>}/>
+           <Route path='setting'element={<Setting/>}/>
            <Route path='edit-profile' element={<EditProfile/>}/>
            <Route path='post-data/:id' element={<PostData/>}/>
            <Route path='search'element={<Search/>}/>
+           <Route path='change-pass'element={<ChangePasswod/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>

@@ -10,6 +10,7 @@ const MainPage = () => {
   const [onfile, setOnFile] = useState(null);
   const [filteredData,setFilteredData]=useState(null);
   useEffect(() => {
+    setcommvis(false)
     window.scrollTo({
       top: 0,
       behavior: "instant",

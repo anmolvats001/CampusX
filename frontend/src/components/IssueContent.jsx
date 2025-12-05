@@ -3,7 +3,7 @@ import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
 
 const IssueContent = ({e,i,search}) => {
-    const {timeAgo,dark,setPostdata}=useContext(AppContext);
+    const {timeAgo,dark,setPostdata,setcommvis}=useContext(AppContext);
     const navigate=useNavigate()
   return (
     
