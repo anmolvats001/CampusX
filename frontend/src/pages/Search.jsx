@@ -8,7 +8,7 @@ const Search = () => {
  const find = (e) => {
   const value = e.target.value.toLowerCase();
  data && setFilteredData(data.filter(item => 
-    item.name.toLowerCase().includes(value)
+   { return item.name.toLowerCase().includes(value)||item.data.toLowerCase().includes(value)}
   ));
 };
 
