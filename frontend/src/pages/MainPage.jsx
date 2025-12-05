@@ -5,8 +5,7 @@ import IssueNavBar from "../components/IssueNavBar";
 import IssueContent from "../components/IssueContent";
 
 const MainPage = () => {
-  const { dark, setcommvis, timeAgo,setPostVis ,filter,val,data} = useContext(AppContext);
-  const [on, seton] = useState(false);
+  const { dark, setcommvis, timeAgo,setPostVis ,filter,val,data,on,onfile,seton,setOnFile} = useContext(AppContext);
  
   const [filteredData,setFilteredData]=useState(null);
   useEffect(() => {

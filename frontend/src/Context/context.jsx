@@ -16,6 +16,8 @@ export const AppProvider = ({ children }) => {
   const [filter,setFilter]=useState(null);
   const [PostData,setPostdata]=useState({});
   const [data,setData]=useState([]);
+    const [onfile, setOnFile] = useState(null);
+         const [on, seton] = useState(false);
   useEffect(()=>{
   let arr = [
   {
@@ -448,7 +450,7 @@ setData(arr)
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile}}>
       {children}
     </AppContext.Provider>
   );

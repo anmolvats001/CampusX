@@ -3,9 +3,8 @@ import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
 
 const IssueContent = ({e,i,search}) => {
-    const {timeAgo,dark,setPostdata,setcommvis}=useContext(AppContext);
-     const [onfile, setOnFile] = useState(null);
-       const [on, seton] = useState(false);
+    const {timeAgo,dark,setPostdata,setcommvis,on,onfile,seton,setOnFile}=useContext(AppContext);
+   
     const navigate=useNavigate()
   return (
     
@@ -229,33 +228,7 @@ const IssueContent = ({e,i,search}) => {
                                  {" "}
                 </div>
                              {" "}
-                {on && (
-        <>
-          <div className="absolute w-[80%] bg-black  z-100 h-full left-16 top-0 px-4 py-2.5 flex justify-center items-center">
-            <img
-              src={onfile}
-              className="w-full h-fit max-h-[80%] object-cover"
-              alt=""
-            />
-                    <div
-              className="absolute top-9 rounded-full px-1 flex pt-0.5 right-6 text-white cursor-pointer"
-              onClick={() => {
-                seton(false);
-                setcommvis(false);
-              }}
-            >
-              <i class={(dark?"text-white":"text-black")+" fi fi-br-cross-small"}></i>
-            </div>
-          </div>
-          <div
-            className="absolute w-screen left-[-57%] z-99 h-full top-0 bg-black opacity-70  "
-            onClick={() => {
-              seton(false);
-              setcommvis(false);
-            }}
-          ></div>
-        </>
-      )}
+                
               </div>
   )
 }
