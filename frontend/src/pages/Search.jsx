@@ -13,7 +13,7 @@ const Search = () => {
   ));
 };
 
-  useEffect(() => {}, [filteredData]);
+  useEffect(() => {setFilteredData(data)}, []);
   return (
     <div
       className={`${
