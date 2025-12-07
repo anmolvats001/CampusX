@@ -23,6 +23,8 @@ import PostData from './components/PostData'
 import Search from './pages/Search'
 import Setting from './pages/Setting'
 import ChangePasswod from './pages/ChangePasswod'
+import Resolve from './pages/Resolve'
+import InchargeDashboard from './pages/InchargeDashboard'
 const App = () => {
   return (
     <div>
@@ -42,6 +44,8 @@ const App = () => {
            <Route path='post-data/:id' element={<PostData/>}/>
            <Route path='search'element={<Search/>}/>
            <Route path='change-pass'element={<ChangePasswod/>}/>
+           <Route path='resolve' element={<Resolve/>}/>
+           <Route path='incharge-dashboard'element={<InchargeDashboard/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>

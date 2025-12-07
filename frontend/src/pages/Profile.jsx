@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
-  const { dark, userData ,setProfileOn,setPostVis} = useContext(AppContext);
+  const { dark, userData ,setProfileOn,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin} = useContext(AppContext);
   const [extend, setextend] = useState(false);
     const [openMenuId, setOpenMenuId] = useState(null);
 const bioRef = useRef(null);
@@ -83,10 +83,13 @@ useEffect(() => {
               </p>
             )}
           </div>
-        </div>
-
+          {inchargelogin&&<div className="flex flex-col px-8 py-5 gap-4"><div className="flex gap-3.5"><p className=" capitalize font-semibold text-gray-500">Mobile no. :</p><p>+91 {userData.mobile_no}</p></div>
+          <div className="flex gap-3.5"><p className=" capitalize font-semibold text-gray-500">email :</p><p>{userData.email}</p></div>
+          <div className="flex gap-3.5"><p className=" capitalize font-semibold text-gray-500">branch :</p><p>{userData.branch}</p></div>
+        </div>}
+          </div>
         {/* POSTS */}
-        <div className="mt-3">
+        {studentLogin&&<div className="mt-3">
           {userData.posts ? (
             <div>
               <div className="border-b-1 border-b-gray-800 items-center flex justify-center"><p className=" text-gray-400 text-xl font-bold pb-3.5  mr-36">Posts</p></div>
@@ -110,7 +113,7 @@ useEffect(() => {
             </div>
           )}
         </div>
-
+}
       </div>
     </div>
   );

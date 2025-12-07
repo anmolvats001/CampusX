@@ -3,7 +3,7 @@ import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
 
 const IssueContent = ({e,i,search}) => {
-    const {timeAgo,dark,setPostdata,setcommvis,on,onfile,seton,setOnFile}=useContext(AppContext);
+    const {timeAgo,dark,setPostdata,setcommvis,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin}=useContext(AppContext);
    
     const navigate=useNavigate()
   return (
@@ -79,8 +79,8 @@ const IssueContent = ({e,i,search}) => {
                           <img
                             src={e.files[0].src}
                             onClick={() => {
-                              seton(true);
-                              setOnFile(e.files[0].src);
+                             !search&& !search&& seton(true);
+                             !search&& setOnFile(e.files[0].src);
                             }}
                             className={"h-full w-full object-cover rounded-xl"+(search ?" h-fit max-h-[250px] overflow-hidden":'')}
                             alt={`Attached image for ${e.title}`}
@@ -98,8 +98,8 @@ const IssueContent = ({e,i,search}) => {
                               <img
                                 src={a.src}
                                 onClick={() => {
-                                  seton(true);
-                                  setOnFile(a.src);
+                                  !search&& seton(true);
+                                  !search&& setOnFile(e.files[0].src);
                                 }}
                                 className={"w-full max-h-full object-cover rounded-xl"+(search ?" h-fit max-h-[250px] overflow-hidden":'')}
                                 alt={`Attached image ${j + 1} for ${e.title}`}
@@ -119,8 +119,8 @@ const IssueContent = ({e,i,search}) => {
                             <img
                               src={e.files[0].src}
                               onClick={() => {
-                                seton(true);
-                                setOnFile(e.files[0].src);
+                                !search&& seton(true);
+                                !search&&setOnFile(e.files[0].src);
                               }}
                               className={"w-full h-full object-cover rounded-xl"+(search ?" h-fit max-h-[250px] overflow-hidden":'')}
                               alt={`Attached image 1 for ${e.title}`}
@@ -133,8 +133,8 @@ const IssueContent = ({e,i,search}) => {
                             <img
                               src={e.files[1].src}
                               onClick={() => {
-                                seton(true);
-                                setOnFile(e.files[1].src);
+                                !search&& seton(true);
+                                !search&&setOnFile(e.files[1].src);
                               }}
                               className={"w-full h-full object-cover rounded-xl"+(search ?" h-fit max-h-[250px] overflow-hidden":'')}
                               alt={`Attached image 2 for ${e.title}`}
@@ -143,8 +143,8 @@ const IssueContent = ({e,i,search}) => {
                             <img
                               src={e.files[2].src}
                               onClick={() => {
-                                seton(true);
-                                setOnFile(e.files[2].src);
+                                !search&& seton(true);
+                                !search&& setOnFile(e.files[2].src);
                               }}
                               className={"w-full h-full object-cover rounded-xl"+(search ?" h-fit max-h-[250px] overflow-hidden":'')}
                               alt={`Attached image 3 for ${e.title}`}
@@ -164,8 +164,8 @@ const IssueContent = ({e,i,search}) => {
                               <img
                                 src={a.src}
                                 onClick={() => {
-                                  seton(true);
-                                  setOnFile(a.src);
+                                  !search&& seton(true);
+                                  !search&& setOnFile(e.files[0].src);
                                 }}
                                 className={"w-full h-full object-cover rounded-xl"+(search ?" h-fit max-h-[250px] overflow-hidden":'')}
                                 alt={`Attached image ${k + 1} for ${e.title}`}

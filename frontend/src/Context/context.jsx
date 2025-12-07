@@ -16,17 +16,24 @@ export const AppProvider = ({ children }) => {
   const [filter,setFilter]=useState(null);
   const [PostData,setPostdata]=useState({});
   const [data,setData]=useState([]);
-    const [onfile, setOnFile] = useState(null);
-         const [on, seton] = useState(false);
+  const [onfile, setOnFile] = useState(null);
+  const [on, seton] = useState(false);
+  const [inchargelogin,setInchargelogin]=useState(true);
+  const [adminlogin,setAdminLogin]=useState(false);
+  const [studentLogin,setStudentLogin]=useState(false);
+  const [inchargeWork,setInchargeWork]=useState("water");
+  const [inchargeData,setInchargeData]=useState(null);
   useEffect(()=>{
-  let arr = [
+let arr = [
   {
     name: "Anmol Vats",
     profile: "https://randomuser.me/api/portraits/men/11.jpg",
     publishedOn: "2025-11-29",
-    
     resolvedByStudent: false,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/200/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge", 
     data: "Over the past few weeks, the water situation in the KC Block has become increasingly difficult for students. Basic facilities like drinking water taps and washroom water supply are either running very weak or stop working entirely during peak hours. This creates unnecessary inconvenience, especially for students who spend long hours in classrooms or labs. Several times, we’ve had to leave the building just to find accessible drinking water, which disrupts regular academic schedules. Proper water availability is a fundamental requirement, and its shortage directly affects hygiene, comfort, and overall campus experience. I request that the maintenance team inspect the system in the KC Block and resolve this issue as soon as possible so students can rely on a consistent and safe water supply.",
     title: "Water problem in KC Block",
     block: "KC",
@@ -45,9 +52,11 @@ export const AppProvider = ({ children }) => {
     name: "Riya Sharma",
     profile: "https://randomuser.me/api/portraits/women/21.jpg",
     publishedOn: "2025-01-09",
-    
     resolvedByStudent: true,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Resolved by Student's name
+    verifiedBy: "Riya Sharma",
     title: "Poor WIFI Connectivity in New Labs",
     block: "AB2",
     branch: "IT",
@@ -65,8 +74,11 @@ export const AppProvider = ({ children }) => {
     name: "Harsh Verma",
     profile: "https://randomuser.me/api/portraits/men/31.jpg",
     publishedOn: "2025-01-08",
-        resolvedByStudent: true,
+    resolvedByStudent: true,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/201/400/250",
+    // Updated verifiedBy: Resolved by Incharge (Incharge takes precedence)
+    verifiedBy: "Admin/Incharge",
     title: "Cleanliness Issue in Boys Washroom",
     block: "BH-1",
     branch: "ECE",
@@ -83,13 +95,15 @@ export const AppProvider = ({ children }) => {
     name: "Sanya Gupta",
     profile: "https://randomuser.me/api/portraits/women/25.jpg",
     publishedOn: "2025-01-11",
-    
     resolvedByStudent: false,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Pending
+    verifiedBy: "Pending",
     title: "Broken Benches in Classroom",
     block: "KC",
     branch: "CSE",
-    problem: "building",
+    problem: "water",
     data: "Several benches in KC Block classrooms, especially on the second floor, are damaged and uncomfortable to use. Some seats are loose, others have missing screws, and a few desks wobble so much that writing becomes almost impossible. This disrupts the learning environment. I request the maintenance team to repair or replace the damaged benches so students can study without discomfort.",
     files: [
       { src: "https://picsum.photos/id/111/400/250", type: "image" },
@@ -105,9 +119,11 @@ export const AppProvider = ({ children }) => {
     name: "Aditya Singh",
     profile: "https://randomuser.me/api/portraits/men/51.jpg",
     publishedOn: "2025-01-12",
-    
     resolvedByStudent: true,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Resolved by Student's name
+    verifiedBy: "Aditya Singh",
     title: "Noise Disturbance During Classes",
     block: "AB1",
     branch: "ME",
@@ -124,8 +140,11 @@ export const AppProvider = ({ children }) => {
     name: "Neha Verma",
     profile: "https://randomuser.me/api/portraits/women/41.jpg",
     publishedOn: "2025-01-13",
-        resolvedByStudent: true,
+    resolvedByStudent: true,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/202/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
     title: "Mess Food Quality Issue",
     block: "Hostel Block",
     branch: "CE",
@@ -143,9 +162,11 @@ export const AppProvider = ({ children }) => {
     name: "Riya Sharma",
     profile: "https://randomuser.me/api/portraits/women/32.jpg",
     publishedOn: "2025-01-14",
-    
     resolvedByStudent: false,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/203/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
     title: "Frequent Power Cuts in LT Block",
     block: "LT",
     branch: "ECE",
@@ -163,8 +184,11 @@ export const AppProvider = ({ children }) => {
     name: "Aarav Gupta",
     profile: "https://randomuser.me/api/portraits/men/19.jpg",
     publishedOn: "2025-01-15",
-        resolvedByStudent: true,
+    resolvedByStudent: true,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Resolved by Student's name
+    verifiedBy: "Aarav Gupta",
     title: "Unclean Washrooms in AB Block",
     block: "AB",
     branch: "ME",
@@ -181,9 +205,11 @@ export const AppProvider = ({ children }) => {
     name: "Priya Verma",
     profile: "https://randomuser.me/api/portraits/women/55.jpg",
     publishedOn: "2025-01-16",
-    
     resolvedByStudent: false,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Pending
+    verifiedBy: "Pending",
     title: "Low Quality Food in College Canteen",
     block: "Canteen",
     branch: "CSE",
@@ -202,9 +228,11 @@ export const AppProvider = ({ children }) => {
     name: "Harsh Kumar",
     profile: "https://randomuser.me/api/portraits/men/44.jpg",
     publishedOn: "2025-01-17",
-    
     resolvedByStudent: true,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Resolved by Student's name
+    verifiedBy: "Harsh Kumar",
     title: "Weak Wi-Fi Connectivity in Library",
     block: "Library",
     branch: "IT",
@@ -221,8 +249,11 @@ export const AppProvider = ({ children }) => {
     name: "Nisha Raj",
     profile: "https://randomuser.me/api/portraits/women/62.jpg",
     publishedOn: "2025-01-18",
-        resolvedByStudent: true,
+    resolvedByStudent: true,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/204/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
     title: "Broken Equipment in Physics Lab",
     block: "Lab Block",
     branch: "EEE",
@@ -239,9 +270,11 @@ export const AppProvider = ({ children }) => {
     name: "Sarthak Singh",
     profile: "https://randomuser.me/api/portraits/men/70.jpg",
     publishedOn: "2025-01-19",
-    
     resolvedByStudent: false,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/205/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
     title: "Parking Space Shortage Near Main Block",
     block: "Main",
     branch: "CSE",
@@ -259,8 +292,11 @@ export const AppProvider = ({ children }) => {
     name: "Simran Kaur",
     profile: "https://randomuser.me/api/portraits/women/67.jpg",
     publishedOn: "2025-01-20",
-        resolvedByStudent: false,
+    resolvedByStudent: false,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/206/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
     title: "Security Issues Near Hostel Road",
     block: "Hostel",
     branch: "MBA",
@@ -277,9 +313,11 @@ export const AppProvider = ({ children }) => {
     name: "Yash Kapoor",
     profile: "https://randomuser.me/api/portraits/men/73.jpg",
     publishedOn: "2025-01-21",
-    
     resolvedByStudent: true,
     resolvedByIncharge: false,
+    verifiedImage: null,
+    // Updated verifiedBy: Resolved by Student's name
+    verifiedBy: "Yash Kapoor",
     title: "Broken Benches in Classroom",
     block: "KC",
     branch: "CSE",
@@ -296,9 +334,11 @@ export const AppProvider = ({ children }) => {
     name: "Kunal Dabas",
     profile: "https://randomuser.me/api/portraits/men/75.jpg",
     publishedOn: "2025-01-22",
-    
     resolvedByStudent: false,
     resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/207/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
     title: "Heating/AC Problem in Auditorium",
     block: "Auditorium",
     branch: "BBA",
@@ -312,7 +352,142 @@ export const AppProvider = ({ children }) => {
     likes: 16,
   },
 ];
-
+setInchargeData({
+  name:"Anmol vats",
+  branch:"CSE",
+  work:"water",
+  yourwork:[
+    {
+    name: "Kunal Dabas",
+    profile: "https://randomuser.me/api/portraits/men/75.jpg",
+    publishedOn: "2025-01-22",
+    resolvedByStudent: false,
+    resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/207/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
+    title: "Heating/AC Problem in Auditorium",
+    block: "Auditorium",
+    branch: "BBA",
+    problem: "administration",
+    data: "The heating and cooling system in the Main Auditorium is inconsistent. It gets extremely cold during winter lectures and too hot during summer events, making it difficult for attendees to concentrate. I request that the HVAC system be inspected and maintained for proper climate control.",
+    files: [
+      { src: "https://picsum.photos/id/40/800/500", type: "image" },
+    ],
+    liked: false,
+    comments: 0,
+    likes: 16,
+  },
+  {
+    name: "Simran Kaur",
+    profile: "https://randomuser.me/api/portraits/women/67.jpg",
+    publishedOn: "2025-01-20",
+    resolvedByStudent: false,
+    resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/206/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
+    title: "Security Issues Near Hostel Road",
+    block: "Hostel",
+    branch: "MBA",
+    problem: "safety",
+    data: "The road leading to the hostel has poor lighting, making students feel unsafe. Installing lights and CCTV would improve safety. I request urgent action from the administration.",
+    files: [
+      { src: "https://picsum.photos/id/20/800/500", type: "image" },
+    ],
+    liked: false,
+    comments: 1,
+    likes: 7,
+  },
+  {
+    name: "Sarthak Singh",
+    profile: "https://randomuser.me/api/portraits/men/70.jpg",
+    publishedOn: "2025-01-19",
+    resolvedByStudent: false,
+    resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/205/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
+    title: "Parking Space Shortage Near Main Block",
+    block: "Main",
+    branch: "CSE",
+    problem: "administration",
+    data: "There is a major shortage of parking space near the Main Block. Students struggle to find parking and get delayed for classes. I request the management to reorganize or expand parking.",
+    files: [
+      { src: "https://picsum.photos/id/160/400/250", type: "image" },
+      { src: "https://picsum.photos/id/161/400/250", type: "image" },
+    ],
+    liked: true,
+    comments: 10,
+    likes: 38,
+  },
+  {
+    name: "Nisha Raj",
+    profile: "https://randomuser.me/api/portraits/women/62.jpg",
+    publishedOn: "2025-01-18",
+    resolvedByStudent: true,
+    resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/204/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
+    title: "Broken Equipment in Physics Lab",
+    block: "Lab Block",
+    branch: "EEE",
+    problem: "building",
+    data: "Many instruments in the Physics lab like voltmeters and resistors are broken or uncalibrated. This affects practical sessions. I request immediate repair or replacement.",
+    files: [
+      { src: "https://picsum.photos/id/300/800/500", type: "image" },
+    ],
+    liked: true,
+    comments: 2,
+    likes: 21,
+  },
+  {
+    name: "Neha Verma",
+    profile: "https://randomuser.me/api/portraits/women/41.jpg",
+    publishedOn: "2025-01-13",
+    resolvedByStudent: true,
+    resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/202/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
+    title: "Mess Food Quality Issue",
+    block: "Hostel Block",
+    branch: "CE",
+    problem: "food",
+    data: "The quality of food served in the hostel mess has declined noticeably. Many students reported undercooked chapatis, oily vegetables, and repetitive menus. This directly affects students’ health. I request the mess management to supervise the kitchen, improve hygiene, and provide a more balanced menu.",
+    files: [
+      { src: "https://picsum.photos/id/35/400/250", type: "image" },
+      { src: "https://picsum.photos/id/36/400/250", type: "image" },
+    ],
+    liked: true,
+    comments: 20,
+    likes: 72,
+  },
+  {
+    name: "Riya Sharma",
+    profile: "https://randomuser.me/api/portraits/women/32.jpg",
+    publishedOn: "2025-01-14",
+    resolvedByStudent: false,
+    resolvedByIncharge: true,
+    verifiedImage: "https://picsum.photos/id/203/400/250",
+    // Updated verifiedBy: Resolved by Incharge
+    verifiedBy: "Admin/Incharge",
+    title: "Frequent Power Cuts in LT Block",
+    block: "LT",
+    branch: "ECE",
+    problem: "administration",
+    data: "LT Block has been facing frequent power cuts during lecture hours. This interrupts classes and affects lab equipment. Proper electricity is essential for smooth functioning. I request the maintenance team to look into the issue and ensure uninterrupted supply.",
+    files: [
+      { src: "https://picsum.photos/id/15/400/250", type: "image" },
+      { src: "https://picsum.photos/id/18/400/250", type: "image" },
+    ],
+    liked: false,
+    comments: 7,
+    likes: 19,
+  },
+  ]
+})
 setData(arr)
 },[])
 
@@ -450,7 +625,7 @@ setData(arr)
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,inchargeWork,setInchargeWork,inchargeData,setInchargeData}}>
       {children}
     </AppContext.Provider>
   );

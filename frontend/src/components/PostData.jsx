@@ -1,13 +1,20 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useContext, useState } from "react";
 import { AppContext } from "../Context/context";
+import { toast } from 'react-toastify';
 const PostData = () => {
     const {id}=useParams();
-     const { dark, setcommvis, timeAgo,setPostVis,PostData} = useContext(AppContext);
+     const { dark, setcommvis, timeAgo,setPostVis,PostData,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,inchargeWork,setInchargeWork,setPostdata} = useContext(AppContext);
       const [on, seton] = useState(false);
       const [onfile, setOnFile] = useState(null);
       const [data,setData]=useState({});
+      const [verifyImage, setVerifyImage] = useState(null);
+      const navigate=useNavigate();
+      const verify=()=>{
+        toast.success("verified");
+        navigate("/issues/home")
+      }
       useEffect(()=>{
         setData( PostData);
         return ()=>{
@@ -249,6 +256,65 @@ const PostData = () => {
                  {" "}
         </div>
              {" "}
+        {(inchargelogin && !verifyImage && (!data.resolvedByIncharge && !data.resolvedByStudent)&& inchargeWork.toLowerCase() ===data.problem )&& (
+  <div className="py-4 px-4 capitalize flex gap-2 justify-center items-center">
+
+    {/* CLICKABLE BUTTON */}
+    <p
+      className="px-3 py-1 text-white rounded-3xl bg-gray-700 w-fit cursor-pointer"
+      onClick={() => document.getElementById("verifyImage").click()}
+    >
+      resolve
+    </p>
+
+    <div className='flex items-center text-gray-600'><i className="fi fi-rr-arrow-small-right pt-1"></i><p className="text-gray-600"> upload the pic to verify</p></div>
+
+    <input
+      id="verifyImage"
+      type="file"
+      accept="image/*"
+      className="hidden"
+      onChange={(e) => {
+        if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          const url = URL.createObjectURL(file); 
+
+          setVerifyImage(url); 
+        }
+      }}
+    />
+  </div>
+)}
+{
+  verifyImage && <div className=' flex flex-col px-5 py-5'>
+    <p className='text-2xl font-bold capitalize'>resolved proof...</p>
+    <div className="py-4 px-4 capitalize flex gap-2 items-center">
+    <img src={verifyImage} className='h-fit max-h-[250px]' alt="" />
+  </div>
+  <div className='px-7 py-4'><p className='w-fit px-3 py-1 rounded-2xl bg-gray-600 font-bold text-white' onClick={verify}>Submit</p></div>
+  </div>
+}
+{
+  PostData.verifiedImage && <div className=' flex flex-col px-5 py-5'>
+    <p className='text-2xl font-bold capitalize'>resolved proof...</p>
+    <div className="py-4 px-4 capitalize flex gap-4 items-end text-gray-500">
+    <img onClick={()=>{
+      seton(true);
+       setOnFile(PostData.verifiedImage);
+    }} src={PostData.verifiedImage} className='h-fit max-h-[250px] w-[40%]' alt="" />
+    <p>verified by {PostData.verifiedBy}</p>
+  </div>
+  </div>
+}
+
+{
+  PostData.resolvedByStudent && <div className=' flex flex-col px-5 py-5'>
+    <p className='text-2xl font-bold capitalize'>resolved proof...</p>
+    <div className="py-4 px-4 capitalize flex gap-4 items-end text-gray-500">
+    <p>verified by {PostData.verifiedBy}</p>
+  </div>
+  </div>
+}
       </div>
       {on && (
         <>

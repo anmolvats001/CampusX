@@ -15,7 +15,6 @@ const Setting = () => {
         <div className='flex flex-col gap-3.5 px-10 capitalize pt-6 font-semibold'>
         <div></div><div className={'flex justify-between  py-2 px-3 rounded-lg cursor-pointer border-b-2 border-b-gray-800 '+(dark? "hover:bg-gray-900":"hover:bg-gray-400")} onClick={()=>navigate("/issues/edit-profile")}><p>edit profile</p><i class="fi fi-br-angle-small-right"></i></div>
         <div onClick={()=>navigate("/issues/change-pass")} className={'flex justify-between  py-2 px-3 rounded-lg border-b-2 border-b-gray-800 '+(dark? "hover:bg-gray-900":"hover:bg-gray-400")}><p>change password</p><i class="fi fi-br-angle-small-right"></i></div>
-        <div className={'flex justify-between  py-2 px-3 rounded-lg border-b-2 border-b-gray-800 '+(dark? "hover:bg-gray-900":"hover:bg-gray-400")}><p>your liked</p><i class="fi fi-br-angle-small-right"></i></div>
                     <div className="group">
 
   <div className={'flex justify-between  py-2 px-3 rounded-lg border-b-2 border-b-gray-800 '+(dark? "hover:bg-gray-900":"hover:bg-gray-400")}><p>contact</p><i class="fi fi-br-angle-small-right"></i></div>

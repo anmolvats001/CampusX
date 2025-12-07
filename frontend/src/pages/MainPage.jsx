@@ -5,7 +5,7 @@ import IssueNavBar from "../components/IssueNavBar";
 import IssueContent from "../components/IssueContent";
 
 const MainPage = () => {
-  const { dark, setcommvis, timeAgo,setPostVis ,filter,val,data,on,onfile,seton,setOnFile} = useContext(AppContext);
+  const { dark, setcommvis, timeAgo,setPostVis ,filter,val,data,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin} = useContext(AppContext);
  
   const [filteredData,setFilteredData]=useState(null);
   useEffect(() => {
@@ -62,7 +62,7 @@ useEffect(() => {
           })}
                  {" "}
         </div>
-        <div
+        {studentLogin&&<div
           className={`${
             !dark ? "bg-black text-white" : "bg-white text-black"
           }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full cursor-pointer`} onClick={()=>setPostVis(true)}
@@ -74,7 +74,7 @@ useEffect(() => {
           >
             +
           </p>
-        </div>
+        </div>}
              {" "}
       </div>
       {on && (
