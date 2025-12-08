@@ -18,10 +18,12 @@ const Sider = () => {
         <div className="absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer">
           <NavLink to={"/issues/home"} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
           {inchargelogin&&<NavLink to={"/issues/incharge-dashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
-          {adminlogin&&<NavLink to={"/issues/adminDashboad"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
+          {adminlogin&&<NavLink to={"/issues/adminDashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
           <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
           {studentLogin && <div className="flex gap-1" onClick={()=>{setPostVis(true);navigate("/issues/home")}}>{dark ?<i class="fi fi-ss-add text-white"></i>:<i class="fi fi-ss-add"></i>} <p>Report</p></div>}
           {inchargelogin && <div className="flex gap-1" onClick={()=>{navigate("/issues/resolve")}}>{dark ?<i class="fi fi-ss-problem-solving text-white"></i>:<i class="fi fi-ss-problem-solving"></i>} <p>Resolve</p></div>}
+          {adminlogin && <div className="flex gap-1" onClick={()=>{navigate("/issues/incharges")}}>{dark ?<i class="fi fi-rr-leadership-alt text-white"></i>:<i class="fi fi-rr-leadership-alt"></i>} <p>Incharges</p></div>}
+          {adminlogin && <div className="flex gap-1" onClick={()=>{navigate("/issues/add-incharge")}}>{dark ?<i class="fi fi-sr-person-circle-plus text-white"></i>:<i class="fi fi-ss-problem-solving"></i>} <p> Add Incharges</p></div>}
           <div>
             <div className="group">
   <div className="flex gap-1 items-center cursor-pointer">

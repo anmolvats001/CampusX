@@ -3,7 +3,7 @@ import { AppContext } from '../Context/context';
 import IssueContent from '../components/IssueContent';
 
 const Resolve = () => {
-  const { data, dark ,inchargeWork} = useContext(AppContext);
+  const { data, dark ,inchargeData} = useContext(AppContext);
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
@@ -12,11 +12,11 @@ const Resolve = () => {
       data.filter(item => 
         !item.resolvedByIncharge &&
         !item.resolvedByStudent &&
-        inchargeWork.toLowerCase() === item.problem.toLowerCase()
+        inchargeData.work.toLowerCase() === item.problem.toLowerCase()
       )
     );
   }
-}, [data, inchargeWork]);
+}, [data, inchargeData]);
 return (
     <div
       className={`${

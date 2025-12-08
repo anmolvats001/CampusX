@@ -18,11 +18,11 @@ export const AppProvider = ({ children }) => {
   const [data,setData]=useState([]);
   const [onfile, setOnFile] = useState(null);
   const [on, seton] = useState(false);
-  const [inchargelogin,setInchargelogin]=useState(true);
-  const [adminlogin,setAdminLogin]=useState(false);
+  const [inchargelogin,setInchargelogin]=useState(false);
+  const [adminlogin,setAdminLogin]=useState(true);
   const [studentLogin,setStudentLogin]=useState(false);
-  const [inchargeWork,setInchargeWork]=useState("water");
   const [inchargeData,setInchargeData]=useState(null);
+  const [adminData,setAdminData]=useState({});
   useEffect(()=>{
 let arr = [
   {
@@ -353,9 +353,16 @@ let arr = [
   },
 ];
 setInchargeData({
-  name:"Anmol vats",
-  branch:"CSE",
+  name:"Incharge ",
   work:"water",
+   dob: "2006-05-04",
+  address:"fafrana road bhrampuri gali no. 2 Modinagar (201204) ghaziabad uttarPradesh",
+   gender:"Male",
+  bio:"Frontend Developer with a growing skill set in React, GSAP, and modern web design patterns. I enjoy turning ideas into interactive, user-friendly experiences and collaborating on projects that challenge me to think deeper. Currently expanding my knowledge in scalable UI systems, accessibility, and performance-oriented development.",
+  image:`${userphoto}`,
+   college:"ABES Engineering College",
+   mobile_no:7983704543,
+   email:"vatsanmol4@gmail.com",
   yourwork:[
     {
     name: "Kunal Dabas",
@@ -487,6 +494,19 @@ setInchargeData({
     likes: 19,
   },
   ]
+});
+setAdminData({
+  name:"Admin ",
+  work:"water",
+   dob: "2006-05-04",
+  address:"fafrana road bhrampuri gali no. 2 Modinagar (201204) ghaziabad uttarPradesh",
+   gender:"Male",
+  bio:"Frontend Developer with a growing skill set in React, GSAP, and modern web design patterns. I enjoy turning ideas into interactive, user-friendly experiences and collaborating on projects that challenge me to think deeper. Currently expanding my knowledge in scalable UI systems, accessibility, and performance-oriented development.",
+  image:`${userphoto}`,
+   college:"ABES Engineering College",
+   mobile_no:7983704543,
+   email:"vatsanmol4@gmail.com",
+   
 })
 setData(arr)
 },[])
@@ -500,9 +520,12 @@ setData(arr)
       mobile_no:7983704543,
       email:"vatsanmol4@gmail.com",
       branch:"CSE",
+       dob: "2006-05-04",
+       address:"fafrana road bhrampuri gali no. 2 Modinagar (201204) ghaziabad uttarPradesh",
+   gender:"Male",
       posts:[ {
       name: "Riya Sharma",
-      dob: "2006-05-04",
+     
       profile: "https://randomuser.me/api/portraits/women/21.jpg",
       publishedOn: "2025-01-09",
       resolved: false,
@@ -597,8 +620,7 @@ setData(arr)
     },
 
    ],
-   address:"fafrana road bhrampuri gali no. 2 Modinagar (201204) ghaziabad uttarPradesh",
-   gender:"Male",
+   
 
     })
 
@@ -625,7 +647,7 @@ setData(arr)
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,inchargeWork,setInchargeWork,inchargeData,setInchargeData}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,userData,setUserData,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,inchargeData,setInchargeData,setAdminData,adminData}}>
       {children}
     </AppContext.Provider>
   );

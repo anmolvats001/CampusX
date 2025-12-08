@@ -25,6 +25,9 @@ import Setting from './pages/Setting'
 import ChangePasswod from './pages/ChangePasswod'
 import Resolve from './pages/Resolve'
 import InchargeDashboard from './pages/InchargeDashboard'
+import AdminDashBoard from './pages/AdminDashBoard'
+import Incharges from './pages/Incharges'
+import AddIncharge from './pages/AddIncharge'
 const App = () => {
   return (
     <div>
@@ -46,6 +49,9 @@ const App = () => {
            <Route path='change-pass'element={<ChangePasswod/>}/>
            <Route path='resolve' element={<Resolve/>}/>
            <Route path='incharge-dashboard'element={<InchargeDashboard/>}/>
+           <Route path='adminDashboard'element={<AdminDashBoard/>}/>
+           <Route path='incharges'element={<Incharges/>}/>
+           <Route path='add-incharge'element={<AddIncharge/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
       </Routes>

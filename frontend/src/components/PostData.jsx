@@ -5,7 +5,7 @@ import { AppContext } from "../Context/context";
 import { toast } from 'react-toastify';
 const PostData = () => {
     const {id}=useParams();
-     const { dark, setcommvis, timeAgo,setPostVis,PostData,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,inchargeWork,setInchargeWork,setPostdata} = useContext(AppContext);
+     const { dark, setcommvis, timeAgo,setPostVis,PostData,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,setPostdata,inchargeData} = useContext(AppContext);
       const [on, seton] = useState(false);
       const [onfile, setOnFile] = useState(null);
       const [data,setData]=useState({});
@@ -256,7 +256,7 @@ const PostData = () => {
                  {" "}
         </div>
              {" "}
-        {(inchargelogin && !verifyImage && (!data.resolvedByIncharge && !data.resolvedByStudent)&& inchargeWork.toLowerCase() ===data.problem )&& (
+        {(inchargelogin && !verifyImage && (!data.resolvedByIncharge && !data.resolvedByStudent)&& inchargeData.work.toLowerCase() ===data.problem )&& (
   <div className="py-4 px-4 capitalize flex gap-2 justify-center items-center">
 
     {/* CLICKABLE BUTTON */}
@@ -306,14 +306,15 @@ const PostData = () => {
   </div>
   </div>
 }
-
 {
-  PostData.resolvedByStudent && <div className=' flex flex-col px-5 py-5'>
+   PostData.resolvedByStudent && !PostData.resolvedByIncharge &&(
+     <div className=' flex flex-col px-5 py-5'>
     <p className='text-2xl font-bold capitalize'>resolved proof...</p>
     <div className="py-4 px-4 capitalize flex gap-4 items-end text-gray-500">
-    <p>verified by {PostData.verifiedBy}</p>
+    <p>verified by {PostData?.verifiedBy}</p>
   </div>
   </div>
+   )
 }
       </div>
       {on && (
