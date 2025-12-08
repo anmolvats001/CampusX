@@ -5,7 +5,8 @@ import { AppContext } from '../Context/context';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [islogin,setIsLogin]=useState(true);
+    const {setStudentLogin,setAdminLogin,setInchargelogin,studentLogin}=useContext(AppContext);
+  
     const {setProfileOn}=useContext(AppContext);
   
   const login = () => {
@@ -51,7 +52,7 @@ const NavBar = () => {
         </div>
 
         <div>
-          {!islogin ?<button
+          {!studentLogin ?<button
             onClick={login}
             className='ml-6 rounded-full  from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#1E40AF] text-white px-6 py-2 font-semibold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300'
           >
@@ -78,7 +79,7 @@ const NavBar = () => {
     className={` hidden group-hover:flex flex-col gap-2 text-sm absolute right-12 top-14 bg-white px-4 py-3 rounded-xl shadow-lg`}
   >
     <div className="cursor-pointer hover:opacity-80"onClick={()=>{setProfileOn(true);navigate("/issues/profile")}}>View Profile</div>
-    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{setIsLogin(false);navigate("/")}}>Logout</div>
+    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{setIsLogin(false);navigate("/");setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);}}>Logout</div>
   </div>
 </div>}
         </div>

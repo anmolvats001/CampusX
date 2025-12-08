@@ -1,5 +1,5 @@
-import React, { useContext, useRef } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext, useEffect, useRef } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sider from "../components/Sider";
 import RightSider from "../components/RightSider";
 import IssueNavBar from "../components/IssueNavBar";
@@ -8,9 +8,11 @@ import Comment from "../components/Comment";
 import Post from "../components/Post";
 
 const IssuesLayout = () => {
-  const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,postvis,setPostVis} = useContext(AppContext);
-
-
+  const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,postvis,inchargelogin,adminlogin,studentLogin} = useContext(AppContext);
+const navigate=useNavigate();
+useEffect(()=>{
+  (!inchargelogin&&!adminlogin&&!studentLogin)&& navigate("/login")
+},[])
 
   
   return (

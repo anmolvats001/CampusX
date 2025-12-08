@@ -10,6 +10,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 const Sider = () => {
   const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin}=useContext(AppContext);
   const navigate=useNavigate();
+  
   console.log(dark);
   return(
     <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 "}>
@@ -84,7 +85,7 @@ const Sider = () => {
     className={`${!dark?"dark":"light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}
   >
     <div className="cursor-pointer hover:opacity-80"onClick={()=>{setProfileOn(true);navigate("/issues/profile")}}>View Profile</div>
-    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>navigate("/")}>Logout</div>
+    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{navigate("/");setInchargelogin(false);setStudentLogin(false);setAdminLogin(false)}}>Logout</div>
   </div>
 </div>
 </div>

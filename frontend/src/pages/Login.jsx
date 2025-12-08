@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from "react-toastify";
 import login from "../assets/login.jpeg";
 import { gsap } from "gsap";
+import { AppContext } from '../Context/context';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [sign, setSign] = useState(false);
   const [otpverify, setotpverify] = useState(false);
   const [who,setWho]=useState("student");
+  const {setStudentLogin,setAdminLogin,setInchargelogin}=useContext(AppContext);
   const emaildata = useRef();
+  const navigate=useNavigate();
   const mainpart=useRef();
   const sidepart=useRef();
   const change = () => setSign(!sign);
@@ -52,9 +56,9 @@ const moveleft = () => {
               </p>
               <p className="text-gray-500 text-sm">Enter the credentials to access your account</p>
               {
-              !sign&&<div className='flex justify-center'><div className='border-1 rounded-l-full rounded-r-full flex w-fit'><p className={(who=="student"?"bg-blue-600 text-white":"bg-white")+' rounded-l-full border-r-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("student")}>Student</p>
-              <p className={(who=="incharge"?"bg-blue-600 text-white":"bg-white")+'  border-r-1  px-3 py-1.5 cursor-pointer'}onClick={()=>setWho("incharge")}>Incharge</p>
-              <p className={(who=="admin"?"bg-blue-600 text-white":"bg-white")+' rounded-r-full border-l-1  px-3 py-1.5 cursor-pointer'} onClick={()=>setWho("admin")}>Admin</p></div></div>
+              !sign&&<div className='flex justify-center'><div className='border-1 rounded-l-full rounded-r-full flex w-fit'><p className={(who=="student"?"bg-blue-600 text-white":"bg-white")+' rounded-l-full border-r-1  px-3 py-1.5 cursor-pointer'} onClick={()=>{setWho("student");setStudentLogin(true);setInchargelogin(false);setAdminLogin(false);}}>Student</p>
+              <p className={(who=="incharge"?"bg-blue-600 text-white":"bg-white")+'  border-r-1  px-3 py-1.5 cursor-pointer'}onClick={()=>{setWho("incharge");setInchargelogin(true);setStudentLogin(false);setAdminLogin(false);}}>Incharge</p>
+              <p className={(who=="admin"?"bg-blue-600 text-white":"bg-white")+' rounded-r-full border-l-1  px-3 py-1.5 cursor-pointer'} onClick={()=>{setWho("admin");setAdminLogin(true);setInchargelogin(false);setStudentLogin(false);}}>Admin</p></div></div>
               }
             </div>
 
@@ -103,7 +107,7 @@ const moveleft = () => {
             </div>
 
           <div className='gap-2 w-full flex flex-col items-center'>
-              <button className="px-6 py-2 bg-blue-600 text-white rounded ">
+              <button className="px-6 py-2 bg-blue-600 text-white rounded " onClick={()=>navigate("/issues/home")}>
               {sign ? "SignIn" : "LogIn"}
             </button>
             <p className='text-start '>{sign ?<>Already a user ? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveleft();}}>login</span></>:<>New user ? <span className='text-blue-600 cursor-pointer'onClick={()=>{change();moveright();}}>signIn</span></>}</p>

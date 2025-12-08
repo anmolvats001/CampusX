@@ -19,7 +19,7 @@ export const AppProvider = ({ children }) => {
   const [onfile, setOnFile] = useState(null);
   const [on, seton] = useState(false);
   const [inchargelogin,setInchargelogin]=useState(false);
-  const [adminlogin,setAdminLogin]=useState(true);
+  const [adminlogin,setAdminLogin]=useState(false);
   const [studentLogin,setStudentLogin]=useState(false);
   const [inchargeData,setInchargeData]=useState(null);
   const [adminData,setAdminData]=useState({});
