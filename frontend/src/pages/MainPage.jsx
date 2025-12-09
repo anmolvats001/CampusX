@@ -44,16 +44,12 @@ useEffect(() => {
   }
 }, [val, data]);
   return (
-    <div
-      className={`${
-        dark ? "dark" : "light"
-      } h-screen w-[45%] border border-gray-800 relative`}
-    >
+    <div className={`${dark ? "dark" : "light"} h-screen w-full lg:w-[45%] border border-gray-800 relative`}>
       <IssueNavBar />
            {" "}
       <div className="overflow-y-scroll w-full scroller h-full relative">
                {" "}
-        <div className=" h-fit flex items-center pt-20 flex-col gap-14">
+        <div className=" h-fit flex items-center pt-14 lg:pt-20 flex-col gap-14">
                    {" "}
           {filteredData?.map((e, i) => {
             return (
@@ -65,7 +61,7 @@ useEffect(() => {
         {studentLogin&&<div
           className={`${
             !dark ? "bg-black text-white" : "bg-white text-black"
-          }" sticky bottom-10 right-10 w-16 h-16  float-right flex justify-center items-center rounded-full cursor-pointer`} onClick={()=>setPostVis(true)}
+          }" sticky bottom-36 lg:bottom-10  right-6 lg:right-10 w-16 h-16  float-right flex justify-center items-center rounded-full cursor-pointer`} onClick={()=>setPostVis(true)}
         >
           <p
             className={`${

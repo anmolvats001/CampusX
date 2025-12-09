@@ -149,129 +149,129 @@ const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark} = useContext(A
 };
 
   return (
-     <>
-            <div
-              className={`${
-                dark ? "dark" : "light"
-              } absolute w-[30%]   z-100 h-full right-0 top-0 px-4 py-2.5 flex justify-center items-center border-l-1 border-gray-800`}
+    <>
+      <div
+        className={`${
+          dark ? "dark" : "light"
+        } fixed lg:absolute w-full lg:w-[30%] z-50 h-full right-0 top-0 px-3 sm:px-4 py-2.5 flex justify-center items-center border-l border-gray-800`}
+      >
+        <div className="h-full overflow-y-scroll w-full pt-4 lg:pt-5 scroller">
+          {/* Close button for mobile */}
+          <div className="lg:hidden flex justify-between items-center mb-3">
+            <p className="font-bold text-xl">Comments ...</p>
+            <div 
+              className="text-2xl cursor-pointer p-2"
+              onClick={() => setcommvis(false)}
             >
-              <div className="h-full overflow-y-scroll w-[100%] pt-5 scroller">
-                <p className="font-bold text-xl ">Comments ...</p>
-                <div className="flex px-1.5 mt-3 gap-2"><textarea
-  ref={textareaRef}
-  onInput={handleInput}
-  placeholder="Enter your thoughts"
-  rows="1"
-  className={`focus:outline-0 
-    w-[80%] 
-    border-gray-800 
-    rounded-2xl 
-    scroller 
-    border-2 
-    py-1 
-    px-3
-    ${dark? "text-gray-300":"text-gray-600"}
-    
-    resize-none
-    overflow-y-auto
-    max-h-[100px]
-    min-h-[50px]
-  `}
-></textarea>
-<p className={`${
-                !dark ? "dark" : "light"
-              } rounded-3xl px-3.5 h-10 font-bold py-1 flex justify-center items-center`}>Post</p>
-</div>
-                <div className="mt-4 flex flex-col gap-3">
-                  {data.map((e,i)=>(
-                  <div
-                    key={i}
-                    className="w-full border-gray-800 border-1 rounded-2xl h-fit  px-3.5 py-2.5"
-                  >
-                                   {" "}
-                    <div className="flex flex-col gap-2">
-                                       {" "}
-                      <div className="flex justify-between">
-                        <div className="flex gap-2 px-2.5 ">
-                                             {" "}
-                          <img
-                            src={e.profile}
-                            className="w-10 h-10 object-cover rounded-full "
-                            alt={`Profile picture of ${e.name}`}
-                          />
-                                             {" "}
-                          <div>
-                                                 {" "}
-                            <p className="font-semibold  text-sm ">{e.name}</p>{" "}
-                                                 {" "}
-                            <p className="text-[10px] text-gray-400">
-                              ({e.branch})
-                            </p>
-                                               {" "}
-                          </div>
-                                             {" "}
-                          <p className="text-[12px] font-semibold text-gray-400 px-1 mt-1">
-                                                  {timeAgo(e.publishedOn)}     
-                                         {" "}
-                          </p>
-                                           {" "}
-                        </div>
-                      </div>
-                      <div className=" pr-6 pl-12  ">
-                                           {" "}
-                        <p
-                          className={
-                            dark
-                              ? "text-[14px] text-gray-200"
-                              : "text-[14px] text-gray-900"
-                          }
-                        >
-                          {e.data}
+              ×
+            </div>
+          </div>
+          
+          {/* Desktop title */}
+          <p className="font-bold text-xl hidden lg:block">Comments ...</p>
+          
+          {/* Comment input */}
+          <div className="flex px-1 lg:px-1.5 mt-3 gap-2">
+            <textarea
+              ref={textareaRef}
+              onInput={handleInput}
+              placeholder="Enter your thoughts"
+              rows="1"
+              className={`focus:outline-0 
+                w-full lg:w-[80%] 
+                border-gray-800 
+                rounded-xl lg:rounded-2xl 
+                scroller 
+                border-2 
+                py-2 lg:py-1 
+                px-3
+                ${dark ? "text-gray-300" : "text-gray-600"}
+                resize-none
+                overflow-y-auto
+                max-h-[100px]
+                min-h-[50px]
+                text-sm lg:text-base
+              `}
+            />
+            <p className={`${
+              !dark ? "dark" : "light"
+            } rounded-xl lg:rounded-3xl px-3 lg:px-3.5 h-10 font-bold py-1 flex justify-center items-center cursor-pointer min-w-[60px] lg:min-w-auto`}>
+              Post
+            </p>
+          </div>
+          
+          {/* Comments list */}
+          <div className="mt-4 flex flex-col gap-3">
+            {data.map((e, i) => (
+              <div
+                key={i}
+                className="w-full border-gray-800 border rounded-xl lg:rounded-2xl h-fit px-3 lg:px-3.5 py-2.5"
+              >
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <div className="flex gap-2 px-1 lg:px-2.5">
+                      <img
+                        src={e.profile}
+                        className="w-8 h-8 lg:w-10 lg:h-10 object-cover rounded-full"
+                        alt={`Profile picture of ${e.name}`}
+                      />
+                      <div className="min-w-0">
+                        <p className="font-semibold text-xs lg:text-sm truncate">{e.name}</p>
+                        <p className="text-[9px] lg:text-[10px] text-gray-400">
+                          ({e.branch})
                         </p>
-                                         {" "}
                       </div>
-                      <div className="flex px-11 mt-5 gap-8">
-                        <div
-                          className={
-                            (dark ? "text-gray-500" : "text-gray-700") +
-                            " flex cursor-pointer items-center rounded-3xl hover:text-red-800 " +
-                            (e.liked && "text-red-800")
-                          }
-                        >
-                          <i class="fi fi-ss-social-network"></i>{" "}
-                          <p className="text-xs">{e.likes}</p>
-                        </div>
-                        <div
-                          className={
-                            (dark ? "text-gray-500" : "text-gray-700") +
-                            " group flex items-center rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative"
-                          }
-                        >
-                          <i className="fi fi-tr-heart-partner-handshake"></i>
-                          <p className="text-sm">{e.comments}</p>
-
-                          <div className="absolute px-3 py-1 bottom-8 left-6 bg-white rounded shadow hidden group-hover:block">
-                            agree
-                          </div>
-                        </div>
-                      </div>
-                                     {" "}
+                      <p className="text-[10px] lg:text-[12px] font-semibold text-gray-400 px-1 mt-1">
+                        {timeAgo(e.publishedOn)}
+                      </p>
                     </div>
-                                 {" "}
                   </div>
-                  ))}
-                         {" "}
+                  <div className="pr-2 lg:pr-6 pl-10 lg:pl-12">
+                    <p className={
+                      dark
+                        ? "text-xs lg:text-[14px] text-gray-200"
+                        : "text-xs lg:text-[14px] text-gray-900"
+                    }>
+                      {e.data}
+                    </p>
+                  </div>
+                  <div className="flex px-8 lg:px-11 mt-3 lg:mt-5 gap-4 lg:gap-8">
+                    <div
+                      className={
+                        (dark ? "text-gray-500" : "text-gray-700") +
+                        " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
+                        (e.liked && "text-red-800")
+                      }
+                    >
+                      <i className="fi fi-ss-social-network text-sm lg:text-base"></i>
+                      <p className="text-xs ml-1">{e.likes}</p>
+                    </div>
+                    <div
+                      className={
+                        (dark ? "text-gray-500" : "text-gray-700") +
+                        " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative"
+                      }
+                    >
+                      <i className="fi fi-tr-heart-partner-handshake text-sm lg:text-base"></i>
+                      <p className="text-xs lg:text-sm">{e.comments || 0}</p>
+                      <div className="absolute px-2 py-1 bottom-6 lg:bottom-8 left-4 lg:left-6 bg-white dark:bg-gray-800 rounded shadow hidden group-hover:block text-xs">
+                        agree
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className="absolute w-screen z-99 h-full top-0 bg-black opacity-70  "
-              onClick={() => {
-                setcommvis(false);
-              }}
-            ></div>
-          </>
-  )
+            ))}
+          </div>
+        </div>
+      </div>
+      <div
+        className="fixed lg:absolute w-screen z-40 h-full top-0 bg-black opacity-70"
+        onClick={() => {
+          setcommvis(false);
+        }}
+      ></div>
+    </>)
 }
 
 export default Comment

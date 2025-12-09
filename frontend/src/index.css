@@ -94,9 +94,3 @@ button:hover {
   0% { transform: translateX(0);}
   100% { transform: translateX(-50%);}
 }
-.thisPage .Toastify__progress-bar,
-.thisPage .Toastify__progress-bar--light,
-.thisPage .Toastify__progress-bar--dark {
-  background: black !important;
-  background-color: black !important;
-}

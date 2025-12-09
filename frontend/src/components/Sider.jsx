@@ -13,7 +13,7 @@ const Sider = () => {
   
   console.log(dark);
   return(
-    <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 "}>
+    <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 hidden lg:block"}>
       <div className=" h-full relative">
         <img className="absolute pos right-10" src={!dark ?campusxblack :campusxwhite} alt="" />
         <div className="absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer">
