@@ -66,6 +66,7 @@ const Login = () => {
   
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+    setStudentLogin(true)
   }, []);
 
   return (
