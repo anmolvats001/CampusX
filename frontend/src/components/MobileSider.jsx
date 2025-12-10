@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { AppContext } from "../Context/context";
 import campusxwhite from "../assets/campusxwhite.png"
 import campusxblack from "../assets/campusxblack.png"
@@ -9,7 +9,26 @@ const MobileSider = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  
+  const filterRef = useRef(null);
+  const [clickProfile,setProfile]=useState(false)
+  // Close filter dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    };
+
+    if (filterOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      setProfile(false)
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [filterOpen]);
+
   return (
     <>
       {/* Three-dot menu - exactly matching your theme */}
@@ -123,20 +142,95 @@ const MobileSider = () => {
                   </p>
                 )}
                 
-                {/* Filter Section - EXACTLY like your Sider */}
-                <div className="group">
-                  <p className="flex gap-1 items-center cursor-pointer">
+                {/* Filter Section - UPDATED with click functionality */}
+                <div className="relative" ref={filterRef}>
+                  <div 
+                    className="flex gap-1 items-center cursor-pointer"
+                    onClick={() => setFilterOpen(!filterOpen)}
+                  >
                     {dark ? <i className="fi fi-sr-play text-white"></i> : <i className="fi fi-sr-play"></i>}
                     <p className={dark ? "text-white" : "text-black"}>Filter</p>
-                  </p>
+                  </div>
                   
-                  <div className="flex flex-col gap-3 text-lg text-gray-500 ml-6 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:max-h-40 group-hover:opacity-100 group-hover:my-2">
-                    <p className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("all"); setMenuOpen(false); }}>All</p>
-                    <p className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("water"); setMenuOpen(false); }}>water</p>
-                    <p className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("administration"); setMenuOpen(false); }}>administration</p>
-                    <p className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("building"); setMenuOpen(false); }}>building</p>
-                    <p className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("safety"); setMenuOpen(false); }}>safety</p>
-                    <p className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("food"); setMenuOpen(false); }}>food</p>
+                  {/* Filter Dropdown */}
+                  <div 
+                    className={`
+                      flex flex-col gap-3 text-lg ml-6 
+                      transition-all duration-300 ease-in-out
+                      overflow-hidden
+                      ${dark ? 'text-gray-300' : 'text-gray-700'}
+                      ${filterOpen 
+                        ? 'max-h-96 opacity-100 mt-2' 
+                        : 'max-h-0 opacity-0'
+                      }
+                    `}
+                  >
+                    <p 
+                      className="hover:text-gray-400 cursor-pointer transition-colors duration-200"
+                      onClick={() => { 
+                        navigate("/issues/home"); 
+                        setFilter("all"); 
+                        setFilterOpen(false);
+                        setMenuOpen(false); 
+                      }}
+                    >
+                      All
+                    </p>
+                    <p 
+                      className="hover:text-gray-400 cursor-pointer transition-colors duration-200"
+                      onClick={() => { 
+                        navigate("/issues/home"); 
+                        setFilter("water"); 
+                        setFilterOpen(false);
+                        setMenuOpen(false); 
+                      }}
+                    >
+                      Water
+                    </p>
+                    <p 
+                      className="hover:text-gray-400 cursor-pointer transition-colors duration-200"
+                      onClick={() => { 
+                        navigate("/issues/home"); 
+                        setFilter("administration"); 
+                        setFilterOpen(false);
+                        setMenuOpen(false); 
+                      }}
+                    >
+                      Administration
+                    </p>
+                    <p 
+                      className="hover:text-gray-400 cursor-pointer transition-colors duration-200"
+                      onClick={() => { 
+                        navigate("/issues/home"); 
+                        setFilter("building"); 
+                        setFilterOpen(false);
+                        setMenuOpen(false); 
+                      }}
+                    >
+                      Building
+                    </p>
+                    <p 
+                      className="hover:text-gray-400 cursor-pointer transition-colors duration-200"
+                      onClick={() => { 
+                        navigate("/issues/home"); 
+                        setFilter("safety"); 
+                        setFilterOpen(false);
+                        setMenuOpen(false); 
+                      }}
+                    >
+                      Safety
+                    </p>
+                    <p 
+                      className="hover:text-gray-400 cursor-pointer transition-colors duration-200"
+                      onClick={() => { 
+                        navigate("/issues/home"); 
+                        setFilter("food"); 
+                        setFilterOpen(false);
+                        setMenuOpen(false); 
+                      }}
+                    >
+                      Food
+                    </p>
                   </div>
                 </div>
                 
@@ -161,9 +255,9 @@ const MobileSider = () => {
                 </NavLink>
               </div>
               
-              {/* User Profile - EXACTLY like your Sider */}
+
               <div className="absolute bottom-6 left-4 right-4 px-4 py-3 flex border border-gray-800 rounded-2xl group">
-                <div className="flex gap-1.5 cursor-pointer items-center">
+                <div onClick={()=>setProfile(!clickProfile)} className="flex gap-1.5 cursor-pointer items-center">
                   <img 
                     src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" 
                     className="rounded-full w-10 object-cover" 
@@ -184,16 +278,16 @@ const MobileSider = () => {
                   </div>
                 </div>
                 
-                <div className={`${!dark ? "dark" : "light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}>
+                <div  className={`${!dark ? "dark" : "light"} ${clickProfile? "  flex ":"hidden "} flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}>
                   <p className="cursor-pointer hover:opacity-80" onClick={() => { setProfileOn(true); navigate("/issues/profile"); setMenuOpen(false); }}>View Profile</p>
-                  <p className="cursor-pointer hover:opacity-80 text-red-800" onClick={() => { navigate("/"); setMenuOpen(false); }}>Logout</p>
+                  <p className="cursor-pointer hover:opacity-80 text-red-800" onClick={() => {setInchargelogin(false);setStudentLogin(false);setAdminLogin(false); navigate("/"); setMenuOpen(false); }}>Logout</p>
                 </div>
               </div>
               
               {/* Close button for mobile */}
               <p 
                 className="absolute top-4 right-4 text-2xl cursor-pointer"
-                onClick={() => setMenuOpen(false)}
+                onClick={() => {setMenuOpen(false);setProfile(false)}}
               >
                 ×
               </p>

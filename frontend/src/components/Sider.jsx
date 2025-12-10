@@ -13,10 +13,10 @@ const Sider = () => {
   
   console.log(dark);
   return(
-    <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 hidden lg:block"}>
-      <div className=" h-full relative">
+    <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 hidden lg:block overflow-y-scroll scroller"}>
+      <div className=" h-full relative ">
         <img className="absolute pos right-10" src={!dark ?campusxblack :campusxwhite} alt="" />
-        <div className="absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer">
+        <div className={(dark?"bg-black ":"bg-white ")+" absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer"}>
           <NavLink to={"/issues/home"} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
           {inchargelogin&&<NavLink to={"/issues/incharge-dashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
           {adminlogin&&<NavLink to={"/issues/adminDashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
@@ -36,15 +36,15 @@ const Sider = () => {
   </div>
 
   <div
-    className="
-      flex flex-col gap-3 text-lg text-gray-500 ml-6
+    className={`
+     flex flex-col gap-3 text-lg text-gray-500 ml-6
       max-h-0 overflow-hidden
       opacity-0
       transition-all duration-300 ease-in-out
-      group-hover:max-h-40
+      group-hover:max-h-96 
       group-hover:opacity-100
       group-hover:my-2
-    "
+    `}
   >
     <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("all")}}>All</div>
     <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("water")}}>water</div>
@@ -85,7 +85,7 @@ const Sider = () => {
     className={`${!dark?"dark":"light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}
   >
     <div className="cursor-pointer hover:opacity-80"onClick={()=>{setProfileOn(true);navigate("/issues/profile")}}>View Profile</div>
-    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{navigate("/");setInchargelogin(false);setStudentLogin(false);setAdminLogin(false)}}>Logout</div>
+    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);navigate("/");}}>Logout</div>
   </div>
 </div>
 </div>

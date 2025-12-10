@@ -48,8 +48,9 @@ useEffect(() => {
       <IssueNavBar />
            {" "}
       <div className="overflow-y-scroll w-full scroller h-full relative">
+        <div className="px-14 pt-6 lg:hidden"><p className="text-2xl font-bold ">CampusX</p></div>
                {" "}
-        <div className=" h-fit flex items-center pt-14 lg:pt-20 flex-col gap-14">
+        <div className=" h-fit flex items-center pt-6 pb-16 lg:pb-4  lg:pt-20 flex-col gap-14">
                    {" "}
           {filteredData?.map((e, i) => {
             return (

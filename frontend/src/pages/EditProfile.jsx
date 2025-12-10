@@ -39,8 +39,6 @@ const EditProfile = () => {
         setProfileOn(true);
         return () => setProfileOn(false);
     }, [])
-
-    // Common form fields component
     const renderFormFields = (data, setData, isStudent = false) => {
         if (!data) return null;
 
@@ -168,7 +166,7 @@ const EditProfile = () => {
     }
 
     return (
-        <div className={`${dark ? "dark" : "light"} min-h-screen w-full md:w-[75%] border border-gray-800 relative`}>
+        <div className={`${dark ? "dark" : "light"} min-h-screen pb-16 lg:pb-0 w-full md:w-[75%] border border-gray-800 relative`}>
             {/* Mobile Header Spacing */}
             <div className="h-16 sm:h-0"></div>
             

@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../Context/context'
 import { useNavigate } from 'react-router-dom';
 
 const Setting = () => {
     const {dark, setcommvis} = useContext(AppContext);
     const navigate = useNavigate();
+    const [contactOpen, setContactOpen] = useState(false);
     
     useEffect(() => {
         setcommvis(false)
@@ -44,25 +45,76 @@ const Setting = () => {
                         <i className="fi fi-br-angle-small-right text-sm sm:text-base"></i>
                     </div>
                     
-                    {/* Contact */}
-                    <div className="group">
-                        <div className={`flex justify-between py-2 px-3 rounded-lg cursor-pointer border-b border-gray-800 ${dark ? "hover:bg-gray-900" : "hover:bg-gray-100"} transition-colors`}>
+                    {/* Contact - Updated for mobile click */}
+                    <div className="relative">
+                        <div 
+                            className={`flex justify-between py-2 px-3 rounded-lg cursor-pointer border-b border-gray-800 ${dark ? "hover:bg-gray-900" : "hover:bg-gray-100"} transition-colors`}
+                            onClick={() => setContactOpen(!contactOpen)}
+                        >
                             <p className='text-sm sm:text-base'>Contact</p>
-                            <i className="fi fi-br-angle-small-right text-sm sm:text-base"></i>
+                            <i className={`fi fi-br-angle-small-right text-sm sm:text-base transition-transform duration-300 ${contactOpen ? 'rotate-90' : ''}`}></i>
                         </div>
                         
-                        <div className="flex flex-col gap-2 text-gray-500 ml-4 sm:ml-6 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out group-hover:max-h-40 group-hover:opacity-100 group-hover:my-2 text-xs sm:text-sm">
-                            <div className="hover:text-gray-300 p-1">
-                                <a href="mailto:vatsanmol4@gmail.com" className='hover:text-blue-400 transition-colors'>vatsanmol4@gmail.com</a>
+                        {/* Contact Details */}
+                        <div 
+                            className={`
+                                flex flex-col gap-2 text-gray-500 ml-4 sm:ml-6 
+                                overflow-hidden transition-all duration-300 ease-in-out
+                                text-xs sm:text-sm
+                                ${dark ? 'text-gray-400' : 'text-gray-600'}
+                                ${contactOpen 
+                                    ? 'max-h-96 opacity-100 my-2' 
+                                    : 'max-h-0 opacity-0'
+                                }
+                            `}
+                        >
+                            <div className="p-1 hover:text-gray-300">
+                                <a 
+                                    href="mailto:vatsanmol4@gmail.com" 
+                                    className='hover:text-blue-400 transition-colors block py-1'
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <i className="fi fi-sr-envelope text-xs"></i>
+                                        <span>vatsanmol4@gmail.com</span>
+                                    </div>
+                                </a>
                             </div>
-                            <div className="hover:text-gray-300 p-1">
-                                <a href="tel:+917983704504" className='hover:text-blue-400 transition-colors'>+91 7983704504</a>
+                            <div className="p-1 hover:text-gray-300">
+                                <a 
+                                    href="tel:+917983704504" 
+                                    className='hover:text-blue-400 transition-colors block py-1'
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <i className="fi fi-sr-phone-call text-xs"></i>
+                                        <span>+91 7983704504</span>
+                                    </div>
+                                </a>
                             </div>
-                            <div className="hover:text-gray-300 p-1">
-                                <a href="#" className='hover:text-blue-400 transition-colors'>Facebook</a>
+                            <div className="p-1 hover:text-gray-300">
+                                <a 
+                                    href="#" 
+                                    className='hover:text-blue-400 transition-colors block py-1'
+                                    onClick={(e) => { e.stopPropagation(); /* Handle Facebook click */ }}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <i className="fi fi-brands-facebook text-xs"></i>
+                                        <span>Facebook</span>
+                                    </div>
+                                </a>
                             </div>
-                            <div className="hover:text-gray-300 p-1">
-                                <a href="#" className='hover:text-blue-400 transition-colors'>Instagram</a>
+                            <div className="p-1 hover:text-gray-300">
+                                <a 
+                                    href="#" 
+                                    className='hover:text-blue-400 transition-colors block py-1'
+                                    onClick={(e) => { e.stopPropagation(); /* Handle Instagram click */ }}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <i className="fi fi-brands-instagram text-xs"></i>
+                                        <span>Instagram</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -99,4 +151,4 @@ const Setting = () => {
     )
 }
 
-export default Setting
+export default Setting;

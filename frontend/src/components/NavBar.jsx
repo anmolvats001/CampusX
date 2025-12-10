@@ -142,7 +142,7 @@ const NavBar = () => {
                   <div className="cursor-pointer hover:opacity-80 py-2 text-sm" onClick={()=>{setProfileOn(true); navigate("/issues/profile"); setMobileMenuOpen(false)}}>
                     View Profile
                   </div>
-                  <div className="cursor-pointer hover:opacity-80 text-red-800 py-2 text-sm" onClick={()=>{/* logout logic */; setMobileMenuOpen(false)}}>
+                  <div className="cursor-pointer hover:opacity-80 text-red-800 py-2 text-sm" onClick={()=>{setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);navigate("/"); setMobileMenuOpen(false)}}>
                     Logout
                   </div>
                 </div>

@@ -34,11 +34,7 @@ const Resolve = () => {
     >
       <div className="overflow-y-scroll w-full scroller h-full relative">
         {/* Header */}
-        <div className="w-full px-3 sm:px-3.5 flex pt-4 sm:pt-5 items-center">
-          <p className='text-xl sm:text-2xl font-semibold capitalize pt-3  px-12 lg:pt-0 lg:px-6 w-full'>
-            Issues to Resolve
-          </p>
-        </div>
+        <div className="px-14 pt-6 lg:hidden"><p className="text-2xl font-bold ">Issues Needed To Be Resolved</p></div>
         
         {/* Empty State */}
         {(!filteredData || filteredData.length === 0) ? (

@@ -29,9 +29,10 @@ const Search = () => {
     <div
       className={`${
         dark ? "dark" : "light"
-      } h-screen w-full lg:w-[45%] pt-10 lg:pt-0 border border-gray-800 relative`}
+      } h-screen w-full  lg:w-[45%]  border border-gray-800 relative`}
     >
       <div className="overflow-y-scroll w-full scroller h-full relative">
+        <div className="px-14 pt-6 lg:hidden"><p className="text-2xl font-bold ">Search</p></div>
         {/* Search Input */}
         <div className="w-full px-3 sm:px-3.5 flex pt-4 lg:pt-5 gap-2 items-center">
           <input 
