@@ -51,7 +51,7 @@ const IssueContent = ({e, i, search}) => {
                 <div className="px-7 sm:px-9">
                     <p className={`
                         ${dark ? "text-gray-200" : "text-gray-900"} 
-                        text-xs sm:text-sm lg:text-[15px]
+                        text-sm lg:text-[15px]
                         ${search ? "line-clamp-2" : ""}
                     `}>
                         {e.data}
