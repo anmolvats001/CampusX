@@ -5,7 +5,7 @@ import { AppContext } from '../Context/context';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const {setStudentLogin, setAdminLogin, setInchargelogin, studentLogin} = useContext(AppContext);
+  const {setStudentLogin, setAdminLogin, setInchargelogin, studentLogin,logout,utoken,itoken,atoken} = useContext(AppContext);
   const {setProfileOn} = useContext(AppContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -55,7 +55,7 @@ const NavBar = () => {
           </div>
 
           <div>
-            {!studentLogin ? (
+            {(!utoken&&!itoken&&!atoken) ? (
               <button
                 onClick={login}
                 className='ml-2 lg:ml-4 rounded-full bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#1E40AF] text-white px-3 py-1.5 lg:px-5 lg:py-2 font-semibold shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-xs lg:text-sm'
@@ -63,7 +63,7 @@ const NavBar = () => {
                 Login
               </button>
             ) : (
-              <div className="px-1 py-1 lg:px-2 lg:py-2 flex rounded-2xl group">
+              <div className="px-1 py-1 lg:px-2 lg:py-2  flex rounded-2xl group">
                 <div className="flex gap-1 cursor-pointer items-center">
                   <img 
                     src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" 
@@ -75,9 +75,9 @@ const NavBar = () => {
                     <p className="text-[6px] lg:text-[8px] text-gray-500">(CSE)</p>
                   </div>
                 </div>
-                <div className={`hidden group-hover:flex flex-col gap-1 text-xs lg:text-sm absolute right-2 lg:right-8 top-14 bg-white px-3 py-2 rounded-xl shadow-lg z-50 whitespace-nowrap`}>
+                <div className={`hidden group-hover:flex flex-col gap-1 text-xs lg:text-sm absolute right-2 lg:right-8 top-0 bg-white px-3 py-2 rounded-xl shadow-lg z-100 whitespace-nowrap h-44`}>
                   <div className="cursor-pointer hover:opacity-80 px-2 py-1" onClick={()=>{setProfileOn(true); navigate("/issues/profile")}}>View Profile</div>
-                  <div className="cursor-pointer hover:opacity-80 text-red-800 px-2 py-1" onClick={()=>{/* logout logic */}}>Logout</div>
+                  <div className="cursor-pointer hover:opacity-80 text-red-800 px-2 py-1" onClick={()=>logout()}>Logout</div>
                 </div>
               </div>
             )}
@@ -142,7 +142,7 @@ const NavBar = () => {
                   <div className="cursor-pointer hover:opacity-80 py-2 text-sm" onClick={()=>{setProfileOn(true); navigate("/issues/profile"); setMobileMenuOpen(false)}}>
                     View Profile
                   </div>
-                  <div className="cursor-pointer hover:opacity-80 text-red-800 py-2 text-sm" onClick={()=>{setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);navigate("/"); setMobileMenuOpen(false)}}>
+                  <div className="cursor-pointer hover:opacity-80 text-red-800 py-2 text-sm" onClick={()=>{logout()}}>
                     Logout
                   </div>
                 </div>

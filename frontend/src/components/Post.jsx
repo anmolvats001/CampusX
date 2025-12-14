@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { AppContext } from "../Context/context";
 
 const Post = () => {
-  const { postvis, setPostVis, dark, userData } = useContext(AppContext);
+  const { postvis, setPostVis, dark, profileData,setProfileData } = useContext(AppContext);
   const [words, setWords] = useState(0);
   const textref = useRef();
   const [images, setImages] = useState([]);
@@ -62,13 +62,13 @@ const Post = () => {
             <div className="flex gap-2 px-1 sm:px-2.5 justify-between">
               <div className="flex gap-2">
                 <img
-                  src={userData?.image}
+                  src={profileData?.profile}
                   className="w-7 h-7 sm:w-8 sm:h-8 object-cover rounded-full"
                   alt=""
                 />
                 <div>
-                  <p className="font-semibold text-xs sm:text-sm">{userData?.name}</p>
-                  <p className="text-xs text-gray-400">({userData?.branch})</p>
+                  <p className="font-semibold text-xs sm:text-sm">{profileData?.name}</p>
+                  <p className="text-xs text-gray-400">({profileData?.branch})</p>
                 </div>
               </div>
               <div

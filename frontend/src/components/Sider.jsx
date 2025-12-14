@@ -8,7 +8,7 @@ import profile from "../assets/user.png"
 import setting from "../assets/settings.png"
 import { NavLink, useNavigate } from "react-router-dom";
 const Sider = () => {
-  const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin}=useContext(AppContext);
+  const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,logout}=useContext(AppContext);
   const navigate=useNavigate();
   
   console.log(dark);
@@ -85,7 +85,7 @@ const Sider = () => {
     className={`${!dark?"dark":"light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}
   >
     <div className="cursor-pointer hover:opacity-80"onClick={()=>{setProfileOn(true);navigate("/issues/profile")}}>View Profile</div>
-    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);navigate("/");}}>Logout</div>
+    <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{logout()}}>Logout</div>
   </div>
 </div>
 </div>

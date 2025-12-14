@@ -6,16 +6,11 @@ import { useNavigate } from 'react-router-dom';
 const EditProfile = () => {
     const [image, setimage] = useState(false);
     const { 
-        userData, 
-        setUserData, 
+        profileData,setProfileData, 
         dark, 
         setProfileOn, 
         inchargelogin, 
-        inchargeData, 
-        setInchargeData, 
-        adminData, 
         adminlogin, 
-        setAdminData,
         studentLogin 
     } = useContext(AppContext);
     
@@ -24,11 +19,11 @@ const EditProfile = () => {
     const updateUserProfileData = async () => {
         try {
             const formData = new FormData();
-            formData.append('name', userData.name);
-            formData.append("phone", userData.phone);
-            formData.append("address", JSON.stringify(userData.address));
-            formData.append("gender", userData.gender);
-            formData.append("dob", userData.dob);
+            formData.append('name', profileData.name);
+            formData.append("phone", profileData.phone);
+            formData.append("address", JSON.stringify(profileData.address));
+            formData.append("gender", profileData.gender);
+            formData.append("dob", profileData.dob);
             image && formData.append("image", image);
         } catch(err) {
             console.log(err);
@@ -56,8 +51,8 @@ const EditProfile = () => {
                     <div><p className='text-base md:text-lg font-semibold capitalize'>Mobile No. :</p></div>
                     <input 
                         type="text" 
-                        onChange={(e) => setData(prev => ({...prev, mobile_no: e.target.value}))} 
-                        value={data.mobile_no || ''} 
+                        onChange={(e) => setData(prev => ({...prev, phone: e.target.value}))} 
+                        value={data.phone || ''} 
                         className="w-full md:w-fit border border-gray-700 px-2 py-1 md:px-1.5 rounded-lg focus:outline-0" 
                     />
                     
@@ -113,7 +108,7 @@ const EditProfile = () => {
                             <div className='inline-block relative cursor-pointer'>
                                 <img 
                                     className='w-24 h-24 sm:w-36 sm:h-36 rounded-full object-cover opacity-75' 
-                                    src={image ? URL.createObjectURL(image) : data.image} 
+                                    src={image ? URL.createObjectURL(image) : data.profile} 
                                     alt="Profile" 
                                 />
                                 <img 
@@ -173,12 +168,12 @@ const EditProfile = () => {
             {/* Student Edit Profile */}
             {studentLogin && (
                 <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
-                    {renderProfileHeader(userData, setUserData, "student")}
-                    {renderFormFields(userData, setUserData, true)}
+                    {renderProfileHeader(profileData,setProfileData, "student")}
+                    {renderFormFields(profileData,setProfileData, true)}
                     <div className='flex justify-center w-full px-4 md:w-[80%] mt-6'>
                         <button 
                             className={`${dark ? "bg-white text-black" : "bg-black text-white"} px-6 py-2 cursor-pointer rounded-3xl w-full sm:w-fit font-medium`}
-                            onClick={() => handleSaveChanges(setUserData, userData)}
+                            onClick={() => handleSaveChanges(setProfileData, profileData)}
                         >
                             Apply the changes
                         </button>
@@ -187,14 +182,14 @@ const EditProfile = () => {
             )}
 
             {/* Incharge Edit Profile */}
-            {inchargelogin && inchargeData && (
+            {inchargelogin && profileData && (
                 <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
-                    {renderProfileHeader(inchargeData, setInchargeData, "incharge")}
-                    {renderFormFields(inchargeData, setInchargeData)}
+                    {renderProfileHeader(profileData, setProfileData, "incharge")}
+                    {renderFormFields(profileData, setProfileData)}
                     <div className='flex justify-center w-full px-4 md:w-[80%] mt-6'>
                         <button 
                             className={`${dark ? "bg-white text-black" : "bg-black text-white"} px-6 py-2 cursor-pointer rounded-3xl w-full sm:w-fit font-medium`}
-                            onClick={() => handleSaveChanges(setInchargeData, inchargeData)}
+                            onClick={() => handleSaveChanges(setProfileData, profileData)}
                         >
                             Apply the changes
                         </button>
@@ -203,14 +198,14 @@ const EditProfile = () => {
             )}
 
             {/* Admin Edit Profile */}
-            {adminlogin && adminData && (
+            {adminlogin && profileData && (
                 <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
-                    {renderProfileHeader(adminData, setAdminData, "admin")}
-                    {renderFormFields(adminData, setAdminData)}
+                    {renderProfileHeader(profileData, setProfileData, "admin")}
+                    {renderFormFields(profileData, setProfileData)}
                     <div className='flex justify-center w-full px-4 md:w-[80%] mt-6'>
                         <button 
                             className={`${dark ? "bg-white text-black" : "bg-black text-white"} px-6 py-2 cursor-pointer rounded-3xl w-full sm:w-fit font-medium`}
-                            onClick={() => handleSaveChanges(setAdminData, adminData)}
+                            onClick={() => handleSaveChanges(setProfileData, profileData)}
                         >
                             Apply the changes
                         </button>

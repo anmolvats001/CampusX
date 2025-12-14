@@ -4,18 +4,24 @@ import login from "../assets/login.jpeg";
 import { gsap } from "gsap";
 import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
 const Login = () => {
   const [sign, setSign] = useState(false);
   const [otpverify, setotpverify] = useState(false);
   const [who,setWho]=useState("student");
-  const {setStudentLogin,setAdminLogin,setInchargelogin}=useContext(AppContext);
+  const {setStudentLogin,setAdminLogin,setInchargelogin,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken}=useContext(AppContext);
   const emaildata = useRef();
   const emaildataMobile = useRef();
   const navigate=useNavigate();
   const mainpart=useRef();
   const sidepart=useRef();
-  
+  const [email,setemail]=useState(null);
+  const [name,setName]=useState(null);
+  const [password,setPassword]=useState(null);
+  const [addno,setAddNo]=useState(null);
+  const [otp,setOtp]=useState(0);
+  const [correctOtp,setCorrectOpt]=useState(false);
+  const [otpfromback,setotpfromback]=useState(56);
   const change = () => setSign(!sign);
   
   const moveright = () => { 
@@ -50,8 +56,17 @@ const Login = () => {
       });
     }
   };
-
-  const handleVerify = () => {
+  const otpverification=async()=>{
+    console.log(otpfromback,otp)
+     if(otpfromback==otp){
+          setCorrectOpt(true);
+          toast.success("OTP verified")
+        }
+        else{
+          toast.error("Wrong OTP")
+        }
+  }
+  const handleVerify = async() => {
     // Get email value from either desktop or mobile input
     const emailValue = window.innerWidth >= 1024 
       ? emaildata.current?.value 
@@ -59,11 +74,71 @@ const Login = () => {
     
     if (emailValue && emailValue !== "") {
       setotpverify(true);
+      const {data}=await axios.post(backendUrl+"/api/user/otp",{email:emailValue});
+      if(!data.success){
+        toast.error(data.message);
+      }
+      else{
+
+       setotpfromback(data.otp);
+       toast.success("OTP sent successfully");
+      }
     } else {
       toast.error("Enter valid Email");
     }
   };
-  
+  const handleSubmit=async()=>{
+    if(!sign){
+      
+      if(who=="student")login_User();
+      else if(who=="incharge")login_Incharge();
+      else if(who=="admin")login_Admin();
+    }
+    else{
+      
+      register_User();
+    }
+  }
+  const login_User=async()=>{
+    let {data}=await axios.post(backendUrl+"/api/user/login",{add_no:addno,password});
+    if(data.success){
+      localStorage.setItem("utoken",data.utoken);
+      setuToken(data.utoken);
+      toast.success(data.message);
+      navigate("/issues/home")
+    }
+    else{
+      toast.error(data.message)
+    }
+  }
+  const login_Incharge=async()=>{
+
+  }
+  const login_Admin=async()=>{
+
+  }
+  const register_User=async()=>{
+    try {
+      if(correctOtp){
+    const {data}=await axios.post(backendUrl+"/api/user/register",{add_no:addno,email,password,name});
+    if(data.success){
+      localStorage.setItem("utoken",data.utoken);
+      setuToken(data.utoken);
+      // toast.success("Registered successfully")
+      toast.success(data.message);
+      navigate("/issues/home")
+    }
+    else{
+      toast.error(data.message);
+    }
+  }
+    else{
+      toast.error("some fields are missing");
+    }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     setStudentLogin(true)
@@ -109,7 +184,7 @@ const Login = () => {
           <div className="flex flex-col gap-4 w-full">
             {sign && (
               <div className="flex flex-col gap-1">
-                <input 
+                <input  onChange={(e)=>{setName(e.target.value)}}
                   id="name" 
                   type="text" 
                   placeholder='Create Username' 
@@ -118,9 +193,11 @@ const Login = () => {
               </div>
             )}
 
-            {who=="student" && (
+            {(who=="student"||sign) && (
               <div className="flex flex-col gap-1">
-                <input 
+                <input onChange={(e)=>{
+                  setAddNo(e.target.value);
+                }} 
                   id="admno" 
                   type="text" 
                   placeholder='Enter Admission No.' 
@@ -132,7 +209,7 @@ const Login = () => {
             {(sign || who=="incharge" || who=="admin") && (
               <div className="flex flex-col gap-1">
                 <div className="flex flex-col gap-2">
-                  <input 
+                  <input onChange={(e)=>setemail(e.target.value)}
                     id="email-mobile" 
                     ref={emaildataMobile} 
                     placeholder='Enter the Email' 
@@ -148,20 +225,30 @@ const Login = () => {
                 </div>
 
                 {otpverify && (
-                  <div className="flex flex-col gap-1 mt-2">
-                    <input 
+                  
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1 mt-2">
+                    <input onChange={(e)=>setOtp(e.target.value.toString().replace(/\s+/g, ""))}
                       id="otp-mobile" 
                       type="number" 
                       placeholder='Enter the OTP' 
                       className="border focus:outline-0 px-3 py-2 rounded-2xl" 
                     />
                   </div>
+                  <button
+                    className={(!sign&&"hidden")+" px-4 py-2 bg-blue-500 text-white rounded-lg w-full"}
+                    onClick={otpverification}
+                  >
+                    Verify Email
+                  </button>
+                </div>
+
                 )}
               </div>
             )}
 
             <div className="flex flex-col gap-1">
-              <input 
+              <input onChange={(e)=>setPassword(e.target.value)}
                 id="password-mobile" 
                 type="password" 
                 placeholder='Enter the password' 
@@ -173,16 +260,16 @@ const Login = () => {
           <div className='gap-3 w-full flex flex-col items-center'>
             <button 
               className="px-6 py-2.5 bg-blue-600 text-white rounded-xl w-full" 
-              onClick={()=>navigate("/issues/home")}
+              onClick={handleSubmit}
             >
               {sign ? "Sign In" : "Log In"}
             </button>
             
             <p className='text-center text-sm'>
               {sign ? (
-                <>Already a user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveleft();}}> Login</span></>
+                <>Already a user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveleft();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}> Login</span></>
               ) : (
-                <>New user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveright();}}> Sign Up</span></>
+                <>New user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveright();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}> Sign Up</span></>
               )}
             </p>
           </div>
@@ -208,18 +295,18 @@ const Login = () => {
             <div className="flex flex-col gap-4 w-72">
               {sign && (
                 <div className="flex flex-col gap-1">
-                  <input id="name" type="text" placeholder='Create Username' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+                  <input onChange={(e)=>setName(e.target.value)} id="name" type="text" placeholder='Create Username' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
                 </div>
               )}
 
-             {who=="student"&& <div className="flex flex-col gap-1">
-                <input id="admno" type="text" placeholder='Enter Admission No.' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+             {(who=="student"||sign) && <div className="flex flex-col gap-1">
+                <input onChange={(e)=>setAddNo(e.target.value)} id="admno" type="text" placeholder='Enter Admission No.' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
               </div>}
 
               {(sign || who=="incharge"||who=="admin") && (
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2 relative">
-                    <input id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded-2xl w-full" />
+                    <input onChange={(e)=>setemail(e.target.value)} id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded-2xl w-full" />
                     <button
                       className={(!sign&&" hidden")+" px-3 py-1 bg-blue-500 text-white absolute right-[-70px]"}
                       onClick={handleVerify}
@@ -229,27 +316,37 @@ const Login = () => {
                   </div>
 
                   {otpverify && (
-                    <div className="flex flex-col gap-1 mt-2">
-                      <input id="otp" type="number" placeholder='Enter the OTP' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+                    
+                    <div className="flex gap-2 relative">
+                      <div className="flex flex-col gap-1 mt-2">
+                      <input onChange={(e)=>setOtp(e.target.value.toString().replace(/\s+/g, ""))} id="otp" type="number" placeholder='Enter the OTP' className="border px-2 focus:outline-0 py-1 rounded-2xl w-full"  />
                     </div>
+                    <button
+                      className={(!sign&&" hidden")+" px-3 py-1 bg-blue-500 text-white absolute right-[-70px]"}
+                      onClick={otpverification}
+                    >
+                      verify
+                    </button>
+                  </div>
+
                   )}
                 </div>
               )}
 
               <div className="flex flex-col gap-1">
-                <input id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+                <input onChange={(e)=>setPassword(e.target.value)} id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
               </div>
             </div>
 
             <div className='gap-2 w-full flex flex-col items-center'>
-              <button className="px-6 py-2 bg-blue-600 text-white rounded " onClick={()=>navigate("/issues/home")}>
+              <button className="px-6 py-2 bg-blue-600 text-white rounded " onClick={()=>{handleSubmit()}}>
                 {sign ? "SignIn" : "LogIn"}
               </button>
               <p className='text-start '>
                 {sign ? (
-                  <>Already a user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveleft();}}>login</span></>
+                  <>Already a user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveleft();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}>login</span></>
                 ) : (
-                  <>New user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveright();}}>signIn</span></>
+                  <>New user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveright();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}>signIn</span></>
                 )}
               </p>
             </div>

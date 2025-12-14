@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const PostData = () => {
     const {id} = useParams();
-    const { dark, setcommvis, timeAgo, PostData, inchargelogin, inchargeData } = useContext(AppContext);
+    const { dark, setcommvis, timeAgo, PostData, inchargelogin, profileData } = useContext(AppContext);
     const [on, seton] = useState(false);
     const [onfile, setOnFile] = useState(null);
     const [data, setData] = useState({});
@@ -186,7 +186,7 @@ const PostData = () => {
                 </div>
                 
                 {/* Incharge Resolve Section */}
-                {(inchargelogin && !verifyImage && (!data.resolvedByIncharge && !data.resolvedByStudent) && inchargeData?.work?.toLowerCase() === data.problem?.toLowerCase()) && (
+                {(inchargelogin && !verifyImage && (!data.resolvedByIncharge && !data.resolvedByStudent) && profileData?.work?.toLowerCase() === data.problem?.toLowerCase()) && (
                     <div className="py-4 px-4 capitalize flex flex-col sm:flex-row gap-3 sm:gap-2 justify-center items-center">
                         <p className="px-3 py-2 text-white rounded-xl lg:rounded-3xl bg-gray-700 hover:bg-gray-600 w-full sm:w-fit text-center cursor-pointer transition-colors" onClick={() => document.getElementById("verifyImage").click()}>
                             Resolve Issue

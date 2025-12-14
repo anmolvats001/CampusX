@@ -3,7 +3,7 @@ import { AppContext } from '../Context/context';
 import IssueContent from '../components/IssueContent';
 
 const Resolve = () => {
-  const { data, dark, inchargeData, setcommvis } = useContext(AppContext);
+  const { data, dark, profileData,setProfileData, setcommvis } = useContext(AppContext);
   const [filteredData, setFilteredData] = useState([]);
   
   useEffect(() => {
@@ -20,11 +20,11 @@ const Resolve = () => {
         data.filter(item => 
           !item.resolvedByIncharge &&
           !item.resolvedByStudent &&
-          inchargeData.work.toLowerCase() === item.problem.toLowerCase()
+          profileData.work.toLowerCase() === item.problem.toLowerCase()
         )
       );
     }
-  }, [data, inchargeData]);
+  }, [data, profileData]);
   
   return (
     <div
@@ -42,7 +42,7 @@ const Resolve = () => {
             <i className="fi fi-rr-check-circle text-4xl mb-4 text-green-500"></i>
             <p className="text-lg font-medium">No issues to resolve</p>
             <p className="text-sm mt-2 text-center">
-              All {inchargeData?.work?.toLowerCase() || "assigned"} issues are currently resolved or in process
+              All {profileData?.work?.toLowerCase() || "assigned"} issues are currently resolved or in process
             </p>
             <div className="mt-4 flex gap-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>

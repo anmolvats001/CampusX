@@ -3,7 +3,7 @@ import { AppContext } from "../Context/context";
 import { useNavigate } from "react-router-dom";
 
 const InchargeDashboard = () => {
-    const {dark, inchargeData, data, setcommvis, setPostdata} = useContext(AppContext);
+    const {dark,profileData,setProfileData, data, setcommvis, setPostdata} = useContext(AppContext);
     let [resolved, setresolved] = useState(0);
     let [inprocess, setinprocess] = useState(0);
     let [pending, setpending] = useState(0);
@@ -22,7 +22,7 @@ const InchargeDashboard = () => {
         let process = 0;
         let resolve = 0;
 
-        inchargeData?.yourwork?.forEach((e) => {
+        profileData?.yourwork?.forEach((e) => {
             if (e.resolvedByStudent) {
                 resolve++;
             } else if (e.resolvedByIncharge) {
@@ -34,7 +34,7 @@ const InchargeDashboard = () => {
             if (
                 !item.resolvedByIncharge &&
                 !item.resolvedByStudent &&
-                inchargeData.work.toLowerCase() === item.problem.toLowerCase()
+                profileData.work.toLowerCase() === item.problem.toLowerCase()
             ) {
                 pendingdata++;
             }
@@ -43,7 +43,7 @@ const InchargeDashboard = () => {
         setpending(pendingdata);
         setinprocess(process);
         setresolved(resolve);
-    }, [inchargeData, data]);
+    }, [profileData, data]);
 
     return (
         <div
@@ -85,7 +85,7 @@ const InchargeDashboard = () => {
                 <div className="px-4 sm:px-8 lg:px-12 pt-6 lg:pt-10 p-4 lg:p-6">
                     <p className="text-lg sm:text-xl font-bold">Posts Resolved By You</p>
                     <div className="flex flex-col gap-3 sm:gap-4 px-2 sm:px-3.5 py-3 sm:py-3.5">
-                        {inchargeData?.yourwork?.map((e, index) => (
+                        {profileData?.yourwork?.map((e, index) => (
                             <div
                                 key={index}
                                 className={`${dark ? "bg-black" : "bg-white"} 
@@ -107,7 +107,7 @@ const InchargeDashboard = () => {
                         ))}
                         
                         {/* Empty state */}
-                        {(!inchargeData?.yourwork || inchargeData.yourwork.length === 0) && (
+                        {(!profileData?.yourwork || profileData.yourwork.length === 0) && (
                             <div className="flex flex-col items-center justify-center h-48 text-gray-500">
                                 <i className="fi fi-rr-inbox text-4xl mb-4"></i>
                                 <p className="text-lg font-medium">No resolved posts yet</p>

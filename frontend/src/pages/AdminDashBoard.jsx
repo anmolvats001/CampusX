@@ -3,7 +3,7 @@ import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashBoard = () => {
-   const {dark, adminData, setPostdata, data, adminlogin, setcommvis} = useContext(AppContext);
+   const {dark,profileData,setProfileData, setPostdata, data, adminlogin, setcommvis} = useContext(AppContext);
     let [resolved, setresolved] = useState(0);
     let [inprocess, setinprocess] = useState(0);
     let [pending, setpending] = useState(0);
@@ -25,13 +25,13 @@ const AdminDashBoard = () => {
         const filteredPosts = [];
 
         data?.forEach((e) => {
-            if (e.problem === adminData?.work) {
+            if (e.problem === profileData?.work) {
                 filteredPosts.push(e);
             }
 
-            if (e.problem === adminData?.work && e.resolvedByStudent) {
+            if (e.problem === profileData?.work && e.resolvedByStudent) {
                 resolve++;
-            } else if (e.problem === adminData?.work && e.resolvedByIncharge) {
+            } else if (e.problem === profileData?.work && e.resolvedByIncharge) {
                 process++;
             }
         });
@@ -40,7 +40,7 @@ const AdminDashBoard = () => {
             if (
                 !item.resolvedByIncharge &&
                 !item.resolvedByStudent &&
-                adminData?.work?.toLowerCase() === item.problem?.toLowerCase()
+                profileData?.work?.toLowerCase() === item.problem?.toLowerCase()
             ) {
                 pendingdata++;
             }
@@ -50,7 +50,7 @@ const AdminDashBoard = () => {
         setpending(pendingdata);
         setinprocess(process);
         setresolved(resolve);
-    }, [adminData, data]);
+    }, [profileData, data]);
 
     return (
         adminlogin && (

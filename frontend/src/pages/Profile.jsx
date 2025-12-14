@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const { 
     dark, 
-    userData, 
+    profileData,setProfileData, 
     setProfileOn, 
     setPostVis, 
     inchargelogin, 
@@ -14,9 +14,7 @@ const Profile = () => {
     adminlogin, 
     setAdminLogin, 
     studentLogin, 
-    setStudentLogin, 
-    inchargeData, 
-    adminData, 
+    setStudentLogin,  
     setcommvis 
   } = useContext(AppContext);
   
@@ -57,7 +55,7 @@ const Profile = () => {
         <div className="flex flex-col sm:flex-row gap-4 pt-4 sm:pt-7 px-4 sm:px-7 items-center justify-between w-full">
           <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
             <img 
-              src={data.image} 
+              src={data.profile} 
               className="w-20 h-20 sm:w-28 sm:h-28 rounded-full object-cover" 
               alt="Profile" 
             />
@@ -110,7 +108,7 @@ const Profile = () => {
           <div className="flex flex-col px-4 sm:px-8 py-4 sm:py-5 gap-3 sm:gap-4">
             <div className="flex flex-col sm:flex-row sm:gap-3.5">
               <p className="capitalize font-semibold text-gray-500 text-sm sm:text-base">Mobile no. :</p>
-              <p className="text-sm sm:text-base">+91 {data.mobile_no}</p>
+              <p className="text-sm sm:text-base">+91 {data.phone}</p>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-3.5">
               <p className="capitalize font-semibold text-gray-500 text-sm sm:text-base">Email :</p>
@@ -127,7 +125,7 @@ const Profile = () => {
   };
 
   const renderPosts = () => {
-    if (!userData?.posts) {
+    if (!profileData?.posts) {
       return (
         <div className="flex w-full h-80 justify-center items-center">
           <p className="text-lg sm:text-2xl text-gray-400">Post Something</p>
@@ -141,7 +139,7 @@ const Profile = () => {
           <p className="text-gray-400 text-lg sm:text-xl font-bold pb-3.5 mr-0 sm:mr-36">Posts</p>
         </div>
         <div className="flex gap-3 flex-wrap justify-center sm:justify-start px-4 sm:px-8 pb-10 mt-6">
-          {userData.posts.map((e, i) => (
+          {profileData.posts.map((e, i) => (
             <PostCard 
               key={i} 
               e={e} 
@@ -174,9 +172,9 @@ const Profile = () => {
       
       <div className="overflow-y-scroll w-full scroller h-full relative">
         {/* Student Profile */}
-        {studentLogin && userData && (
+        {studentLogin && profileData && (
           <>
-            {renderProfileHeader(userData, "student")}
+            {renderProfileHeader(profileData, "student")}
             <div className="mt-3">
               {renderPosts()}
             </div>
@@ -184,16 +182,16 @@ const Profile = () => {
         )}
 
         {/* Incharge Profile */}
-        {inchargelogin && inchargeData && (
+        {inchargelogin && profileData && (
           <>
-            {renderProfileHeader(inchargeData, "incharge")}
+            {renderProfileHeader(profileData, "incharge")}
           </>
         )}
 
         {/* Admin Profile */}
-        {adminlogin && adminData && (
+        {adminlogin && profileData && (
           <>
-            {renderProfileHeader(adminData, "admin")}
+            {renderProfileHeader(profileData, "admin")}
           </>
         )}
       </div>

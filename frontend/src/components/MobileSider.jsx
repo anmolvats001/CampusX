@@ -5,7 +5,7 @@ import campusxblack from "../assets/campusxblack.png"
 import { NavLink, useNavigate } from "react-router-dom";
 
 const MobileSider = () => {
-  const { dark, setProfileOn, setFilter, setPostVis, inchargelogin, adminlogin, studentLogin } = useContext(AppContext);
+  const { dark, setProfileOn, setFilter, setPostVis, inchargelogin, adminlogin, studentLogin,logout } = useContext(AppContext);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -280,7 +280,7 @@ const MobileSider = () => {
                 
                 <div  className={`${!dark ? "dark" : "light"} ${clickProfile? "  flex ":"hidden "} flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}>
                   <p className="cursor-pointer hover:opacity-80" onClick={() => { setProfileOn(true); navigate("/issues/profile"); setMenuOpen(false); }}>View Profile</p>
-                  <p className="cursor-pointer hover:opacity-80 text-red-800" onClick={() => {setInchargelogin(false);setStudentLogin(false);setAdminLogin(false); navigate("/"); setMenuOpen(false); }}>Logout</p>
+                  <p className="cursor-pointer hover:opacity-80 text-red-800" onClick={() => {logout() }}>Logout</p>
                 </div>
               </div>
               
