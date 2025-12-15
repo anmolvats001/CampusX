@@ -82,7 +82,7 @@ const Sider = () => {
   </div>
 
   <div
-    className={`${!dark?"dark":"light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-12 bottom-10 px-4 py-3 rounded-xl shadow-lg`}
+    className={`${!dark?"dark":"light"} hidden group-hover:flex flex-col gap-2 text-sm absolute -right-9 bottom-10 px-4 py-3 rounded-xl shadow-lg `}
   >
     <div className="cursor-pointer hover:opacity-80"onClick={()=>{setProfileOn(true);navigate("/issues/profile")}}>View Profile</div>
     <div className="cursor-pointer hover:opacity-80 text-red-800" onClick={()=>{logout()}}>Logout</div>

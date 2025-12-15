@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../Context/context';
 import upload_icon from "../assets/upload_icon.png"
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const EditProfile = () => {
     const [image, setimage] = useState(false);
@@ -9,9 +11,7 @@ const EditProfile = () => {
         profileData,setProfileData, 
         dark, 
         setProfileOn, 
-        inchargelogin, 
-        adminlogin, 
-        studentLogin 
+        atoken,itoken,utoken,findProfileData
     } = useContext(AppContext);
     
     const navigate = useNavigate();
@@ -21,10 +21,19 @@ const EditProfile = () => {
             const formData = new FormData();
             formData.append('name', profileData.name);
             formData.append("phone", profileData.phone);
-            formData.append("address", JSON.stringify(profileData.address));
+            formData.append("address",profileData.address);
             formData.append("gender", profileData.gender);
             formData.append("dob", profileData.dob);
+            formData.append("bio", profileData.bio);
             image && formData.append("image", image);
+            const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/editprofile",formData,{headers:{utoken}});
+            if(data.success){
+                toast.success("Updated Successfully");
+                findProfileData();
+            }
+            else{
+                toast.error(data.message)
+            }
         } catch(err) {
             console.log(err);
         }
@@ -141,7 +150,7 @@ const EditProfile = () => {
                                 />
                                 <textarea 
                                     className="text-xs mt-2.5 text-gray-500 capitalize w-full md:w-[500px] border border-gray-700 px-2 py-1 md:px-1.5 rounded-lg focus:outline-0 focus:text-white resize-none scroller h-20" 
-                                    value={data.address || ''} 
+                                    value={data.address || ''} placeholder='Enter address' 
                                     onChange={(e) => setData(prev => ({...prev, address: e.target.value}))}
                                 />
                             </div>
@@ -152,11 +161,11 @@ const EditProfile = () => {
         );
     }
 
-    const handleSaveChanges = (setData, data) => {
+    const handleSaveChanges = async(setData, data) => {
         if (image) {
-            setData(prev => ({ ...prev, image: URL.createObjectURL(image) }));
+            setData(prev => ({ ...prev, profile: URL.createObjectURL(image) }));
         }
-        // Here you would typically call an API to save the changes
+        updateUserProfileData();
         navigate("/issues/profile");
     }
 
@@ -166,7 +175,7 @@ const EditProfile = () => {
             <div className="h-16 sm:h-0"></div>
             
             {/* Student Edit Profile */}
-            {studentLogin && (
+            {utoken && (
                 <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
                     {renderProfileHeader(profileData,setProfileData, "student")}
                     {renderFormFields(profileData,setProfileData, true)}
@@ -182,7 +191,7 @@ const EditProfile = () => {
             )}
 
             {/* Incharge Edit Profile */}
-            {inchargelogin && profileData && (
+            {itoken && profileData && (
                 <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
                     {renderProfileHeader(profileData, setProfileData, "incharge")}
                     {renderFormFields(profileData, setProfileData)}
@@ -198,7 +207,7 @@ const EditProfile = () => {
             )}
 
             {/* Admin Edit Profile */}
-            {adminlogin && profileData && (
+            {atoken && profileData && (
                 <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
                     {renderProfileHeader(profileData, setProfileData, "admin")}
                     {renderFormFields(profileData, setProfileData)}

@@ -75,27 +75,30 @@ const getProfile = async (req, res) => {
 };
 const editProfile = async (req, res) => {
   try {
-    const { userId, name, address, dob, gender, phone } = req.body;
+    const { userId, name, address, dob, gender, phone,bio } = req.body;
     const imageFile = req.file;
-    if (!name || !phone || !address || !dob || !gender) {
+    if (!name || !phone || !address || !dob || !gender ||!bio) {
       return res.json({ success: false, message: "Data missing" });
     }
     await userModel.findByIdAndUpdate(userId, {
       name,
       phone,
-      address: JSON.parse(address),
+      address,
       dob,
       gender,
+      bio
     });
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
         resource_type: "image",
       });
       const imageUrl = imageUpload.secure_url;
-      await userModel.findByIdAndUpdate(userId, { image: imageUrl });
+      console
+      await userModel.findByIdAndUpdate(userId, { profile: imageUrl });
     }
     return res.json({ success: true, message: "Edited Successfully" });
   } catch (error) {
+    console.log(error)
     res.json({
       success: false,
       message: "Error occured in editProfile function",

@@ -382,7 +382,7 @@ let arr = [
 ];
 
 setData(arr)
-},[])
+},[utoken,itoken,atoken])
     const timeAgo = (dateString) => {
     const now = new Date();
     const past = new Date(dateString);
