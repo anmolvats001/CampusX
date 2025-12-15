@@ -5,7 +5,7 @@ import { AppContext } from '../Context/context';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const {setStudentLogin, setAdminLogin, setInchargelogin, studentLogin,logout,utoken,itoken,atoken} = useContext(AppContext);
+  const {setStudentLogin, setAdminLogin, setInchargelogin, studentLogin,logout,utoken,itoken,atoken,profileData} = useContext(AppContext);
   const {setProfileOn} = useContext(AppContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -66,13 +66,13 @@ const NavBar = () => {
               <div className="px-1 py-1 lg:px-2 lg:py-2  flex rounded-2xl group">
                 <div className="flex gap-1 cursor-pointer items-center">
                   <img 
-                    src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" 
+                    src={`${profileData.profile}`} 
                     className="rounded-full w-7 h-7 lg:w-9 lg:h-9 object-cover" 
                     alt="" 
                   />
                   <div className="hidden lg:block">
-                    <p className="font-bold text-xs lg:text-sm whitespace-nowrap">Anmol Vats</p>
-                    <p className="text-[6px] lg:text-[8px] text-gray-500">(CSE)</p>
+                    <p className="font-bold text-xs lg:text-sm whitespace-nowrap">{profileData.name}</p>
+                    <p className="text-[6px] lg:text-[8px] text-gray-500">({profileData.branch})</p>
                   </div>
                 </div>
                 <div className={`hidden group-hover:flex flex-col gap-1 text-xs lg:text-sm absolute right-2 lg:right-8 top-0 bg-white px-3 py-2 rounded-xl shadow-lg z-100 whitespace-nowrap h-44`}>

@@ -8,7 +8,7 @@ import profile from "../assets/user.png"
 import setting from "../assets/settings.png"
 import { NavLink, useNavigate } from "react-router-dom";
 const Sider = () => {
-  const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,logout}=useContext(AppContext);
+  const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,logout,profileData}=useContext(AppContext);
   const navigate=useNavigate();
   
   console.log(dark);
@@ -62,14 +62,14 @@ const Sider = () => {
         </div><div className="absolute bottom-6 px-4 py-3 flex border border-gray-800 rounded-2xl group">
   <div className="flex gap-1.5 cursor-pointer items-center">
     <img 
-      src="https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740&q=80" 
+      src={`${profileData.profile}`} 
       className="rounded-full w-10 object-cover" 
       alt="" 
     />
 
     <div>
-      <p className="bold">Anmol Vats</p>
-      <p className="text-[8px] text-gray-500">(CSE)</p>
+      <p className="bold">{profileData.name}</p>
+      <p className="text-[8px] text-gray-500">({profileData.branch})</p>
     </div>
 
     <div className="h-full flex items-center">
