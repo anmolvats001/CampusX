@@ -121,10 +121,11 @@ const deletePost = async (req, res) => {
 };
 const uploadPost = async (req, res) => {
   try {
-    const { userId, data, block, problem } = req.body;
+    const {  data, block, problem,floor } = req.body;
+    const {userId} = req.body;
     const imageFiles = req.files;
-
-    if (!data || !block || !problem || !userId) {
+    console.log(userId,data,block,problem)
+    if (!data || !block || !problem) {
       return res.status(400).json({
         success: false,
         message: "Credential missing"
@@ -135,7 +136,7 @@ const uploadPost = async (req, res) => {
       data,
       block,
       problem,
-      files: []
+      files: [],floor
     });
 
     const postId = newPost._id;

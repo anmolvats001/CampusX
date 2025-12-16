@@ -405,7 +405,7 @@ setData(arr)
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,profileData,setProfileData,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,logout}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,profileData,setProfileData,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,logout,findProfileData}}>
       {children}
     </AppContext.Provider>
   );

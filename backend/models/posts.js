@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const PostSchema=new mongoose.Schema({
-    creator:{type:mongoose.Schema.Types.ObjectId,ref:"user"},
+    creator:{type:mongoose.Schema.Types.ObjectId,ref:"user",required:true},
     publishedOn:{type:Date,default:Date.now()},
     resolvedByStudent:{type:Boolean,required:true,default:false},
     resolvedByIncharge:{type:Boolean,required:true,default:false},
@@ -10,6 +10,7 @@ const PostSchema=new mongoose.Schema({
     block:{type:String,required:true},
     problem:{type:String,required:true},
     files:[{type:Object}],
+    floor:{type:String,default:"0"},
     likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
     comments:[{type:mongoose.Schema.Types.ObjectId,ref:"comment"}],
 })

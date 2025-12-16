@@ -1,16 +1,54 @@
 import React, { useContext, useRef, useState } from "react";
 import { AppContext } from "../Context/context";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Post = () => {
-  const { postvis, setPostVis, dark, profileData,setProfileData } = useContext(AppContext);
+  const { postvis, setPostVis, dark, profileData,setProfileData,utoken ,findProfileData} = useContext(AppContext);
   const [words, setWords] = useState(0);
   const textref = useRef();
+  const [textdata,setttextdata]=useState(null);
   const [images, setImages] = useState([]);
   const [location, setLocation] = useState(null);
+  const [imageFiles,setImageFiles]=useState([]);
+  const [floor,setFloor]=useState(null);
+  const [problem,setProblem]=useState(null)
   const fileInputRef = useRef();
+  const navigate=useNavigate();
+  const postData = async () => {
+  try {
+    const formData = new FormData();
 
-  const deleteimage = (index) => {
+    formData.append("data", textdata);
+    formData.append("floor", floor);
+    formData.append("problem", problem);
+    formData.append("block", location);
+
+    imageFiles.forEach((file) => {
+      formData.append("images", file); // MUST match multer field name
+    });
+    setPostVis(false);
+     navigate("/issues/home");
+    const res = await axios.post( import.meta.env.VITE_BACKEND_URL + "/api/user/post",formData,{headers:{utoken}});
+    
+    if (res.data.success) {
+      toast.success("Post has been posted");
+      
+      findProfileData();
+     
+    } else {
+      toast.error(res.data.message);
+    }
+
+  } catch (error) {
+    console.error(error);
+    toast.error(error.response?.data?.message || "Post failed");
+  }
+};
+const deleteimage = (index) => {
     setImages(prev => prev.filter((_, i) => i !== index));
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   const handlePickImages = () => {
@@ -25,11 +63,14 @@ const Post = () => {
     }
     const urls = files.map((file) => URL.createObjectURL(file));
     setImages((prev) => [...prev, ...urls]);
+    setImageFiles((prev) => [...prev, ...files]);
+    console.log(imageFiles)
   };
 
   let maxwords = 650;
   const findwords = (e) => {
     let val = e.target.value;
+    setttextdata(e.target.value)
     let len = val.length;
     setWords(val.length);
     if (len > maxwords) {
@@ -135,7 +176,7 @@ const Post = () => {
             {location !== "ground" && (
               <select
                 className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
-              >
+              onChange={(e) => { setFloor(e.target.value); }}>
                 <option value="0">Floor</option>
                 <option value="1">0</option>
                 <option value="1">1</option>
@@ -149,7 +190,7 @@ const Post = () => {
             
             <select
               className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
-            >
+            onChange={(e) => { setProblem(e.target.value); }}>
               <option value="Block">Problem</option>
               <option value="food">Food</option>
               <option value="water">Water</option>
@@ -173,14 +214,14 @@ const Post = () => {
                       (dark ? "text-white" : "text-black") + " fi fi-br-cross-small text-xs"
                     }
                   ></i>
-                </div>
+                </div>{console.log(e)}
                 <img src={e} className="w-full h-full rounded-lg object-cover" alt="" />
               </div>
             ))}
           </div>
           
           <div className="flex px-4 sm:px-8 justify-end pt-3">
-            <p
+            <p onClick={postData}
               className={
                 (dark ? "light" : "dark") +
                 " w-fit px-4 py-2 font-semibold rounded-full cursor-pointer text-sm sm:text-base"
