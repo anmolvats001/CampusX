@@ -62,14 +62,14 @@ const Sider = () => {
         </div><div className="absolute bottom-6 px-4 py-3 flex border border-gray-800 rounded-2xl group">
   <div className="flex gap-1.5 cursor-pointer items-center">
     <img 
-      src={`${profileData.profile}`} 
+      src={`${profileData?.profile}`} 
       className="rounded-full w-10 object-cover" 
       alt="" 
     />
 
     <div>
-      <p className="bold">{profileData.name}</p>
-      <p className="text-[8px] text-gray-500">({profileData.branch})</p>
+      <p className="bold">{profileData?.name}</p>
+      <p className="text-[8px] text-gray-500">({profileData?.branch})</p>
     </div>
 
     <div className="h-full flex items-center">

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import login from "../assets/login.jpeg";
 import { gsap } from "gsap";
 import { AppContext } from '../Context/context';
-import { useNavigate } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
 import axios from "axios";
 const Login = () => {
   const [sign, setSign] = useState(false);
@@ -63,7 +63,7 @@ const Login = () => {
           toast.success("OTP verified")
         }
         else{
-          toast.error("Wrong OTP")
+          toast.error(data.message)
         }
   }
   const handleVerify = async() => {
@@ -84,7 +84,7 @@ const Login = () => {
        toast.success("OTP sent successfully");
       }
     } else {
-      toast.error("Enter valid Email");
+      toast.error(data.message);
     }
   };
   const handleSubmit=async()=>{
@@ -137,6 +137,7 @@ const Login = () => {
     }
     } catch (error) {
       console.log(error)
+      toast.error(data.message)
     }
   }
   useEffect(() => {

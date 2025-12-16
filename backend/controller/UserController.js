@@ -27,14 +27,14 @@ const Userlogin = async (req, res) => {
     }
   } catch (error) {
     console.log(error)
-    res.json({ success: false, message: "Error occured in Login function" });
+    res.json({ success: false, message: error.message });
   }
 };
 const regiser = async (req, res) => {
   try {
     const { email, password, name, add_no } = req.body;
     if (!email || !password || !name || !add_no) {
-      return res.json({ message: "feils are missing ", success: false });
+      return res.json({ message: "feilds are missing ", success: false });
     }
     if (!validator.isEmail(email)) {
       return res.json({ success: false, message: "Invalid Email" });
@@ -58,7 +58,7 @@ const regiser = async (req, res) => {
     });
   } catch (error) {
     console.log(error)
-    res.json({ success: false, message: "Error in Register function" });
+    res.json({ success: false, message: error.message });
   }
 };
 const getProfile = async (req, res) => {
@@ -69,7 +69,7 @@ const getProfile = async (req, res) => {
   } catch (error) {
     res.json({
       success: false,
-      message: "Error occured in getProfile function",
+      message: error.message,
     });
   }
 };
@@ -101,7 +101,7 @@ const editProfile = async (req, res) => {
     console.log(error)
     res.json({
       success: false,
-      message: "Error occured in editProfile function",
+      message: error.message,
     });
   }
 };
@@ -116,7 +116,7 @@ const deletePost = async (req, res) => {
     await PostModel.findByIdAndDelete(postId);
     res.json({ success: true, message: "Post deleted successfully" });
   } catch (error) {
-    res.json({ success: false, message: "error occured in deletepost" });
+    res.json({ success: false, message: error.message });
   }
 };
 const uploadPost = async (req, res) => {
@@ -175,7 +175,7 @@ const uploadPost = async (req, res) => {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: "Error occurred in uploadPost function"
+      message: error.message
     });
   }
 };

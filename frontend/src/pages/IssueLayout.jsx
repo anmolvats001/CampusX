@@ -8,11 +8,11 @@ import Comment from "../components/Comment";
 import Post from "../components/Post";
 
 const IssuesLayout = () => {
-  const { commvisible, setcommvis, dark, timeAgo, profileon, setDark, postvis, inchargelogin, adminlogin, studentLogin } = useContext(AppContext);
+  const { commvisible, setcommvis, dark, timeAgo, profileon, setDark, postvis, inchargelogin, adminlogin, studentLogin,utoken,itoken,atoken } = useContext(AppContext);
   const navigate = useNavigate();
   
   useEffect(() => {
-    (!inchargelogin && !adminlogin && !studentLogin) && navigate("/login")
+    (!itoken && !utoken && !atoken) && navigate("/login")
   }, []);
   
   return (
