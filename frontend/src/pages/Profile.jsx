@@ -34,6 +34,7 @@ const Profile = () => {
   
   useEffect(() => {
     const el = bioRef.current;
+    console.log(profileData)
     setProfileOn(true);
     if (el) {
       const style = window.getComputedStyle(el);
@@ -141,6 +142,7 @@ const Profile = () => {
         <div className="flex gap-3 flex-wrap justify-center sm:justify-start px-4 sm:px-8 pb-10 mt-6">
           {profileData.posts.map((e, i) => (
             <PostCard 
+            
               key={i} 
               e={e} 
               dark={dark} 

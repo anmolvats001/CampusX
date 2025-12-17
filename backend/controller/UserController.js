@@ -64,7 +64,14 @@ const regiser = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const { userId } = req.body;
-    const UserData = await userModel.findById(userId).populate("posts");
+    const UserData = await userModel.findById(userId).populate({
+  path: "posts",
+  populate: {
+    path: "creator",
+    model: "user",
+    select:"name profile branch"
+  }
+})
     res.json({ success: true, message: "Profile got successfully ", UserData });
   } catch (error) {
     res.json({
@@ -201,4 +208,26 @@ const getOtp = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp };
+const deleteAccount = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    await Promise.all(
+      user.posts.map((postId) => PostModel.findByIdAndDelete(postId))
+    );
+
+    await userModel.findByIdAndDelete(userId);
+
+    res.json({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount };

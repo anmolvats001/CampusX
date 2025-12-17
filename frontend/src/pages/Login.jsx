@@ -133,7 +133,7 @@ const Login = () => {
     }
   }
     else{
-      toast.error("some fields are missing");
+      toast.error("Verify otp first");
     }
     } catch (error) {
       console.log(error)

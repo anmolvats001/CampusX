@@ -35,14 +35,14 @@ const PostData = () => {
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                             <div className="flex gap-2 px-1 sm:px-2.5">
                                 <img
-                                    src={data.profile}
+                                    src={data?.creator?.profile}
                                     className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-full"
-                                    alt={`Profile picture of ${data.name}`}
+                                    alt={`Profile picture of ${data?.creator?.name}`}
                                 />
                                 <div className="min-w-0">
-                                    <p className="font-semibold text-xs sm:text-sm">{data.name}</p>
+                                    <p className="font-semibold text-xs sm:text-sm">{data?.creator?.name}</p>
                                     <p className="text-[9px] sm:text-[10px] text-gray-400">
-                                        ({data.branch})
+                                        ({data?.creator?.branch})
                                     </p>
                                 </div>
                                 <p className="text-[10px] sm:text-[12px] font-semibold text-gray-400 px-1 mt-1">
@@ -222,7 +222,7 @@ const PostData = () => {
                 )}
                 
                 {/* Already Verified Proof */}
-                {PostData.verifiedImage && (
+                {PostData.verifiedImage!=="null" && (
                     <div className='flex flex-col px-4 sm:px-5 py-4'>
                         <p className='text-lg sm:text-xl lg:text-2xl font-bold capitalize'>Resolved Proof</p>
                         <div className="py-4 px-4 capitalize flex flex-col sm:flex-row gap-3 sm:gap-4 items-start text-gray-500">
@@ -255,7 +255,7 @@ const PostData = () => {
             {/* Image Modal */}
             {on && (
                 <>
-                    <div className="fixed lg:absolute w-[95%] lg:w-[80%] bg-black z-50 h-full lg:left-16 lg:top-0 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2.5 flex justify-center items-center rounded-lg lg:rounded-none">
+                    <div className="fixed lg:absolute w-[95%] lg:w-[80%] bg-black z-50 h-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2.5 flex justify-center items-center rounded-lg lg:rounded-none">
                         <img src={onfile} className="w-full h-fit max-h-[80vh] object-contain" alt="Enlarged view" />
                         <div className="absolute top-4 lg:top-9 rounded-full px-1 flex pt-0.5 right-4 lg:right-6 cursor-pointer" onClick={() => { seton(false); setcommvis(false); }}>
                             <i className={`${dark ? "text-white" : "text-black"} fi fi-br-cross-small text-xl`}></i>

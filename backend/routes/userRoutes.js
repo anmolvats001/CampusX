@@ -1,5 +1,5 @@
 import express from "express";
-import { deletePost, editProfile, getOtp, getProfile, regiser, uploadPost, Userlogin } from "../controller/UserController.js";
+import { deleteAccount, deletePost, editProfile, getOtp, getProfile, regiser, uploadPost, Userlogin } from "../controller/UserController.js";
 import authUser from "../middleware/authUser.js"
 import upload from "../middleware/multer.js";
 const userRouter=express.Router();
@@ -10,4 +10,5 @@ userRouter.post("/editprofile",upload.single("image",1),authUser,editProfile);
 userRouter.post("/deletePost",authUser,deletePost);
 userRouter.post("/post",upload.array("images", 4),authUser,uploadPost);
 userRouter.post("/otp",getOtp);
+userRouter.get("/deleteaccount",authUser,deleteAccount);
 export default userRouter;
