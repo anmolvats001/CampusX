@@ -26,11 +26,15 @@ const Post = () => {
     formData.append("block", location);
 
     imageFiles.forEach((file) => {
-      formData.append("images", file); // MUST match multer field name
+      formData.append("images", file);
     });
-    setPostVis(false);
-     navigate("/issues/home");
-    const res = await axios.post( import.meta.env.VITE_BACKEND_URL + "/api/user/post",formData,{headers:{utoken}});
+    if(!problem||!textdata||!location||imageFiles.length==0){
+      toast.error("credential missing")
+    }
+    else{
+      setPostVis(false);
+      navigate("/issues/home")
+const res = await axios.post( import.meta.env.VITE_BACKEND_URL + "/api/user/post",formData,{headers:{utoken}});
     
     if (res.data.success) {
       toast.success("Post has been posted");
@@ -41,6 +45,8 @@ const Post = () => {
       toast.error(res.data.message);
     }
 
+    }
+    
   } catch (error) {
     console.error(error);
     toast.error(error.response?.data?.message || "Post failed");

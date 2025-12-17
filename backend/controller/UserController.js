@@ -121,7 +121,7 @@ const deletePost = async (req, res) => {
 };
 const uploadPost = async (req, res) => {
   try {
-    const {  data, block, problem,floor } = req.body;
+    const { data, block, problem, floor } = req.body;
     const {userId} = req.body;
     const imageFiles = req.files;
     console.log(userId,data,block,problem)
