@@ -94,3 +94,33 @@ button:hover {
   0% { transform: translateX(0);}
   100% { transform: translateX(-50%);}
 }
+@keyframes shimmerText-black {
+  0% {
+    color: #9ca3af; /* gray-400 */
+  }
+  50% {
+    color: #000000; /* black */
+  }
+  100% {
+    color: #9ca3af; /* gray-400 */
+  }
+}
+
+.animate-shimmer-text-black {
+  animation: shimmerText-black 1.5s infinite ease-in-out;
+}
+@keyframes shimmerText-white {
+  0% {
+    color: #8b929e; /* gray-400 */
+  }
+  50% {
+    color: white; /* white */
+  }
+  100% {
+    color: #7a8393; /* gray-400 */
+  }
+}
+
+.animate-shimmer-text-white {
+  animation: shimmerText-white 1.5s infinite ease-in-out;
+}

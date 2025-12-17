@@ -3,6 +3,7 @@ import { AppContext } from "../Context/context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Shrimmer from "./Shrimmer";
 
 const Post = () => {
   const { postvis, setPostVis, dark, profileData,setProfileData,utoken ,findProfileData} = useContext(AppContext);
@@ -13,11 +14,13 @@ const Post = () => {
   const [location, setLocation] = useState(null);
   const [imageFiles,setImageFiles]=useState([]);
   const [floor,setFloor]=useState(null);
-  const [problem,setProblem]=useState(null)
+  const [problem,setProblem]=useState(null);
+  const [loading,setLoading]=useState(false);
   const fileInputRef = useRef();
   const navigate=useNavigate();
   const postData = async () => {
   try {
+    setLoading(true)
     const formData = new FormData();
 
     formData.append("data", textdata);
@@ -32,17 +35,21 @@ const Post = () => {
       toast.error("credential missing")
     }
     else{
-      setPostVis(false);
-      navigate("/issues/home")
+      
+     
 const res = await axios.post( import.meta.env.VITE_BACKEND_URL + "/api/user/post",formData,{headers:{utoken}});
     
     if (res.data.success) {
       toast.success("Post has been posted");
-      
+      setLoading(false)
+       navigate("/issues/home")
       findProfileData();
-     
+     setPostVis(false)
     } else {
       toast.error(res.data.message);
+      setLoading(false);
+      setPostVis(false)
+      navigate("/issues/home")
     }
 
     }
@@ -91,7 +98,7 @@ const deleteimage = (index) => {
       <div
         className="absolute w-screen z-99 h-full top-0 bg-black opacity-70"
         onClick={() => {
-          setPostVis(false);
+          if(!loading)setPostVis(false);
         }}
       ></div>
 
@@ -104,7 +111,9 @@ const deleteimage = (index) => {
           px-3 sm:px-4 py-2.5 sm:py-3
           border-2 rounded-xl z-100 border-gray-800 bg-inherit`}
       >
-        <div className="h-full overflow-y-scroll w-full pt-3 sm:pt-5 scroller px-2 sm:px-4">
+        {loading ? (
+    <Shrimmer />
+  ) : (<div className="h-full overflow-y-scroll w-full pt-3 sm:pt-5 scroller px-2 sm:px-4">
           <div>
             <div className="flex gap-2 px-1 sm:px-2.5 justify-between">
               <div className="flex gap-2">
@@ -236,7 +245,7 @@ const deleteimage = (index) => {
               Post
             </p>
           </div>
-        </div>
+        </div>)}
       </div>
     </>
   );

@@ -15,10 +15,10 @@ const Login = () => {
   const navigate=useNavigate();
   const mainpart=useRef();
   const sidepart=useRef();
-  const [email,setemail]=useState(null);
-  const [name,setName]=useState(null);
-  const [password,setPassword]=useState(null);
-  const [addno,setAddNo]=useState(null);
+  const [email,setemail]=useState("");
+  const [name,setName]=useState("");
+  const [password,setPassword]=useState("");
+  const [addno,setAddNo]=useState("");
   const [otp,setOtp]=useState(0);
   const [correctOtp,setCorrectOpt]=useState(false);
   const [otpfromback,setotpfromback]=useState(56);
@@ -190,6 +190,7 @@ const Login = () => {
                   type="text" 
                   placeholder='Create Username' 
                   className="border focus:outline-0 px-3 py-2 rounded-2xl" 
+                  value={name}
                 />
               </div>
             )}
@@ -203,6 +204,7 @@ const Login = () => {
                   type="text" 
                   placeholder='Enter Admission No.' 
                   className="border focus:outline-0 px-3 py-2 rounded-2xl" 
+                  value={addno}
                 />
               </div>
             )}
@@ -216,6 +218,7 @@ const Login = () => {
                     placeholder='Enter the Email' 
                     type="email" 
                     className="border px-3 focus:outline-0 py-2 rounded-2xl w-full" 
+                    value={email}
                   />
                   <button
                     className={(!sign&&"hidden")+" px-4 py-2 bg-blue-500 text-white rounded-lg w-full"}
@@ -254,6 +257,7 @@ const Login = () => {
                 type="password" 
                 placeholder='Enter the password' 
                 className="border focus:outline-0 px-3 py-2 rounded-2xl" 
+                value={password}
               />
             </div>
           </div>
@@ -268,9 +272,9 @@ const Login = () => {
             
             <p className='text-center text-sm'>
               {sign ? (
-                <>Already a user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveleft();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}> Login</span></>
+                <>Already a user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveleft();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}> Login</span></>
               ) : (
-                <>New user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveright();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}> Sign Up</span></>
+                <>New user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveright();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}> Sign Up</span></>
               )}
             </p>
           </div>
@@ -296,18 +300,18 @@ const Login = () => {
             <div className="flex flex-col gap-4 w-72">
               {sign && (
                 <div className="flex flex-col gap-1">
-                  <input onChange={(e)=>setName(e.target.value)} id="name" type="text" placeholder='Create Username' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+                  <input onChange={(e)=>setName(e.target.value)} id="name" type="text" placeholder='Create Username' className="border focus:outline-0 px-2 py-1 rounded-2xl" value={name}/>
                 </div>
               )}
 
              {(who=="student"||sign) && <div className="flex flex-col gap-1">
-                <input onChange={(e)=>setAddNo(e.target.value)} id="admno" type="text" placeholder='Enter Admission No.' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+                <input onChange={(e)=>setAddNo(e.target.value)} id="admno" type="text" placeholder='Enter Admission No.' className="border focus:outline-0 px-2 py-1 rounded-2xl" value={addno}/>
               </div>}
 
               {(sign || who=="incharge"||who=="admin") && (
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2 relative">
-                    <input onChange={(e)=>setemail(e.target.value)} id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded-2xl w-full" />
+                    <input onChange={(e)=>setemail(e.target.value)} id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded-2xl w-full" value={email}/>
                     <button
                       className={(!sign&&" hidden")+" px-3 py-1 bg-blue-500 text-white absolute right-[-70px]"}
                       onClick={handleVerify}
@@ -335,7 +339,7 @@ const Login = () => {
               )}
 
               <div className="flex flex-col gap-1">
-                <input onChange={(e)=>setPassword(e.target.value)} id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded-2xl" />
+                <input onChange={(e)=>setPassword(e.target.value)} id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded-2xl" value={password}/>
               </div>
             </div>
 
@@ -345,9 +349,9 @@ const Login = () => {
               </button>
               <p className='text-start '>
                 {sign ? (
-                  <>Already a user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveleft();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}>login</span></>
+                  <>Already a user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveleft();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}>login</span></>
                 ) : (
-                  <>New user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveright();setAddNo(null);setemail(null);setPassword(null),setCorrectOpt(null)}}>signIn</span></>
+                  <>New user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveright();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}>signIn</span></>
                 )}
               </p>
             </div>

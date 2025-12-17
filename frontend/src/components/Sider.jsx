@@ -63,7 +63,7 @@ const Sider = () => {
   <div className="flex gap-1.5 cursor-pointer items-center">
     <img 
       src={`${profileData?.profile}`} 
-      className="rounded-full w-10 object-cover" 
+      className="rounded-full w-10 h-10 object-cover" 
       alt="" 
     />
 

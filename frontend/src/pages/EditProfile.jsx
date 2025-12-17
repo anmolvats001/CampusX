@@ -146,7 +146,7 @@ const EditProfile = () => {
                                     type='text' 
                                     className={`${dark ? "text-gray-300" : "text-gray-800"} w-full sm:w-fit border border-gray-700 px-2 py-1 md:px-1.5 rounded-lg focus:outline-0`}
                                     value={data.branch || data.work || ''}
-                                    readOnly={type !== "student"}
+
                                 />
                                 <textarea 
                                     className="text-xs mt-2.5 text-gray-500 capitalize w-full md:w-[500px] border border-gray-700 px-2 py-1 md:px-1.5 rounded-lg focus:outline-0 focus:text-white resize-none scroller h-20" 

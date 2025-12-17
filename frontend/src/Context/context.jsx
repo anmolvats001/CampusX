@@ -29,6 +29,7 @@ export const AppProvider = ({ children }) => {
   const [utoken,setuToken]=useState(localStorage.getItem("utoken")?localStorage.getItem("utoken"):false);
   const [itoken,setiToken]=useState(localStorage.getItem("itoken")?localStorage.getItem("itoken"):false);
   const [atoken,setaToken]=useState(localStorage.getItem("atoken")?localStorage.getItem("atoken"):false);
+  const [loading,setLoading]=useState(false)
   const backendUrl=import.meta.env.VITE_BACKEND_URL;
   const logout=()=>{
     setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);
@@ -405,7 +406,7 @@ setData(arr)
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,profileData,setProfileData,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,logout,findProfileData}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,profileData,setProfileData,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,logout,findProfileData,loading,setLoading}}>
       {children}
     </AppContext.Provider>
   );
