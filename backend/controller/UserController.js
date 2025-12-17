@@ -84,9 +84,7 @@ const editProfile = async (req, res) => {
   try {
     const { userId, name, address, dob, gender, phone,bio } = req.body;
     const imageFile = req.file;
-    if (!name || !phone || !address || !dob || !gender ||!bio) {
-      return res.json({ success: false, message: "Data missing" });
-    }
+    
     await userModel.findByIdAndUpdate(userId, {
       name,
       phone,
