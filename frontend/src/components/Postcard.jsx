@@ -1,12 +1,40 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../Context/context";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
-  const { setcommvis ,setPostdata} = useContext(AppContext);
+  const { setcommvis ,setPostdata,utoken,findProfileData} = useContext(AppContext);
   const navigate=useNavigate()
   const isOpen = openMenuId === index;
-
+  const deletePost=async(postId)=>{
+    const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/deletePost",{postId},{headers:{utoken}});
+    if(data.success){
+      findProfileData();
+      navigate("/issues/home")
+      toast.success("post Deleted Successfully");
+      
+    }
+    else{
+      toast.error(data.message);
+    }
+  }
+  const resolvePost=async(postId)=>{
+    try {
+      const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/resolvepost",{postId},{headers:{utoken}});
+      if(data.success){
+        findProfileData();
+      navigate("/issues/home")
+        toast.success(data.message)
+      }
+      else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(data.message);
+    }
+  }
   return (
     <div
       className={`${dark ? "bg-black" : "bg-white"} 
@@ -29,7 +57,7 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
           ${e.liked && "text-red-800"}`}
         >
           <i className="fi fi-ss-social-network"></i>
-          <p className="text-xs ml-1">{e.likes}</p>
+          <p className="text-xs ml-1">{e.likes.length}</p>
         </div>
 
         {/* Comments */}
@@ -39,7 +67,7 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
           onClick={() => setcommvis(true)}
         >
           <i className="fi fi-ts-comment-dots text-sm"></i>
-          <p className="text-sm">{e.comments}</p>
+          <p className="text-sm">{e.comments.length}</p>
         </div>
 
         {/* Agree */}
@@ -48,7 +76,7 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
           group flex items-center rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative`}
         >
           <i className="fi fi-tr-heart-partner-handshake"></i>
-          <p className="text-sm">{e.comments}</p>
+          <p className="text-sm">{e.comments.length}</p>
 
           <div className="absolute px-3 py-1 bottom-8 left-6 bg-white rounded shadow hidden group-hover:block">
             agree
@@ -74,8 +102,9 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
       </div>
       {isOpen && (
         <div className={(dark ? "dark" : "light") + " absolute right-3 top-10 w-24 rounded-2xl shadow p-2"}>
-          <p className="cursor-pointer hover:bg-gray-900 p-1">Edit</p>
-          <p className="cursor-pointer hover:bg-gray-900 p-1 text-red-900">Delete</p>
+          
+          {!e.resolvedByStudent&&<p className="cursor-pointer hover:bg-gray-900 p-1 text-green-600"onClick={()=>resolvePost(e._id)} >Resolved</p>}
+          <p className="cursor-pointer hover:bg-gray-900 p-1 text-red-900" onClick={()=>deletePost(e._id)}>Delete</p>
         </div>
       )}
     </div>

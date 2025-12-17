@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../Context/context";
 import PostCard from "../components/Postcard";
 import { useNavigate } from "react-router-dom";
-
+import Shrimmer from "../components/Shrimmer.jsx"
 const Profile = () => {
   const { 
     dark, 
@@ -172,7 +172,7 @@ const Profile = () => {
       {/* Mobile Header Spacing */}
       <div className="h-16 sm:h-0"></div>
       
-      <div className="overflow-y-scroll w-full scroller h-full relative">
+      {profileData?(<div className="overflow-y-scroll w-full scroller h-full relative">
         {/* Student Profile */}
         {studentLogin && profileData && (
           <>
@@ -196,7 +196,7 @@ const Profile = () => {
             {renderProfileHeader(profileData, "admin")}
           </>
         )}
-      </div>
+      </div>):(<Shrimmer/>)}
     </div>
   );
 };

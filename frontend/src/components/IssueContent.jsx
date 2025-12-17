@@ -179,7 +179,7 @@ const IssueContent = ({e, i, search}) => {
                         (e.liked && "text-red-800")
                     }>
                         <i className="fi fi-ss-social-network text-sm lg:text-base"></i>
-                        <p className="text-xs ml-1">{e.likes}</p>
+                        <p className="text-xs ml-1">{e.likes.length}</p>
                     </div>
                     <div
                         className={
@@ -192,7 +192,7 @@ const IssueContent = ({e, i, search}) => {
                         }}
                     >
                         <i className="fi fi-ts-comment-dots text-sm lg:text-base"></i>
-                        <p className="text-xs lg:text-sm">{e.comments || 0}</p>
+                        <p className="text-xs lg:text-sm">{e.comments.length || 0}</p>
                     </div>
                     <div
                         className={
@@ -201,7 +201,7 @@ const IssueContent = ({e, i, search}) => {
                         }
                     >
                         <i className="fi fi-tr-heart-partner-handshake text-sm lg:text-base"></i>
-                        <p className="text-xs lg:text-sm">{e.comments || 0}</p>
+                        <p className="text-xs lg:text-sm">{e.comments.length || 0}</p>
                         <div className="absolute px-2 py-1 bottom-6 lg:bottom-8 left-4 lg:left-6 bg-white dark:bg-gray-800 rounded shadow hidden group-hover:block text-xs">
                             agree
                         </div>

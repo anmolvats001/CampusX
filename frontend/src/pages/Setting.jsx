@@ -14,7 +14,7 @@ const Setting = () => {
     itoken,
     setiToken,
     atoken,
-    setaToken,setStudentLogin
+    setaToken,setStudentLogin,logout
   } = useContext(AppContext);
   const navigate = useNavigate();
   const [contactOpen, setContactOpen] = useState(false);
@@ -208,7 +208,7 @@ const Setting = () => {
         <div className="px-4 sm:px-8 lg:px-20 py-6 sm:py-7 flex justify-end">
           <p
             className="font-bold px-3 sm:px-3 py-1.5 sm:py-1 bg-red-600 hover:bg-red-700 text-white rounded-xl sm:rounded-2xl cursor-pointer transition-colors text-sm sm:text-base"
-            onClick={() => navigate("/")}
+            onClick={logout}
           >
             Logout
           </p>

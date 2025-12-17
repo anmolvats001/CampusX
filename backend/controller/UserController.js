@@ -227,5 +227,14 @@ const deleteAccount = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
-
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount };
+const resolvePost=async(req,res)=>{
+  try {
+    const {userId,postId}=req.body;
+    const post=await PostModel.findByIdAndUpdate(postId,{resolvedByStudent:true});
+    res.json({success:true,message:"Post has been resolved"})
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error})
+  }
+}
+export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost };

@@ -164,15 +164,15 @@ const PostData = () => {
                         <div className="flex px-4 sm:px-6 lg:px-11 mt-3 sm:mt-4 lg:mt-5 gap-3 sm:gap-5 lg:gap-8 flex-wrap">
                             <div className={(dark ? "text-gray-500" : "text-gray-700") + " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " + (data.liked && "text-red-800")}>
                                 <i className="fi fi-ss-social-network text-sm lg:text-base"></i>
-                                <p className="text-xs ml-1">{data.likes || 0}</p>
+                                <p className="text-xs ml-1">{data.likes?.length || 0}</p>
                             </div>
                             <div className={(dark ? "text-gray-500" : "text-gray-700") + " flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-blue-500"} onClick={() => setcommvis(true)}>
                                 <i className="fi fi-ts-comment-dots text-sm lg:text-base"></i>
-                                <p className="text-xs lg:text-sm">{data.comments || 0}</p>
+                                <p className="text-xs lg:text-sm">{data.comments?.length || 0}</p>
                             </div>
                             <div className={(dark ? "text-gray-500" : "text-gray-700") + " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative"}>
                                 <i className="fi fi-tr-heart-partner-handshake text-sm lg:text-base"></i>
-                                <p className="text-xs lg:text-sm">{data.comments || 0}</p>
+                                <p className="text-xs lg:text-sm">{data.comments?.length || 0}</p>
                                 <div className="absolute px-2 py-1 bottom-6 lg:bottom-8 left-4 lg:left-6 bg-white dark:bg-gray-800 rounded shadow hidden group-hover:block text-xs">
                                     agree
                                 </div>
