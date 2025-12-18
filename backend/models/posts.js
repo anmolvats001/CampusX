@@ -11,7 +11,7 @@ const PostSchema=new mongoose.Schema({
     problem:{type:String,required:true},
     files:[{type:Object}],
     floor:{type:String,default:"0"},
-    likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user",unique:true}],
+    likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
     comments:[{type:mongoose.Schema.Types.ObjectId,ref:"comment"}],
 })
 const PostModel= mongoose.model("post",PostSchema);

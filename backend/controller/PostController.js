@@ -55,10 +55,11 @@ const handleLike=async(req,res)=>{
     
   const {userId,postId}=req.body;
   if(!postId||!userId){
-    return res.josn({succes:false,message:"post/user is missing"});
+    return res.json({succes:false,message:"post/user is missing"});
   }
   const post=await PostModel.findById(postId);
-  const exist=post.likes.some((id)=>id.toString()===userId.toString());
+  const exist= post.likes.includes(userId);
+
   if(exist){
     await PostModel.findByIdAndUpdate(postId,{$pull:{likes:userId}});
     res.json({success:true,message:"Post UnLiked"});
@@ -103,7 +104,7 @@ const AllComments=async(req,res)=>{
         select:"name profile branch"
       }
     });
-
+    res.json({success:true,message:"got comment",comments:post.comments})
   } catch (error) {
     res.json({success:false,message:error.message})
   }

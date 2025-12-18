@@ -44,7 +44,7 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
       {e.files[0]&&<img
         src={e.files[0].src}
         className="rounded-xl object-cover w-full h-[70%]"
-        alt=""  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${index}`)}}
+        alt=""  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${e._id}`)}}
       />}
 
       <p className="line-clamp-2 text-sm text-gray-500 pt-1.5"  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${index}`)}}>{e.data}</p>

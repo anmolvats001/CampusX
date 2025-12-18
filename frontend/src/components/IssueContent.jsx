@@ -1,9 +1,23 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const IssueContent = ({e, i, search}) => {
-    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile} = useContext(AppContext);
+    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken} = useContext(AppContext);
+    const handleLike=async(id)=>{
+        const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
+        console.log(data);
+        if(data.success){
+            toast.success(data.message);
+            findData();
+        }
+        else{
+            console.log(data);
+        }
+    }
+    
     const navigate = useNavigate();
     return (
         <div 
@@ -177,7 +191,7 @@ const IssueContent = ({e, i, search}) => {
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
                         (e.liked && "text-red-800")
                     }>
-                        <i className="fi fi-ss-social-network text-sm lg:text-base"></i>
+                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>handleLike(e._id)}></i>
                         <p className="text-xs ml-1">{e.likes.length}</p>
                     </div>
                     <div
