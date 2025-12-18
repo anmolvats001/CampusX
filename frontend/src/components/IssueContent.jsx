@@ -17,7 +17,7 @@ const IssueContent = ({e, i, search}) => {
             console.log(data);
         }
     }
-    
+
     const navigate = useNavigate();
     return (
         <div 

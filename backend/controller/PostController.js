@@ -109,4 +109,4 @@ const AllComments=async(req,res)=>{
     res.json({success:false,message:error.message})
   }
 }
-export {AllPost,getPostData,handleLike,addComment};
+export {AllPost,getPostData,handleLike,addComment,AllComments};
