@@ -11,7 +11,6 @@ const Sider = () => {
   const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,logout,profileData}=useContext(AppContext);
   const navigate=useNavigate();
   
-  console.log(dark);
   return(
     <div className={(dark ? "dark":"light") +" pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 hidden lg:block overflow-y-scroll scroller"}>
       <div className=" h-full relative ">

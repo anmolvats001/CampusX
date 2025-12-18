@@ -3,10 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useContext, useState } from "react";
 import { AppContext } from "../Context/context";
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const PostData = () => {
     const {id} = useParams();
-    const { dark, setcommvis, timeAgo, PostData, inchargelogin, profileData } = useContext(AppContext);
+    const { dark, setcommvis, timeAgo, inchargelogin, profileData,utoken } = useContext(AppContext);
     const [on, seton] = useState(false);
     const [onfile, setOnFile] = useState(null);
     const [data, setData] = useState({});
@@ -17,14 +18,28 @@ const PostData = () => {
         toast.success("Verified");
         navigate("/issues/home");
     }
-    
+    const findData=async()=>{
+        const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/getPostData",{postId:id},{headers:{utoken}});
+        console.log(data);
+        setData(data.postdata);
+    }
     useEffect(() => {
-        setData(PostData);
+        findData();
         return () => {
             setcommvis(false);
         }
-    }, [PostData]);
-    
+    }, []);
+    const handleLike=async()=>{
+        const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
+        console.log(data);
+        if(data.success){
+            toast.success(data.message);
+            findData();
+        }
+        else{
+            console.log(data);
+        }
+    }
     return (
         <div className={`${dark ? "dark" : "light"} h-screen w-full lg:w-[45%] border border-gray-800 relative`}>
             <div className="overflow-y-scroll w-full scroller h-full relative">
@@ -163,7 +178,7 @@ const PostData = () => {
                         {/* Action Buttons */}
                         <div className="flex px-4 sm:px-6 lg:px-11 mt-3 sm:mt-4 lg:mt-5 gap-3 sm:gap-5 lg:gap-8 flex-wrap">
                             <div className={(dark ? "text-gray-500" : "text-gray-700") + " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " + (data.liked && "text-red-800")}>
-                                <i className="fi fi-ss-social-network text-sm lg:text-base"></i>
+                                <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={handleLike}></i>
                                 <p className="text-xs ml-1">{data.likes?.length || 0}</p>
                             </div>
                             <div className={(dark ? "text-gray-500" : "text-gray-700") + " flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-blue-500"} onClick={() => setcommvis(true)}>
@@ -222,13 +237,13 @@ const PostData = () => {
                 )}
                 
                 {/* Already Verified Proof */}
-                {PostData.verifiedImage!=="null" && (
+                {data.verifiedImage!=="null" && (
                     <div className='flex flex-col px-4 sm:px-5 py-4'>
                         <p className='text-lg sm:text-xl lg:text-2xl font-bold capitalize'>Resolved Proof</p>
                         <div className="py-4 px-4 capitalize flex flex-col sm:flex-row gap-3 sm:gap-4 items-start text-gray-500">
-                            <img onClick={() => { seton(true); setOnFile(PostData.verifiedImage); }} src={PostData.verifiedImage} className='h-fit max-h-[200px] sm:max-h-[250px] w-full sm:w-[40%] rounded-lg cursor-pointer' alt="Verified proof" />
+                            <img onClick={() => { seton(true); setOnFile(data.verifiedImage); }} src={data.verifiedImage} className='h-fit max-h-[200px] sm:max-h-[250px] w-full sm:w-[40%] rounded-lg cursor-pointer' alt="Verified proof" />
                             <div>
-                                <p className="font-medium">Verified by {PostData.verifiedBy}</p>
+                                <p className="font-medium">Verified by {data.verifiedBy}</p>
                                 <p className="text-sm mt-1 text-green-500">✓ This issue has been resolved</p>
                             </div>
                         </div>
@@ -236,7 +251,7 @@ const PostData = () => {
                 )}
                 
                 {/* Student Verified Section */}
-                {PostData.resolvedByStudent && !PostData.resolvedByIncharge && (
+                {data.resolvedByStudent && !data.resolvedByIncharge && (
                     <div className='flex flex-col px-4 sm:px-5 py-4'>
                         <p className='text-lg sm:text-xl lg:text-2xl font-bold capitalize'>Resolution Status</p>
                         <div className="py-4 px-4 flex gap-4 items-center text-gray-500">

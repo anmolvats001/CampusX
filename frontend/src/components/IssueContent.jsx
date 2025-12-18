@@ -5,12 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const IssueContent = ({e, i, search}) => {
     const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile} = useContext(AppContext);
     const navigate = useNavigate();
-    
     return (
         <div 
             onClick={() => {
                 search && setPostdata(e); 
-                search && navigate(`/issues/post-data/${i}`);
+                search && navigate(`/issues/post-data/${e._id}`);
             }}
             key={i}
             className="w-full border border-gray-800 rounded-xl lg:rounded-2xl h-fit px-3 sm:px-3.5 py-2.5 cursor-pointer  transition-colors"
@@ -20,14 +19,14 @@ const IssueContent = ({e, i, search}) => {
                 <div className="flex justify-between items-start">
                     <div className="flex gap-2 px-1 sm:px-2.5 flex-1 min-w-0">
                         <img
-                            src={e.profile}
+                            src={e.creator.profile}
                             className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-full"
-                            alt={`Profile picture of ${e.name}`}
+                            alt={`Profile picture of ${e.creator.name}`}
                         />
                         <div className="min-w-0 flex-1">
-                            <p className="font-semibold text-xs sm:text-sm truncate">{e.name}</p>
+                            <p className="font-semibold text-xs sm:text-sm truncate">{e.creator.name}</p>
                             <p className="text-[9px] sm:text-[10px] text-gray-400">
-                                ({e.branch})
+                                ({e.creator.branch})
                             </p>
                         </div>
                         <p className="text-[10px] sm:text-[12px] font-semibold text-gray-400 px-1 mt-1 whitespace-nowrap">
