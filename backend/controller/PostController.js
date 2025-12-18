@@ -1,3 +1,4 @@
+import CommentModel from "../models/comment.js";
 import PostModel from "../models/posts.js";
 const AllPost = async (req, res) => {
   try {
@@ -72,4 +73,39 @@ const handleLike=async(req,res)=>{
     res.json({success:false,message:error.message})
   }
 }
-export {AllPost,getPostData,handleLike};
+const addComment=async(req ,res )=>{
+  try {
+  const {postId,userId,data}=req.body;
+  if(!data){
+    return res.json({succes:false,message:"data missing"});
+  }
+  const newComment=await CommentModel.create({
+    data:data,
+    creator:userId,
+  });
+  const commentId=newComment._id;
+  await PostModel.findByIdAndUpdate(postId,{$push:{comments:commentId}});
+  res.json({succes:false,message:"commented successfully"});
+  } catch (error) {
+    res.json({succes:false,message:error.message});
+  }
+}
+const AllComments=async(req,res)=>{
+  try {
+    const {postId}=req.body;
+    if(!postId){
+      return res.json({success:false,message:"cant find the post"})
+    }
+    const post=await PostModel.findById(postId).populate({
+      path:"comments",
+      populate:{
+        path:"creator",
+        select:"name profile branch"
+      }
+    });
+
+  } catch (error) {
+    res.json({success:false,message:error.message})
+  }
+}
+export {AllPost,getPostData,handleLike,addComment};
