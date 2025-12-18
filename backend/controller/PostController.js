@@ -83,10 +83,11 @@ const addComment=async(req ,res )=>{
   const newComment=await CommentModel.create({
     data:data,
     creator:userId,
+    post:postId
   });
   const commentId=newComment._id;
   await PostModel.findByIdAndUpdate(postId,{$push:{comments:commentId}});
-  res.json({succes:false,message:"commented successfully"});
+  res.json({success:true,message:"commented successfully"});
   } catch (error) {
     res.json({succes:false,message:error.message});
   }

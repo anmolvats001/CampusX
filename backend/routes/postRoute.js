@@ -6,5 +6,5 @@ postRouter.get("/alluser-post",authUser,AllPost);
 postRouter.post("/getPostData",authUser,getPostData);
 postRouter.post("/like-postuser",authUser,handleLike);
 postRouter.post("/comment-post",authUser,addComment);
-postRouter.get("/allcomments",AllComments)
+postRouter.post("/allcomments",AllComments)
 export default postRouter;

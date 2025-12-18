@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const IssueContent = ({e, i, search}) => {
-    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken} = useContext(AppContext);
+    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost} = useContext(AppContext);
     const handleLike=async(id)=>{
         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
         console.log(data);
@@ -17,7 +17,6 @@ const IssueContent = ({e, i, search}) => {
             console.log(data);
         }
     }
-
     const navigate = useNavigate();
     return (
         <div 
@@ -201,6 +200,7 @@ const IssueContent = ({e, i, search}) => {
                         }
                         onClick={(event) => {
                             event.stopPropagation();
+                            findCommentData(e._id)
                             setcommvis(true);
                         }}
                     >

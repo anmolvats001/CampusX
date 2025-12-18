@@ -29,6 +29,8 @@ export const AppProvider = ({ children }) => {
   const [utoken,setuToken]=useState(localStorage.getItem("utoken")?localStorage.getItem("utoken"):false);
   const [itoken,setiToken]=useState(localStorage.getItem("itoken")?localStorage.getItem("itoken"):false);
   const [atoken,setaToken]=useState(localStorage.getItem("atoken")?localStorage.getItem("atoken"):false);
+  const [commentData,setcommentData]=useState(null);
+  const [currentPost,setCurrentPost]=useState(null);
   const backendUrl=import.meta.env.VITE_BACKEND_URL;
   const logout=()=>{
     setInchargelogin(false);setStudentLogin(false);setAdminLogin(false);
@@ -46,19 +48,26 @@ export const AppProvider = ({ children }) => {
       toast.error("data not found");
     }
     else{
-      setProfileData(data.UserData);
+      setProfileData({...data.UserData,posts:[...data.UserData.posts].reverse()});
     }
   }
   const findAllPost=async()=>{
     const {data}=await axios.get(import.meta.env.VITE_BACKEND_URL+"/api/post/alluser-post",{headers:{utoken}});
     if(data.success){
-      setData(data.postdata);
+      setData([...data.postdata].reverse());
       // console.log(data.postdata)
     }
     else{
       console.log(data)
     }
   }
+ const findCommentData=async(id)=>{
+  const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/allcomments",{postId:id});
+  setCurrentPost(id);
+  if(data.success){
+    setcommentData([...data.comments].reverse());
+  }
+ }
   useEffect(()=>{
     findProfileData();
     findAllPost();
@@ -85,7 +94,7 @@ export const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,profileData,setProfileData,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,logout,findProfileData}}>
+    <AppContext.Provider value={{ user, setUser,dark,setDark,val,setVal,setcommvis,commvisible,timeAgo,comment,setcomment,profileon,setProfileOn,postvis,setPostVis,filter,setFilter,PostData,setPostdata,data,setData,on,onfile,seton,setOnFile,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,profileData,setProfileData,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,logout,findProfileData,commentData,setcommentData,findCommentData,setCurrentPost,currentPost}}>
       {children}
     </AppContext.Provider>
   );
