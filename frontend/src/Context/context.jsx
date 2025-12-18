@@ -62,8 +62,9 @@ export const AppProvider = ({ children }) => {
     }
   }
  const findCommentData=async(id)=>{
-  const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/allcomments",{postId:id});
+  const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/allcomments",{postId:id},{headers:{utoken}});
   setCurrentPost(id);
+  console.log(data)
   if(data.success){
     setcommentData([...data.comments].reverse());
   }

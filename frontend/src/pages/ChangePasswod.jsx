@@ -2,23 +2,36 @@ import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/context";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const ChangePassword = () => {
-    const { dark } = useContext(AppContext);
+    const { dark ,utoken} = useContext(AppContext);
     const navigate = useNavigate();
-    const inputref = useRef();
-    const newpassref = useRef();
-    const [password, setpassword] = useState("0000000");
     const [verified, setverified] = useState(false);
-    
-    const submit = () => {
-        toast.success("Changed the password successfully");
+    const [add_no,setAddno]=useState(null);
+    const [password,setPass]=useState(null);
+    const [newPass,setNewPass]=useState(null);
+    const submit = async() => {
+        if(!newPass){
+            toast.error("New Password is missing")
+        }
+        else{
+            
+       const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/changePass",{newPass},{headers:{utoken}});
+       if(data.success){
+        toast.success(data.message);
         navigate("/issues/home");
+       }
+       else{
+        toast.error(data.message);
+       }
+        }
     }
-    
-    const verify = () => {
-        if (inputref.current.value === password) {
+    const verify = async() => {
+         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/checkpass",{add_no,password},{headers:{utoken}});
+        if (data.success) {
             setverified(true);
+            submit();
         } else {
             toast.error("Wrong password");
         }
@@ -43,7 +56,7 @@ const ChangePassword = () => {
                         <p className="text-base sm:text-lg w-full sm:w-1/3">Admission No. :</p>
                         <input 
                             placeholder="Enter Your Admission No." 
-                            type="text" 
+                            type="text" onChange={(e)=>setAddno(e.target.value)}
                             className={`border focus:outline-none border-gray-800 w-full sm:w-2/3 rounded-lg sm:rounded-xl py-2 sm:py-1 px-2.5 sm:px-1.5 ${dark ? "text-gray-200 bg-gray-900" : "bg-white"} text-sm sm:text-base`}
                         />
                     </div>
@@ -52,11 +65,11 @@ const ChangePassword = () => {
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
                         <p className="text-base sm:text-lg w-full sm:w-1/3">Current Password :</p>
                         <div className="flex gap-2 w-full sm:w-2/3">
-                            <input 
+                            <input  onChange={(e)=>setPass(e.target.value)}
                                 placeholder="Enter Current Password" 
                                 type="password" 
                                 className={`border focus:outline-none border-gray-800 w-full rounded-lg sm:rounded-xl py-2 sm:py-1 px-2.5 sm:px-1.5 ${dark ? "text-gray-200 bg-gray-900" : "bg-white"} text-sm sm:text-base`} 
-                                ref={inputref}
+                                
                             />
                             <p 
                                 className="px-3 sm:px-2 py-2 sm:py-1 bg-gray-600 hover:bg-gray-700 text-white rounded-lg sm:rounded-2xl cursor-pointer transition-colors whitespace-nowrap text-xs sm:text-sm flex items-center"
@@ -71,11 +84,11 @@ const ChangePassword = () => {
                     {verified && (
                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
                             <p className="text-base sm:text-lg w-full sm:w-1/3">New Password :</p>
-                            <input 
+                            <input onChange={(e)=>setNewPass(e.target.value)}
                                 placeholder="Enter New Password" 
                                 type="password" 
                                 className={`border focus:outline-none border-gray-800 w-full sm:w-2/3 rounded-lg sm:rounded-xl py-2 sm:py-1 px-2.5 sm:px-1.5 ${dark ? "text-gray-200 bg-gray-900" : "bg-white"} text-sm sm:text-base`} 
-                                ref={newpassref}
+                            
                             />
                         </div>
                     )}

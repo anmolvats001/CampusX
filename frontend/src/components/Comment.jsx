@@ -38,6 +38,12 @@ const postComment=async(id)=>{
     toast.error("Data is missing")
   }
 }
+const handleCommentLike=async(id)=>{
+  const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-comment",{commentId:id},{headers:{utoken}});
+    toast.success(data.message);
+    setcommvis(false);
+    findCommentData(id);
+}
 useEffect(()=>{
   setData(commentData)
 },[commentData])
@@ -130,15 +136,15 @@ useEffect(()=>{
                     </p>
                   </div>
                   <div className="flex px-8 lg:px-11 mt-3 lg:mt-5 gap-4 lg:gap-8">
-                    <div
+                    <div onClick={()=>handleCommentLike(e._id)}
                       className={
                         (dark ? "text-gray-500" : "text-gray-700") +
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
-                        (e?.liked && "text-red-800")
+                        (e.liked && "text-red-800")
                       }
                     >
                       <i className="fi fi-ss-social-network text-sm lg:text-base"></i>
-                      <p className="text-xs ml-1">{e.likes||0}</p>
+                      <p className="text-xs ml-1">{e.likes.length||0}</p>
                     </div>
                   </div>
                 </div>

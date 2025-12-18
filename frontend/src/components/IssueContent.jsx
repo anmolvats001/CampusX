@@ -17,6 +17,18 @@ const IssueContent = ({e, i, search}) => {
             console.log(data);
         }
     }
+    const handleAgree=async(id)=>{
+        const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/agree",{postId:id},{headers:{utoken}});
+        console.log(data);
+        if(data.success){
+            toast.success(data.message);
+            findData();
+        }
+        else{
+            console.log(data);
+        }
+    }
+    
     const navigate = useNavigate();
     return (
         <div 
@@ -190,7 +202,7 @@ const IssueContent = ({e, i, search}) => {
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
                         (e.liked && "text-red-800")
                     }>
-                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>handleLike(e._id)}></i>
+                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(!search)handleLike(e._id)}}></i>
                         <p className="text-xs ml-1">{e.likes.length}</p>
                     </div>
                     <div
@@ -207,14 +219,14 @@ const IssueContent = ({e, i, search}) => {
                         <i className="fi fi-ts-comment-dots text-sm lg:text-base"></i>
                         <p className="text-xs lg:text-sm">{e.comments.length || 0}</p>
                     </div>
-                    <div
+                    <div onClick={()=>{if(!search)handleAgree(e._id)}}
                         className={
                             (dark ? "text-gray-500" : "text-gray-700") +
-                            " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative"
+                            " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative "+(e.agreed&&"text-orange-600")
                         }
                     >
                         <i className="fi fi-tr-heart-partner-handshake text-sm lg:text-base"></i>
-                        <p className="text-xs lg:text-sm">{e.comments.length || 0}</p>
+                        <p className="text-xs lg:text-sm">{e.agrees.length || 0}</p>
                         <div className="absolute px-2 py-1 bottom-6 lg:bottom-8 left-4 lg:left-6 bg-white dark:bg-gray-800 rounded shadow hidden group-hover:block text-xs">
                             agree
                         </div>

@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import PostModel from "../models/posts.js"
 import transporter from "../middleware/nodemailer.js";
 import generateOTP from "../middleware/otpgenerator.js";
+import CommentModel from "../models/comment.js";
 const Userlogin = async (req, res) => {
   try {
     const { add_no, password } = req.body;
@@ -118,6 +119,10 @@ const deletePost = async (req, res) => {
   post => post.toString() !== postId.toString()
 );
     await userModel.findByIdAndUpdate(userId, userData);
+    const post=await PostModel.findById(postId);
+    post.comments.map(async(e)=>{
+      await CommentModel.findByIdAndDelete(e);
+    })
     await PostModel.findByIdAndDelete(postId);
     res.json({ success: true, message: "Post deleted successfully" });
   } catch (error) {
@@ -237,4 +242,40 @@ const resolvePost=async(req,res)=>{
     res.json({success:false,message:error})
   }
 }
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost };
+const checkPassword=async(req,res)=>{
+  try {
+     const {userId,add_no,password}=req.body;
+  const user=await userModel.findById(userId);
+  if(!user){
+   return  res.json({success:false,message:"User not found"})
+  }
+  const isCorrect= await bcrypt.compare(password,user.password);
+  if(isCorrect){
+    res.json({success:true});
+  }
+  else{
+    res.json({success:false,message:"Wrong credential"})
+  }
+
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:"Wrong credential"})
+  }
+ }
+ const changePassword=async(req,res)=>{
+  try {
+    const {newPass,userId}=req.body;
+  const user=await userModel.findById(userId);
+  if(!user){
+    return res.json({success:false,message:"User not found"})
+  }
+  const salt=await bcrypt.genSalt(10);
+  const newPassword=await bcrypt.hash(newPass,salt);
+  await userModel.findByIdAndUpdate(userId,{password:newPassword});
+  res.json({success:true,message:"Password Changed"});
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
+ }
+export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword};

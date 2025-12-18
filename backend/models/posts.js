@@ -12,6 +12,7 @@ const PostSchema=new mongoose.Schema({
     files:[{type:Object}],
     floor:{type:String,default:"0"},
     likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
+    agrees:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
     comments:[{type:mongoose.Schema.Types.ObjectId,ref:"comment"}],
 })
 const PostModel= mongoose.model("post",PostSchema);

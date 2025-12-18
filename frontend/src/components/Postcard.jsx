@@ -71,12 +71,12 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
         </div>
 
         {/* Agree */}
-        <div
+        <div 
           className={`${dark ? "text-gray-500" : "text-gray-700"} 
-          group flex items-center rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative`}
+          group flex items-center rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative `+(e.agreed&&"text-orange-600")}
         >
           <i className="fi fi-tr-heart-partner-handshake"></i>
-          <p className="text-sm">{e.comments.length}</p>
+          <p className="text-sm">{e.agrees.length ||0}</p>
 
           <div className="absolute px-3 py-1 bottom-8 left-6 bg-white rounded shadow hidden group-hover:block">
             agree

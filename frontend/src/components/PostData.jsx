@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const PostData = () => {
     const {id} = useParams();
-    const { dark, setcommvis, timeAgo, inchargelogin, profileData,utoken } = useContext(AppContext);
+    const { dark, setcommvis, timeAgo, inchargelogin, profileData,utoken,findCommentData } = useContext(AppContext);
     const [on, seton] = useState(false);
     const [onfile, setOnFile] = useState(null);
     const [data, setData] = useState({});
@@ -23,6 +23,18 @@ const PostData = () => {
         console.log(data);
         setData(data.postdata);
     }
+     const handleAgree=async()=>{
+            const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/agree",{postId:id},{headers:{utoken}});
+            console.log(data);
+            if(data.success){
+                toast.success(data.message);
+                findData();
+            }
+            else{
+                console.log(data);
+            }
+        }
+       
     useEffect(() => {
         findData();
         return () => {
@@ -181,13 +193,13 @@ const PostData = () => {
                                 <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={handleLike}></i>
                                 <p className="text-xs ml-1">{data.likes?.length || 0}</p>
                             </div>
-                            <div className={(dark ? "text-gray-500" : "text-gray-700") + " flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-blue-500"} onClick={() => setcommvis(true)}>
+                            <div className={(dark ? "text-gray-500" : "text-gray-700") + " flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-blue-500"} onClick={() => {setcommvis(true);findCommentData(id)}}>
                                 <i className="fi fi-ts-comment-dots text-sm lg:text-base"></i>
                                 <p className="text-xs lg:text-sm">{data.comments?.length || 0}</p>
                             </div>
-                            <div className={(dark ? "text-gray-500" : "text-gray-700") + " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative"}>
+                            <div onClick={handleAgree} className={(dark ? "text-gray-500" : "text-gray-700") + " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative "+(data.agreed&&"text-orange-600")}>
                                 <i className="fi fi-tr-heart-partner-handshake text-sm lg:text-base"></i>
-                                <p className="text-xs lg:text-sm">{data.comments?.length || 0}</p>
+                                <p className="text-xs lg:text-sm">{data.agrees?.length || 0}</p>
                                 <div className="absolute px-2 py-1 bottom-6 lg:bottom-8 left-4 lg:left-6 bg-white dark:bg-gray-800 rounded shadow hidden group-hover:block text-xs">
                                     agree
                                 </div>

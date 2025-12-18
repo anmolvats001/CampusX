@@ -17,13 +17,12 @@ const Search = () => {
   const find = (e) => {
     const value = e.target.value.toLowerCase();
     data && setFilteredData(data.filter(item => 
-      { return item.name.toLowerCase().includes(value) || item.data.toLowerCase().includes(value)}
+      { return item.creator.name.toLowerCase().includes(value) || item.data.toLowerCase().includes(value)}
     ));
   };
-
   useEffect(() => {
     setFilteredData(data)
-  }, [data]);
+  }, []);
   
   return (
     <div
