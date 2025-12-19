@@ -142,25 +142,31 @@ export const AppProvider = ({ children }) => {
     findProfileData();
   },[utoken, itoken, atoken])
   const timeAgo = (dateString) => {
-    const now = new Date();
-    const past = new Date(dateString);
-    const diffMs = now - past;
-    const diffSec = Math.floor(diffMs / 1000);
-    const diffMin = Math.floor(diffSec / 60);
-    const diffHr = Math.floor(diffMin / 60);
-    const diffDay = Math.floor(diffHr / 24);
+  const now = Date.now();
+  const past = new Date(dateString).getTime();
 
-    if (diffSec < 60) return "Just now";
-    if (diffMin < 60) return `${diffMin} min ago`;
-    if (diffHr < 24) return `${diffHr} hr ago`;
-    if (diffDay === 1) return "Yesterday";
+  const diffMs = now - past;
+  if (diffMs < 0) return "Just now";
 
-    return past.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
+  const diffSec = Math.floor(diffMs / 1000);
+  if (diffSec < 60) return "Just now";
+
+  const diffMin = Math.floor(diffMs / (1000 * 60));
+  if (diffMin < 60) return `${diffMin} min ago`;
+
+  const diffHr = Math.floor(diffMs / (1000 * 60 * 60));
+  if (diffHr < 24) return `${diffHr} hr ago`;
+
+  const diffDay = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (diffDay === 1) return "Yesterday";
+
+  return new Date(dateString).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
 
   return (
     <AppContext.Provider

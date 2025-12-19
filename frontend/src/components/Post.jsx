@@ -35,12 +35,11 @@ const Post = () => {
     }
     else{
       
-     
+     setLoading(true)
 const res = await axios.post( import.meta.env.VITE_BACKEND_URL + "/api/user/post",formData,{headers:{utoken}});
     
     if (res.data.success) {
       toast.success("Post has been posted");
-      setLoading(false)
        navigate("/issues/home")
       findProfileData();
      setPostVis(false)
@@ -50,7 +49,7 @@ const res = await axios.post( import.meta.env.VITE_BACKEND_URL + "/api/user/post
       setPostVis(false)
       navigate("/issues/home")
     }
-
+    setLoading(false)
     }
     
   } catch (error) {

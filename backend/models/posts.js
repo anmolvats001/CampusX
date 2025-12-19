@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const PostSchema=new mongoose.Schema({
     creator:{type:mongoose.Schema.Types.ObjectId,ref:"user",required:true},
-    publishedOn:{type:Date,default:Date.now()},
+    publishedOn:{type:Date,default:Date.now},
     resolvedByStudent:{type:Boolean,required:true,default:false},
     resolvedByIncharge:{type:Boolean,required:true,default:false},
     verifiedImage:{type:String,default:"null"},
