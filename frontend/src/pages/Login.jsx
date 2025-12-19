@@ -165,7 +165,10 @@ const Login = () => {
   }
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    setStudentLogin(true)
+    setStudentLogin(true);
+    if(atoken||utoken||itoken){
+      navigate('/issues/home');
+    }
   }, []);
 
   return (

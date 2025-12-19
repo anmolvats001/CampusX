@@ -3,6 +3,7 @@ import adminModel from "../models/admin.js";
 import bcrypt from "bcrypt";
 import {v2 as cloudinary} from "cloudinary"
 import InchargeModel from "../models/incharge.js";
+import PostModel from "../models/posts.js"
 const login =async(req ,res )=>{
     try {
        const { email, password} = req.body;
@@ -128,4 +129,10 @@ const addIncharge=async(req,res)=>{
     res.json({success:false,message:error.message})
   }
 }
-export {login,getProfile,editProfile,checkPassword,changePassword,addIncharge};
+const getAllIncharge=async(req,res)=>{
+  const {adminId}=req.body;
+  const admin=await adminModel.findById(adminId);
+  const incharges=await PostModel.findOne({work:admin.work});
+  console.log(incharges);
+}
+export {login,getProfile,editProfile,checkPassword,changePassword,addIncharge,getAllIncharge};

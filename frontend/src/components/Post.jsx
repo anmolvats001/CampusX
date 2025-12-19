@@ -20,7 +20,6 @@ const Post = () => {
   const navigate=useNavigate();
   const postData = async () => {
   try {
-    setLoading(true)
     const formData = new FormData();
 
     formData.append("data", textdata);
