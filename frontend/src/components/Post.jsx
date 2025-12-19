@@ -176,7 +176,7 @@ const deleteimage = (index) => {
 
             <select
               className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
-              onChange={(e) => { setLocation(e.target.value); }}
+              onChange={(e) => {if(e.target.value.toLowerCase()!="block") setLocation(e.target.value); else setLocation(null)}}
             >
               <option value="Block">Location</option>
               <option value="ground">Ground</option>
@@ -189,7 +189,7 @@ const deleteimage = (index) => {
             {location !== "ground" && (
               <select
                 className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
-              onChange={(e) => { setFloor(e.target.value); }}>
+              onChange={(e) => {if(e.target.value.toLowerCase()!="floor") setFloor(e.target.value);else{setFloor(null)} }}>
                 <option value="0">Floor</option>
                 <option value="1">0</option>
                 <option value="1">1</option>
@@ -203,7 +203,7 @@ const deleteimage = (index) => {
             
             <select
               className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
-            onChange={(e) => { setProblem(e.target.value); }}>
+            onChange={(e) => {if(e.target.value.toLowerCase()!="problem") setProblem(e.target.value); else setProblem(null)}}>
               <option value="Block">Problem</option>
               <option value="food">Food</option>
               <option value="water">Water</option>
