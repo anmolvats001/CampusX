@@ -136,7 +136,7 @@ useEffect(()=>{
                     </p>
                   </div>
                   <div className="flex px-8 lg:px-11 mt-3 lg:mt-5 gap-4 lg:gap-8">
-                    <div onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleCommentLike(e._id)}}}
+                    <div onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(utoken){handleCommentLike(e._id)}}}
                       className={
                         (dark ? "text-gray-500" : "text-gray-700") +
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
