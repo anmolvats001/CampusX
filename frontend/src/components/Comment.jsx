@@ -9,7 +9,7 @@ const Comment = () => {
       const [data,setData]=useState([]);
       const [inputData,setInputData]=useState(null);
       const [loading,setLoading]=useState(false);
-const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,commentData,setcommentData,findCommentData,utoken,setCurrentPost,currentPost} = useContext(AppContext);
+const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,commentData,setcommentData,findCommentData,utoken,setCurrentPost,currentPost,itoken,atoken} = useContext(AppContext);
 
     const handleInput = () => {
   const textarea = textareaRef.current;
@@ -70,8 +70,8 @@ useEffect(()=>{
           <p className="font-bold text-xl hidden lg:block">Comments ...</p>
           
           {/* Comment input */}
-          <div className="flex px-1 lg:px-1.5 mt-3 gap-2">
-            {utoken&&<textarea
+          {utoken&&<div className="flex px-1 lg:px-1.5 mt-3 gap-2">
+          <textarea
               ref={textareaRef}
               onInput={handleInput}
               placeholder="Enter your thoughts"
@@ -92,13 +92,13 @@ useEffect(()=>{
                 text-sm lg:text-base
               `}
             />
-            }<p className={`${
+            <p className={`${
               !dark ? "dark" : "light"
             } rounded-xl lg:rounded-3xl px-3 lg:px-3.5 h-10 font-bold py-1 flex justify-center items-center cursor-pointer min-w-[60px] lg:min-w-auto`} onClick={()=>postComment(currentPost)}>
               Post
             </p>
           </div>
-          
+          }
           {/* Comments list */}
           {(!commentData|| loading)?<CommentShrimmer/>:
         commentData.length==0?(<div className="h-full overflow-y-scroll w-full pt-4 lg:pt-5 text-2xl font-bold scroller flex justify-center text-gray-500">No Comments Yet</div>):(<div className="mt-4 flex flex-col gap-3">
@@ -136,7 +136,7 @@ useEffect(()=>{
                     </p>
                   </div>
                   <div className="flex px-8 lg:px-11 mt-3 lg:mt-5 gap-4 lg:gap-8">
-                    <div onClick={()=>handleCommentLike(e._id)}
+                    <div onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleCommentLike(e._id)}}}
                       className={
                         (dark ? "text-gray-500" : "text-gray-700") +
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +

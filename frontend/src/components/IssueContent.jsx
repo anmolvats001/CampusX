@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const IssueContent = ({e, i, search}) => {
-    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost} = useContext(AppContext);
+    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost,atoken,itoken} = useContext(AppContext);
     const handleLike=async(id)=>{
         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
         console.log(data);
@@ -202,7 +202,7 @@ const IssueContent = ({e, i, search}) => {
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
                         (e.liked && "text-red-800")
                     }>
-                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(!search)handleLike(e._id)}}></i>
+                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleLike(e._id)}}}></i>
                         <p className="text-xs ml-1">{e.likes.length}</p>
                     </div>
                     <div
@@ -219,7 +219,7 @@ const IssueContent = ({e, i, search}) => {
                         <i className="fi fi-ts-comment-dots text-sm lg:text-base"></i>
                         <p className="text-xs lg:text-sm">{e.comments.length || 0}</p>
                     </div>
-                    <div onClick={()=>{if(!search)handleAgree(e._id)}}
+                    <div onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant Agree")}else if(!search)handleAgree(e._id)}}
                         className={
                             (dark ? "text-gray-500" : "text-gray-700") +
                             " group flex items-center rounded-xl lg:rounded-3xl gap-1 cursor-pointer hover:text-orange-600 relative "+(e.agreed&&"text-orange-600")

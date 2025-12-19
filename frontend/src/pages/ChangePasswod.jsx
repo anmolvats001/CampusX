@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const ChangePassword = () => {
-    const { dark ,utoken} = useContext(AppContext);
+    const { dark ,utoken,itoken,atoken} = useContext(AppContext);
     const navigate = useNavigate();
     const [verified, setverified] = useState(false);
     const [add_no,setAddno]=useState(null);
@@ -16,8 +16,8 @@ const ChangePassword = () => {
             toast.error("New Password is missing")
         }
         else{
-            
-       const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/changePass",{newPass},{headers:{utoken}});
+            if(utoken){
+                const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/changePass",{newPass},{headers:{utoken}});
        if(data.success){
         toast.success(data.message);
         navigate("/issues/home");
@@ -25,16 +25,60 @@ const ChangePassword = () => {
        else{
         toast.error(data.message);
        }
+       
+            }
+            if(itoken){
+                const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/incharge/changePass",{newPass},{headers:{itoken}});
+       if(data.success){
+        toast.success(data.message);
+        navigate("/issues/home");
+       }
+       else{
+        toast.error(data.message);
+       }
+       
+            }
+            if(atoken){
+                const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/admin/changePass",{newPass},{headers:{atoken}});
+       if(data.success){
+        toast.success(data.message);
+        navigate("/issues/home");
+       }
+       else{
+        toast.error(data.message);
+       }
+       
+            }
         }
     }
     const verify = async() => {
-         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/checkpass",{add_no,password},{headers:{utoken}});
+         if(utoken){
+            const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/checkpass",{add_no,password},{headers:{utoken}});
         if (data.success) {
             setverified(true);
             submit();
         } else {
             toast.error("Wrong password");
         }
+         }
+         if(itoken){
+            const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/incharge/checkpass",{password},{headers:{itoken}});
+        if (data.success) {
+            setverified(true);
+            submit();
+        } else {
+            toast.error("Wrong password");
+        }
+         }
+         if(atoken){
+            const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/admin/checkpass",{password},{headers:{atoken}});
+        if (data.success) {
+            setverified(true);
+            submit();
+        } else {
+            toast.error("Wrong password");
+        }
+         }
     }
     
     return (
@@ -52,14 +96,14 @@ const ChangePassword = () => {
                 {/* Form */}
                 <div className="flex flex-col gap-4 sm:gap-5 lg:gap-7 px-4 sm:px-8 lg:px-12 py-4 sm:py-5 lg:py-7">
                     {/* Admission Number */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
+                    {utoken&&<div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
                         <p className="text-base sm:text-lg w-full sm:w-1/3">Admission No. :</p>
                         <input 
                             placeholder="Enter Your Admission No." 
                             type="text" onChange={(e)=>setAddno(e.target.value)}
                             className={`border focus:outline-none border-gray-800 w-full sm:w-2/3 rounded-lg sm:rounded-xl py-2 sm:py-1 px-2.5 sm:px-1.5 ${dark ? "text-gray-200 bg-gray-900" : "bg-white"} text-sm sm:text-base`}
                         />
-                    </div>
+                    </div>}
                     
                     {/* Current Password */}
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">

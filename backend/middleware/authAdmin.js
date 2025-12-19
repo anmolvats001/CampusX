@@ -1,18 +1,17 @@
 import jwt from "jsonwebtoken"
 const authAdmin=async(req,res,next)=>{
     try {
-        const {atoken}=req.headers;
-        if(!atoken){
-            return res.json({success:false,message:"Admin not found"})
-        }
-        const token_decode=jwt.verify(atoken,process.env.JWT_SECRET);
-        if(token_decode!=process.env.WATER_ADMIN_EMAIL+process.env.WATER_ADMIN_EMAIL &&token_decode!=process.env.BUILDING_ADMIN_EMAIL+process.env.BUILDING_ADMIN_EMAIL){
-            return res.json({success:false,message:"wrong credential"});
-        }
-        next();
-    } catch (error) {
-        console.log(error);
-        res.json({success:false,message:"Error occured in AuthAdmin"});
-    }
+       const {atoken}=req.headers;
+               if(!atoken){
+                   res.json({success:false,message:"User not found"});
+               }
+               const atoken_decode=jwt.verify(atoken,process.env.JWT_SECRET);
+               req.body=req.body||{};
+               req.body.adminId=atoken_decode.adminId;
+               next();
+           } catch (error) {
+               console.log(error);
+               res.json({success:false,message:"error occured in authUser"});
+           }
 }
 export default authAdmin;

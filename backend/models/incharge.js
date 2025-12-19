@@ -11,6 +11,7 @@ const InchargeSchema=new mongoose.Schema({
     dob:{type:String,default:"Not Selected"},
     phone:{type:String,default:"000000000"},
     posts:[{type:mongoose.Schema.Types.ObjectId,ref:"post"}],
+    work:{type:String,required:true}
 })
 const InchargeModel=mongoose.model("incharge",InchargeSchema);
 export default InchargeModel;

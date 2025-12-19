@@ -25,13 +25,13 @@ const AdminDashBoard = () => {
         const filteredPosts = [];
 
         data?.forEach((e) => {
-            if (e.problem === profileData?.work) {
+            if (e.problem.toLowerCase() === profileData.work.toLowerCase()) {
                 filteredPosts.push(e);
             }
 
-            if (e.problem === profileData?.work && e.resolvedByStudent) {
+            if (e.problem.toLowerCase() === profileData.work.toLowerCase() && e.resolvedByStudent) {
                 resolve++;
-            } else if (e.problem === profileData?.work && e.resolvedByIncharge) {
+            } else if (e.problem.toLowerCase() === profileData.work.toLowerCase() && e.resolvedByIncharge) {
                 process++;
             }
         });
@@ -117,7 +117,7 @@ const AdminDashBoard = () => {
                                         hover:opacity-90 transition-opacity cursor-pointer`}
                                         onClick={() => {
                                             setPostdata(e);
-                                            navigate(`/issues/post-data/${index}`);
+                                            navigate(`/issues/post-data/${e._id}`);
                                         }}
                                     >
                                         <div className="w-full sm:w-1/3 h-32 sm:h-full">

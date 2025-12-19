@@ -9,7 +9,7 @@ const Login = () => {
   const [sign, setSign] = useState(false);
   const [otpverify, setotpverify] = useState(false);
   const [who,setWho]=useState("student");
-  const {setStudentLogin,setAdminLogin,setInchargelogin,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken}=useContext(AppContext);
+  const {setStudentLogin,setAdminLogin,setInchargelogin,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,findProfileData}=useContext(AppContext);
   const emaildata = useRef();
   const emaildataMobile = useRef();
   const navigate=useNavigate();
@@ -104,6 +104,8 @@ const Login = () => {
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
       setuToken(data.utoken);
+      findProfileData()
+
       toast.success(data.message);
       navigate("/issues/home")
     }
@@ -112,10 +114,30 @@ const Login = () => {
     }
   }
   const login_Incharge=async()=>{
-
+    let {data}=await axios.post(backendUrl+"/api/incharge/login",{email,password});
+    if(data.success){
+      localStorage.setItem("itoken",data.itoken);
+      setiToken(data.itoken);
+      findProfileData()
+      toast.success(data.message);
+      navigate("/issues/home");
+    }
+    else{
+      toast.error(data.message);
+    }
   }
   const login_Admin=async()=>{
-
+    let {data}=await axios.post(backendUrl+"/api/admin/login",{email,password});
+    if(data.success){
+      localStorage.setItem("atoken",data.atoken);
+      setaToken(data.atoken);
+      findProfileData()
+      toast.success(data.message);
+      navigate("/issues/home");
+    }
+    else{
+      toast.error(data.message);
+    }
   }
   const register_User=async()=>{
     try {
@@ -124,6 +146,7 @@ const Login = () => {
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
       setuToken(data.utoken);
+      findProfileData()
       // toast.success("Registered successfully")
       toast.success(data.message);
       navigate("/issues/home")

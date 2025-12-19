@@ -35,6 +35,23 @@ const posts = await PostModel.find().populate({
     });
   }
 };
+const InchargeAndAdminPost=async(req,res)=>{
+  try {
+    const posts = await PostModel.find().populate({
+  path: "creator",
+  select: "name profile branch"
+});
+    
+    res.json({
+      success: true,
+      message: "got posts",
+      postdata:posts
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
+}
 const getPostData=async(req,res)=>{
   try {
     const {postId,userId}=req.body;
@@ -51,6 +68,21 @@ const getPostData=async(req,res)=>{
       );
         postdata={...post}
   res.json({success:true,message:"got post",postdata:{...postdata._doc,liked,agreed}})
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message});
+  }
+}
+const getPostDataInchargeOrAdmin=async(req ,res )=>{
+  try {
+    const {postId}=req.body;
+  const post=await PostModel.findById(postId).populate({
+    path:"creator",
+    select:"name branch profile"
+  });
+  let postdata={};
+        postdata={...post}
+  res.json({success:true,message:"got post",postdata:{...postdata._doc}})
   } catch (error) {
     console.log(error);
     res.json({success:false,message:error.message});
@@ -154,6 +186,28 @@ const AllComments=async(req,res)=>{
     res.json({success:false,message:error.message})
   }
 }
+const AllCommentsInchargeorAdmin=async(req,res)=>{
+  try {
+    const {postId}=req.body;
+    if(!postId){
+      return res.json({success:false,message:"cant find the post"})
+    }
+
+    const post=await PostModel.findById(postId).populate({
+      path:"comments",
+      populate:{
+        path:"creator",
+        select:"name profile branch"
+      }
+    });
+    
+
+    res.json({success:true,message:"got comment",comments:post.comments})
+  } catch (error) {
+    res.json({success:false,message:error.message})
+  }
+}
+
 const likeComment=async(req,res)=>{
   try {
     const {commentId,userId}=req.body;
@@ -177,4 +231,4 @@ const likeComment=async(req,res)=>{
    res.json({success:false,message:error.message}) 
   }
 }
-export {AllPost,getPostData,handleLike,addComment,AllComments,likeComment,handleAgree};
+export {AllPost,getPostData,handleLike,addComment,AllComments,likeComment,handleAgree,InchargeAndAdminPost,getPostDataInchargeOrAdmin,AllCommentsInchargeorAdmin};

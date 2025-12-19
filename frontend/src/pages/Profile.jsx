@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Shrimmer from "../components/Shrimmer.jsx"
 const Profile = () => {
   const { 
-    dark, 
+    dark, atoken,itoken,
     profileData,setProfileData, 
     setProfileOn, 
     setPostVis, 
@@ -63,7 +63,7 @@ const Profile = () => {
             <div className="text-center sm:text-left">
               <p className="text-lg sm:text-xl font-bold">{data.name}</p>
               <p className={dark ? "text-gray-300" : "text-gray-800"}>
-                ({data.branch || data.work})
+                ({(atoken||itoken)?profileData.work:profileData?.branch})
               </p>
               <p className="text-xs pt-2 line-clamp-2 text-gray-500 capitalize w-full sm:w-[90%]">
                 {data.address}
