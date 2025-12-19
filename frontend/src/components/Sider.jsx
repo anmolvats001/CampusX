@@ -49,6 +49,7 @@ const Sider = () => {
     <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("water")}}>water</div>
     <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("administration")}}>administration</div>
     <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("building")}}>building</div>
+    <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("hygiene")}}>hygiene</div>
     <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("safety")}}>safety</div>
      <div className="hover:text-gray-300" onClick={()=>{ navigate("/issues/home");setFilter("food")}}>food</div>
   </div>
