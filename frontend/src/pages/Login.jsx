@@ -146,10 +146,10 @@ const Login = () => {
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
       setuToken(data.utoken);
-      findProfileData()
+      findProfileData();
       // toast.success("Registered successfully")
       toast.success(data.message);
-      navigate("/issues/home")
+      navigate("/issues/")
     }
     else{
       toast.error(data.message);
