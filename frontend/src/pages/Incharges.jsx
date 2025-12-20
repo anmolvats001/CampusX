@@ -94,7 +94,7 @@ const Incharges = () => {
               {/* Header */}
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <img
-                  src={item.image}
+                  src={item.profile}
                   alt="user"
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover"
                 />

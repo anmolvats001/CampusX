@@ -116,7 +116,6 @@ const checkPassword=async(req,res)=>{
  }
 const resolvePost=async(req,res)=>{
   try {
-    
   const {inchargeId,postId}=req.body;
   const imageFile = req.file;
   console.log(imageFile)
