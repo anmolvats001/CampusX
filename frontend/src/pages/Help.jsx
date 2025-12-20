@@ -9,37 +9,30 @@ const Help = () => {
           UNDERSTAND THE WEBSITE
         </h1>
 
-        {/* Scrollable container with better UX */}
-        <div className="relative w-full overflow-hidden">
-          {/* Instruction for users */}
-          <div className="text-center text-sm text-gray-500 mb-2 sm:hidden">
-            ← Scroll horizontally to view full diagram →
-          </div>
+        <div className="relative">
           
-          {/* Scrollable area */}
-          <div className="overflow-x-auto pb-4">
-            {/* Image container with original size - adjust min-width based on your SVG size */}
-            <div className="min-w-[1200px] sm:min-w-[1400px] lg:min-w-[1600px] xl:min-w-[1800px]">
-              <img
-                src={userflow}
-                alt="User Flow Chart"
-                className="
-                  w-full      /* Takes full width of container */
-                  h-auto      /* Maintains aspect ratio */
-                  min-h-[400px] /* Minimum height for visibility */
-                  object-scale-down /* Shrinks if too big, but doesn't stretch */
-                  drop-shadow-lg
-                "
-              />
+          
+      
+          <div className="overflow-x-auto scroller bg-white p-4 rounded-lg border">
+          
+            <div className="flex justify-center min-w-full">
+              <div className="relative">
+                <img
+                  src={userflow}
+                  alt="User Flow Chart"
+                  className="
+                    min-w-[2000px]  
+                    h-auto          
+                    max-h-[80vh]    
+                    object-scale-down
+                    mx-auto         
+                  "
+                />
+              </div>
             </div>
           </div>
           
-          {/* Scroll indicators for mobile */}
-          <div className="flex justify-center gap-2 mt-3 sm:hidden">
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-            <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-          </div>
+          
         </div>
 
       </div>
