@@ -47,7 +47,7 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
         alt=""  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${e._id}`)}}
       />}
 
-      <p className="line-clamp-2 text-sm text-gray-500 pt-1.5"  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${index}`)}}>{e.data}</p>
+      <p className="line-clamp-2 text-sm text-gray-500 pt-1.5"  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${e._id}`)}}>{e.data}</p>
 
       <div className="flex mt-2 px-2 gap-8"  onClick={()=>{setPostdata(e);navigate(`/issues/post-data/${e._id}`)}}>
         {/* Likes */}
