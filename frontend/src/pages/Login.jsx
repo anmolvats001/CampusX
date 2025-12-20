@@ -22,8 +22,9 @@ const Login = () => {
   const [otp,setOtp]=useState(0);
   const [correctOtp,setCorrectOpt]=useState(false);
   const [otpfromback,setotpfromback]=useState(56);
+  const [passwordon,setPasswordOn]=useState(false);
   const change = () => setSign(!sign);
-  
+  const changePasson=()=>setPasswordOn(!passwordon);
   const moveright = () => { 
     // Only animate on desktop
     if (window.innerWidth >= 1024) {
@@ -277,14 +278,14 @@ const Login = () => {
               </div>
             )}
 
-            <div className="flex flex-col gap-1">
+            <div className="flex border rounded-2xl justify-between pr-2.5 items-center">
               <input onChange={(e)=>setPassword(e.target.value)}
                 id="password-mobile" 
-                type="password" 
+                type={!passwordon?"password":"text" }
                 placeholder='Enter the password' 
-                className="border focus:outline-0 px-3 py-2 rounded-2xl" 
+                className=" focus:outline-0 px-3 py-2 flex-1 " 
                 value={password}
-              />
+              />{passwordon?<i className="fi fi-rr-eye"></i>:<i class="fi fi-rs-crossed-eye"></i>}
             </div>
           </div>
 
@@ -364,9 +365,16 @@ const Login = () => {
                 </div>
               )}
 
-              <div className="flex flex-col gap-1">
-                <input onChange={(e)=>setPassword(e.target.value)} id="password" type="password" placeholder='Enter the password' className="border focus:outline-0 px-2 py-1 rounded-2xl" value={password}/>
-              </div>
+              <div className="flex border rounded-2xl justify-between pr-2.5 items-center">
+              <input onChange={(e)=>setPassword(e.target.value)}
+                id="password-mobile" 
+                type={!passwordon?"password":"text" } 
+                placeholder='Enter the password' 
+                className=" focus:outline-0 px-3 py-1 flex-1 " 
+                value={password}
+              />{passwordon?<i onClick={changePasson} className="fi fi-rr-eye"></i>:<i onClick={changePasson} class="fi fi-rs-crossed-eye"></i>}
+            </div>
+          
             </div>
 
             <div className='gap-2 w-full flex flex-col items-center'>
