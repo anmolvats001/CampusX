@@ -128,7 +128,7 @@ const Incharges = () => {
               </div>
 
               {/* Basic Details */}
-              <div className="mt-4 space-y-2 capitalize">
+              <div className="mt-4 space-y-2 ">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <p className="text-sm sm:text-base">
                     <span className="font-semibold">Gender:</span> {item.gender}
