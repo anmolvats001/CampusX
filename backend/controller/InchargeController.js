@@ -5,8 +5,14 @@ import PostModel from "../models/posts.js";
 import{v2 as cloudinary}from "cloudinary"
 const login = async (req, res) => {
   try {
+
     const { email, password } = req.body;
+    console.log(email,password)
     const incharge = await InchargeModel.findOne({ email });
+    console.log(incharge)
+    if(!incharge){
+      return res.json({success:false,message:"Incharge not found"})
+    }
     const isMatched = await bcrypt.compare(password, incharge.password);
     console.log("ismatch", isMatched);
     if (isMatched) {
