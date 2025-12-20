@@ -8,13 +8,8 @@ const Help = () => {
         <h1 className="text-center text-[#1E293B] text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wide mb-6">
           UNDERSTAND THE WEBSITE
         </h1>
-
-        <div className="relative">
-          
-          
-      
-          <div className="overflow-x-auto scroller bg-white p-4 rounded-lg border">
-          
+        <div className="relative">     
+          <div className="overflow-x-auto scroller bg-white p-4 rounded-lg border">         
             <div className="flex justify-center min-w-full">
               <div className="relative">
                 <img
@@ -31,13 +26,9 @@ const Help = () => {
               </div>
             </div>
           </div>
-          
-          
         </div>
-
       </div>
     </div>
   );
 };
-
 export default Help;
