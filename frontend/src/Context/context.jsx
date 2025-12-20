@@ -85,6 +85,21 @@ export const AppProvider = ({ children }) => {
       });
     }
     }
+    else if (itoken){
+       const { data } = await axios.get(
+      import.meta.env.VITE_BACKEND_URL + "/api/incharge/profile",
+      { headers: { itoken } }
+    );
+    if (!data) {
+      toast.error("data not found");
+      console.log(data)
+    } else {
+      setProfileData({
+        ...data.UserData
+      });
+      console.log(data)
+    }
+    }
   };
   const findAllPost = async () => {
     if (utoken) {

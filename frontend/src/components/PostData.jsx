@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "../Context/context";
 import { toast } from "react-toastify";
 import axios from "axios";
+import CommentShrimmer from "./CommentShrimmer";
 
 const PostData = () => {
   const { id } = useParams();
@@ -22,12 +23,27 @@ const PostData = () => {
   const [onfile, setOnFile] = useState(null);
   const [data, setData] = useState({});
   const [verifyImage, setVerifyImage] = useState(null);
+  const [image,setimage]=useState(null);
+  const [loading,setLoading]=useState(false);
   const navigate = useNavigate();
+  const resolvePost=async()=>{
+    setLoading(true)
+    const formData = new FormData();
+formData.append("postId", id);
+formData.append("image", image);
 
-  const verify = () => {
-    toast.success("Verified");
-    navigate("/issues/home");
-  };
+const { data } = await axios.post(
+  import.meta.env.VITE_BACKEND_URL + "/api/incharge/resolve-post",
+  formData,{headers:{itoken}});
+    if(data.success){
+      toast.success(data.message);
+      navigate("/issues/home")
+    }
+    else{
+      toast.error(data.message)
+    }
+    setLoading
+  }
   const findData = async () => {
     if(utoken){
         
@@ -87,7 +103,7 @@ const PostData = () => {
         dark ? "dark" : "light"
       } h-screen w-full lg:w-[45%] border border-gray-800 relative`}
     >
-      <div className="overflow-y-scroll w-full scroller h-full relative">
+      {loading?<CommentShrimmer/>:<div className="overflow-y-scroll w-full scroller h-full relative">
         {/* Post Content */}
         <div className="h-fit flex items-center pt-16  lg:pt-7 flex-col gap-8 lg:gap-14 px-2 lg:px-0">
           <div className="w-full border border-gray-800 rounded-xl lg:rounded-2xl h-fit px-3 sm:px-3.5 py-2.5">
@@ -317,7 +333,7 @@ const PostData = () => {
             <div className="py-4 px-4 capitalize flex flex-col sm:flex-row gap-3 sm:gap-2 justify-center items-center">
               <p
                 className="px-3 py-2 text-white rounded-xl lg:rounded-3xl bg-gray-700 hover:bg-gray-600 w-full sm:w-fit text-center cursor-pointer transition-colors"
-                onClick={() => document.getElementById("verifyImage").click()}
+                onClick={() =>{ document.getElementById("verifyImage").click();}}
               >
                 Resolve Issue
               </p>
@@ -333,6 +349,7 @@ const PostData = () => {
                 onChange={(e) => {
                   if (e.target.files && e.target.files[0]) {
                     const file = e.target.files[0];
+                    setimage(file)
                     const url = URL.createObjectURL(file);
                     setVerifyImage(url);
                   }
@@ -356,7 +373,7 @@ const PostData = () => {
               <div className="w-full sm:w-1/2">
                 <p
                   className="w-full px-4 py-2.5 rounded-xl bg-gray-600 hover:bg-gray-700 font-bold text-white text-center cursor-pointer transition-colors"
-                  onClick={verify}
+                  onClick={resolvePost}
                 >
                   Submit Verification
                 </p>
@@ -413,7 +430,7 @@ const PostData = () => {
             </div>
           </div>
         )}
-      </div>
+      </div>}
 
       {/* Image Modal */}
       {on && (

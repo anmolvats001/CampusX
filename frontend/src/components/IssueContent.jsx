@@ -3,6 +3,7 @@ import { AppContext } from '../Context/context';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import CommentShrimmer from './CommentShrimmer';
 
 const IssueContent = ({e, i, search}) => {
     const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost,atoken,itoken} = useContext(AppContext);
@@ -83,7 +84,7 @@ const IssueContent = ({e, i, search}) => {
                 </div>
                 
                 {/* Images grid */}
-                <div className={`max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] w-full h-fit px-4 sm:px-7 ${search ? "h-fit max-h-[200px] sm:max-h-[250px] overflow-hidden" : ''}`}>
+                {!e.files?<CommentShrimmer/>:<div className={`max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] w-full h-fit px-4 sm:px-7 ${search ? "h-fit max-h-[200px] sm:max-h-[250px] overflow-hidden" : ''}`}>
                     <div className="w-full mt-2 sm:mt-3.5 overflow-hidden rounded-lg lg:rounded-xl">
                         {/* 1 image */}
                         {e.files && e.files.length === 1 && (
@@ -194,7 +195,7 @@ const IssueContent = ({e, i, search}) => {
                         )}
                     </div>
                 </div>
-                
+                }
                 {/* Action buttons */}
                 <div className="flex px-6 sm:px-8 lg:px-11 mt-3 sm:mt-4 lg:mt-5 gap-4 sm:gap-6 lg:gap-8 flex-wrap">
                     <div className={

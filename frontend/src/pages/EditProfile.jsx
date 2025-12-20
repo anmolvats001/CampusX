@@ -30,6 +30,7 @@ const EditProfile = () => {
       formData.append("dob", profileData.dob);
       formData.append("bio", profileData.bio);
       image && formData.append("image", image);
+      console.log(formData)
       if (utoken) {
         const { data } = await axios.post(
           import.meta.env.VITE_BACKEND_URL + "/api/user/editprofile",
@@ -49,6 +50,20 @@ const EditProfile = () => {
           import.meta.env.VITE_BACKEND_URL + "/api/admin/editprofile",
           formData,
           { headers: { atoken } }
+        );
+        if (data.success) {
+          toast.success("Updated Successfully");
+          findProfileData();
+        } else {
+          toast.error(data.message);
+        }
+      }
+      if (itoken) {
+        console.log(profileData);
+        const { data } = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/incharge/editprofile",
+          formData,
+          { headers: { itoken } }
         );
         if (data.success) {
           toast.success("Updated Successfully");
@@ -139,10 +154,10 @@ const EditProfile = () => {
             </p>
           </div>
           <input
-            type="date"
+            type="date" className="w-fit border-2 border-gray-800 rounded-lg"
             value={data.dob || ""}
             onChange={(e) =>
-              setData((prev) => ({ ...prev, dob: e.target.value }))
+              setData((prev) => ({ ...prev, dob: e.target.value.toString() }))
             }
           />
 

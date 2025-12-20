@@ -1,6 +1,8 @@
 import InchargeModel from "../models/incharge.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import PostModel from "../models/posts.js";
+import{v2 as cloudinary}from "cloudinary"
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -25,6 +27,51 @@ const login = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+const getProfile = async (req, res) => {
+  try {
+    const { inchargeId } = req.body;
+    const UserData = await InchargeModel.findById(inchargeId).populate({
+      path:"posts"
+    })
+    res.json({ success: true, message: "Profile got successfully ", UserData });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+const editProfile = async (req, res) => {
+  try {
+    const { inchargeId, name, address, dob, gender, phone,bio } = req.body;
+    const imageFile = req.file;
+    console.log(name,address)
+    await InchargeModel.findByIdAndUpdate(inchargeId, {
+      name,
+      phone,
+      address,
+      dob,
+      gender,
+      bio
+    });
+    if (imageFile) {
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        resource_type: "image",
+      });
+      const imageUrl = imageUpload.secure_url;
+      await InchargeModel.findByIdAndUpdate(inchargeId, { profile: imageUrl });
+    }
+
+    return res.json({ success: true, message: "Edited Successfully" });
+  } catch (error) {
+    console.log(error)
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const checkPassword=async(req,res)=>{
   try {
      const {inchargeId,password}=req.body;
@@ -61,5 +108,29 @@ const checkPassword=async(req,res)=>{
     res.json({success:false,message:error.message})
   }
  }
-
-export { login,checkPassword,changePassword };
+const resolvePost=async(req,res)=>{
+  try {
+    
+  const {inchargeId,postId}=req.body;
+  const imageFile = req.file;
+  console.log(imageFile)
+  if(!postId){
+   return res.json({success:false,message:"Post not found"});
+  }
+  await PostModel.findByIdAndUpdate(postId,{resolvedByIncharge:true});
+  if (imageFile) {
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        resource_type: "image",
+      });
+      const imageUrl = imageUpload.secure_url;
+      await PostModel.findByIdAndUpdate(postId, {verifiedImage: imageUrl });
+    }
+    await InchargeModel.findByIdAndUpdate(inchargeId,{ $push: { posts: postId } })
+  res.json({success:true,message:"Post has been resolved"})
+  } catch (error) {
+    
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
+}
+export { login,checkPassword,changePassword ,resolvePost,getProfile,editProfile};

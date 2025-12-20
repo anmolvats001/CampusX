@@ -35,7 +35,7 @@ const AddIncharge = () => {
     formData.append("password", password);
     formData.append("address", address);
     formData.append("bio", bio);
-    formData.append("work", work);
+    formData.append("work", work.toLowerCase());
     formData.append("email", email);
     inchargeImg && formData.append("image", inchargeImg);
     

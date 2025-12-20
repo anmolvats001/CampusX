@@ -130,9 +130,28 @@ const addIncharge=async(req,res)=>{
   }
 }
 const getAllIncharge=async(req,res)=>{
+  try {
   const {adminId}=req.body;
   const admin=await adminModel.findById(adminId);
-  const incharges=await PostModel.findOne({work:admin.work});
-  console.log(incharges);
+  const incharges=await InchargeModel.find({work:admin.work.toLowerCase()});
+  res.json({success:true,message:"Incharge got successfully",incharges})
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
 }
-export {login,getProfile,editProfile,checkPassword,changePassword,addIncharge,getAllIncharge};
+const deleteIncharge=async(req,res)=>{
+  try {
+    
+  const {adminId,inchargeId}=req.body;
+  if(!inchargeId){
+    res.json({success:false,message:"Incharge not found"});
+  }
+  await InchargeModel.findByIdAndDelete(inchargeId);
+  res.json({success:true,message:"Incharge deleted successfully"});
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message});
+  }
+}
+export {login,getProfile,editProfile,checkPassword,changePassword,addIncharge,getAllIncharge,deleteIncharge};

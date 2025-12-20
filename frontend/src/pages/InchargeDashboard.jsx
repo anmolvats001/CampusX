@@ -3,14 +3,15 @@ import { AppContext } from "../Context/context";
 import { useNavigate } from "react-router-dom";
 
 const InchargeDashboard = () => {
-    const {dark,profileData,setProfileData, data, setcommvis, setPostdata} = useContext(AppContext);
+    const {dark,profileData,setProfileData, data, setcommvis, setPostdata,findProfileData} = useContext(AppContext);
     let [resolved, setresolved] = useState(0);
     let [inprocess, setinprocess] = useState(0);
     let [pending, setpending] = useState(0);
     const navigate = useNavigate();
     
     useEffect(() => {
-        setcommvis(false)
+        setcommvis(false);
+        findProfileData();
         window.scrollTo({
             top: 0,
             behavior: "instant",
@@ -22,7 +23,7 @@ const InchargeDashboard = () => {
         let process = 0;
         let resolve = 0;
 
-        profileData?.yourwork?.forEach((e) => {
+        profileData?.posts?.forEach((e) => {
             if (e.resolvedByStudent) {
                 resolve++;
             } else if (e.resolvedByIncharge) {
@@ -34,7 +35,7 @@ const InchargeDashboard = () => {
             if (
                 !item.resolvedByIncharge &&
                 !item.resolvedByStudent &&
-                profileData.work.toLowerCase() === item.problem.toLowerCase()
+                profileData?.work?.toLowerCase() === item.problem.toLowerCase()
             ) {
                 pendingdata++;
             }
@@ -85,14 +86,14 @@ const InchargeDashboard = () => {
                 <div className="px-4 sm:px-8 lg:px-12 pt-6 lg:pt-10 p-4 lg:p-6">
                     <p className="text-lg sm:text-xl font-bold">Posts Resolved By You</p>
                     <div className="flex flex-col gap-3 sm:gap-4 px-2 sm:px-3.5 py-3 sm:py-3.5">
-                        {profileData?.yourwork?.map((e, index) => (
+                        {profileData?.posts?.map((e, index) => (
                             <div
                                 key={index}
                                 className={`${dark ? "bg-black" : "bg-white"} 
                                 px-2 sm:px-1.5 py-2 sm:py-0.5 border border-gray-800 h-auto min-h-[140px] sm:h-[170px] rounded-xl sm:rounded-2xl relative flex flex-col sm:flex-row items-center gap-3 sm:gap-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors`}
                                 onClick={() => {
                                     setPostdata(e);
-                                    navigate(`/issues/post-data/${index}`);
+                                    navigate(`/issues/post-data/${e._id}`);
                                 }}
                             >
                                 <img
@@ -107,7 +108,7 @@ const InchargeDashboard = () => {
                         ))}
                         
                         {/* Empty state */}
-                        {(!profileData?.yourwork || profileData.yourwork.length === 0) && (
+                        {(!profileData?.posts || profileData.posts.length === 0) && (
                             <div className="flex flex-col items-center justify-center h-48 text-gray-500">
                                 <i className="fi fi-rr-inbox text-4xl mb-4"></i>
                                 <p className="text-lg font-medium">No resolved posts yet</p>

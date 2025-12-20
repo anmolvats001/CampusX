@@ -2,31 +2,54 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/context";
 import userphoto from "../assets/user1.png";
 import { toast } from "react-toastify";
+import axios from "axios";
+import Shrimmer from "../components/Shrimmer";
 
 const Incharges = () => {
   const [incharges, setIncharges] = useState([]);
-  const { data, dark, setcommvis } = useContext(AppContext);
+  const { data, dark, setcommvis ,atoken} = useContext(AppContext);
   const [openMenuId, setOpenMenuId] = useState(null);
   const [val, setval] = useState("no");
-  
+  const [images,setImages]=useState(null);
+  const [loading,setLoading]=useState(false);
+  const findAllIncharge=async()=>{
+    const {data}=await axios.get(import.meta.env.VITE_BACKEND_URL+"/api/admin/all-incharge",{headers:{atoken}});
+    if(data.success){
+      console.log(data.incharges)
+      setIncharges(data.incharges);
+    }
+  }
+  const deleteIncharge=async(inchargeId)=>{
+    const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/admin/deleteincharge",{inchargeId:inchargeId},{headers:{atoken}});
+            if(data.success){
+              toast.success(data.message);
+              findAllIncharge();
+            }
+            else{
+              toast.error(data.message);
+            }
+            
+  }
   useEffect(() => {
     setcommvis(false);
     window.scrollTo({
       top: 0,
       behavior: "instant",
     });
+    findAllIncharge();
   }, []);
   
-  const removetheincharge = (index) => {
+  const removetheincharge = (inchargeId) => {
     toast(
       <div className="flex items-center gap-3">
         <span className="text-xs">Wanna Remove the Incharge:</span>
         <button
           className={`${dark ? "bg-gray-800 text-white" : "bg-gray-200"} px-3 py-1 rounded`}
-          onClick={() => {
+          onClick={async() => {
             setval("yes");
-            const updatedIncharges = incharges.filter((_, i) => i !== index);
-            setIncharges(updatedIncharges);
+            setLoading(true);
+            await deleteIncharge(inchargeId);
+            setLoading(false)
             toast.dismiss();
           }}
         >
@@ -49,41 +72,6 @@ const Incharges = () => {
     );
   };
 
-  useEffect(() => {
-    // Your existing incharges data...
-    setIncharges([
-      {
-        name: "Incharge 21",
-        work: "water",
-        dob: "2006-05-04",
-        address: "fafrana road bhrampuri gali no. 2 Modinagar (201204) ghaziabad uttarPradesh",
-        gender: "Male",
-        bio: "Frontend Developer with a growing skill set in React, GSAP, and modern web design patterns. I enjoy turning ideas into interactive, user-friendly experiences and collaborating on projects that challenge me to think deeper. Currently expanding my knowledge in scalable UI systems, accessibility, and performance-oriented development.",
-        image: `${userphoto}`,
-        college: "ABES Engineering College",
-        mobile_no: 7983704543,
-        email: "vatsanmol4@gmail.com",
-        yourwork: [
-          // Your existing work data...
-        ],
-      },
-      {
-        name: "Incharge 2",
-        work: "water",
-        dob: "2006-05-04",
-        address: "fafrana road bhrampuri gali no. 2 Modinagar (201204) ghaziabad uttarPradesh",
-        gender: "Male",
-        bio: "Frontend Developer with a growing skill set in React, GSAP, and modern web design patterns. I enjoy turning ideas into interactive, user-friendly experiences and collaborating on projects that challenge me to think deeper. Currently expanding my knowledge in scalable UI systems, accessibility, and performance-oriented development.",
-        image: `${userphoto}`,
-        college: "ABES Engineering College",
-        mobile_no: 7983704543,
-        email: "vatsanmol4@gmail.com",
-        yourwork: [
-          // Your existing work data...
-        ],
-      },
-    ]);
-  }, []);
 
   return (
     <div className={`${dark ? "dark" : "light"} min-h-screen w-full md:w-[45%] border border-gray-800 relative`}>
@@ -95,10 +83,10 @@ const Incharges = () => {
           Incharges
         </p>
       </div>
-      
+      {loading?<Shrimmer/>:(
       <div className="overflow-y-auto w-full scroller h-full relative pb-10">
         <div className="h-fit flex items-center py-4 sm:py-8 px-4 sm:px-5 flex-col gap-6 sm:gap-10">
-          {incharges.map((item, index) => (
+          {incharges.length==0?<div className="text-gray-500 font-bold text-xl">No Incharge is found</div>: incharges?.map((item, index) => (
             <div
               key={index}
               className="border border-gray-700 p-4 sm:p-6 rounded-xl relative w-full"
@@ -130,7 +118,7 @@ const Incharges = () => {
                       border border-gray-700 rounded-lg py-2 px-3 min-w-[120px] z-10`}>
                       <p
                         className="text-red-700 cursor-pointer  py-1 px-2 rounded"
-                        onClick={() => removetheincharge(index)}
+                        onClick={() => removetheincharge(item._id)}
                       >
                         Remove
                       </p>
@@ -158,7 +146,7 @@ const Incharges = () => {
                 
                 <div className="flex gap-3">
                   <p className="text-sm sm:text-base font-semibold">Resolved:</p>
-                  <p className="text-sm sm:text-base">{item.yourwork.length}</p>
+                  <p className="text-sm sm:text-base">{item.posts.length}</p>
                 </div>
                 
                 <div>
@@ -174,7 +162,7 @@ const Incharges = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };
