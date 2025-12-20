@@ -13,7 +13,9 @@ const UserSchema=new mongoose.Schema({
     dob:{type:String,default:"Not Selected"},
     branch:{type:String,default:"Branch"},
     phone:{type:String,default:"000000000"},
-    bio:{type:String,default:"NO BIO IS SET"}
+    bio:{type:String,default:"NO BIO IS SET"},
+    notification:[{type:mongoose.Schema.Types.ObjectId,
+            ref:"post"}]
 })
 const userModel=mongoose.model("user",UserSchema);
 export default userModel;

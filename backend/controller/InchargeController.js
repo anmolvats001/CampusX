@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import PostModel from "../models/posts.js";
 import{v2 as cloudinary}from "cloudinary"
+import userModel from "../models/user.js";
 const login = async (req, res) => {
   try {
 
@@ -131,11 +132,16 @@ const resolvePost=async(req,res)=>{
       await PostModel.findByIdAndUpdate(postId, {verifiedImage: imageUrl });
     }
     await InchargeModel.findByIdAndUpdate(inchargeId,{ $push: { posts: postId } })
-  res.json({success:true,message:"Post has been resolved"})
+  res.json({success:true,message:"Post has been resolved"});
+  AddToNotification(postId);
   } catch (error) {
     
     console.log(error);
     res.json({success:false,message:error.message})
   }
 }
-export { login,checkPassword,changePassword ,resolvePost,getProfile,editProfile};
+const AddToNotification=async(postId)=>{
+  const post=await PostModel.findById(postId);
+  const user=await userModel.findByIdAndUpdate(post.creator,{$push:{notification:postId}});
+}
+export { login,checkPassword,changePassword ,resolvePost,getProfile,editProfile,AddToNotification};

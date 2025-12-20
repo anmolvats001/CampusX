@@ -28,6 +28,7 @@ import InchargeDashboard from './pages/InchargeDashboard'
 import AdminDashBoard from './pages/AdminDashBoard'
 import Incharges from './pages/Incharges'
 import AddIncharge from './pages/AddIncharge'
+import FeedBack from './pages/FeedBack'
 const App = () => {
   return (
     <div>
@@ -37,7 +38,9 @@ const App = () => {
         <Route path='/about' element={<><NavBar/><About/> <Footer/> </>}/>
         <Route path='/team' element={<><NavBar/><Team/> <Footer/> </>}/>
         <Route path='/contact' element={<><NavBar/><Contact/> <Footer/> </>}/>
+        <Route path='/feedback'element={<><NavBar/><FeedBack/> <Footer/> </>}/>
         <Route path="/issues" element={<IssuesLayout />}>
+        
            <Route path="home" element={<><MainPage /></>} />
            <Route path="data" element={<Data />} />
            <Route path='info/:id'element={<Info/>}/>
@@ -59,5 +62,4 @@ const App = () => {
     </div>
   )
 }
-
 export default App

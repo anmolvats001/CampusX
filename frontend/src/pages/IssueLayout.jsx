@@ -6,9 +6,10 @@ import RightSider from "../components/RightSider";
 import { AppContext } from "../Context/context";
 import Comment from "../components/Comment";
 import Post from "../components/Post";
+import Notification from "../components/Notification";
 
 const IssuesLayout = () => {
-  const { commvisible, setcommvis, dark, timeAgo, profileon, setDark, postvis, inchargelogin, adminlogin, studentLogin,utoken,itoken,atoken } = useContext(AppContext);
+  const { commvisible, setcommvis, dark, timeAgo, profileon, setDark, postvis, inchargelogin, adminlogin, studentLogin,utoken,itoken,atoken,notificationOn,setNotificationOn } = useContext(AppContext);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -30,6 +31,7 @@ const IssuesLayout = () => {
           <Outlet />
           {!profileon && <RightSider />}
           {commvisible && <Comment />}
+          {notificationOn && <Notification/>}
           {postvis && <Post />}
         </div>
       </div>

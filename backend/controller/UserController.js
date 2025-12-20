@@ -278,4 +278,28 @@ const checkPassword=async(req,res)=>{
     res.json({success:false,message:error.message})
   }
  }
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword};
+ const getNotification=async(req,res)=>{
+try {
+    const {userId}=req.body;
+  const user=await userModel.findById(userId).populate("notification");
+  res.json({success:true,notification:user.notification})
+} catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+}
+ }
+ const deleteNotification=async(req,res)=>{
+  try{
+   const {userId}=req.body;
+const user = await userModel.findByIdAndUpdate(
+  userId,
+  { $set: { notification: [] } }
+);
+    res.json({success:true,notification:user.notification})
+  }
+catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+}
+ }
+export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword,getNotification,deleteNotification};

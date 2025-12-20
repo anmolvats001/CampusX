@@ -43,6 +43,7 @@ export const AppProvider = ({ children }) => {
   );
   const [commentData, setcommentData] = useState(null);
   const [currentPost, setCurrentPost] = useState(null);
+  const [notificationOn,setNotificationOn]=useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const logout = () => {
     setInchargelogin(false);
@@ -233,6 +234,7 @@ export const AppProvider = ({ children }) => {
         findCommentData,
         setCurrentPost,
         currentPost,
+        setNotificationOn,notificationOn
       }}
     >
       {children}

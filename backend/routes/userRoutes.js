@@ -1,5 +1,5 @@
 import express from "express";
-import { changePassword, checkPassword, deleteAccount, deletePost, editProfile, getOtp, getProfile, regiser, resolvePost, uploadPost, Userlogin } from "../controller/UserController.js";
+import { changePassword, checkPassword, deleteAccount, deleteNotification, deletePost, editProfile, getNotification, getOtp, getProfile, regiser, resolvePost, uploadPost, Userlogin } from "../controller/UserController.js";
 import authUser from "../middleware/authUser.js"
 import upload from "../middleware/multer.js";
 const userRouter=express.Router();
@@ -13,5 +13,7 @@ userRouter.post("/otp",getOtp);
 userRouter.get("/deleteaccount",authUser,deleteAccount);
 userRouter.post("/resolvepost",authUser,resolvePost);
 userRouter.post("/checkpass",authUser,checkPassword);
-userRouter.post("/changePass",authUser,changePassword)
+userRouter.post("/changePass",authUser,changePassword);
+userRouter.get("/getNotification",authUser,getNotification);
+userRouter.get("/deleteNotifications",authUser,deleteNotification);
 export default userRouter;

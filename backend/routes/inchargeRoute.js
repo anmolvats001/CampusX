@@ -1,6 +1,6 @@
 import express from "express";
 import upload from "../middleware/multer.js"
-import { changePassword, checkPassword, editProfile, getProfile, login, resolvePost } from "../controller/InchargeController.js";
+import { AddToNotification, changePassword, checkPassword, editProfile, getProfile, login, resolvePost } from "../controller/InchargeController.js";
 import authIncharge from "../middleware/authIncharge.js";
 const inchargeRouter=express.Router();
 inchargeRouter.post("/login",login);

@@ -15,7 +15,7 @@ const MainPage = () => {
     on,
     onfile,
     seton,
-    studentLogin,
+    studentLogin,setNotificationOn,utoken
   } = useContext(AppContext);
 
   const [filteredData, setFilteredData] = useState([]);
@@ -74,7 +74,8 @@ const MainPage = () => {
             ))
           )}
         </div>
-
+        {dark?utoken&&<i onClick={()=>setNotificationOn(true)} class="fi fi-ss-bell text-white bg-black rounded-full px-3 py-2 pt-3 text-center   text-xl fixed lg:hidden top-4 right-3"></i>:utoken&&<i onClick={()=>setNotificationOn(true)} class="fi fi-ss-bell rounded-full px-3 py-2 pt-3 lg:hidden text-xl fixed top-4 right-3 bg-white"></i>}
+        
         {studentLogin && (
           <div
             className={`${!dark ? "bg-black text-white" : "bg-white text-black"} sticky bottom-36 lg:bottom-10 right-6 lg:right-10 w-16 h-16 float-right flex justify-center items-center rounded-full cursor-pointer`}

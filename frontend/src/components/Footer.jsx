@@ -63,7 +63,7 @@ const Footer = () => {
             <a href={"/"} className='hover:text-[#1D4ED8] transition-all duration-200 text-sm sm:text-base'>Home</a>
             <a href={"/issues/home"} className='hover:text-[#1D4ED8] transition-all duration-200 text-sm sm:text-base'>Issues</a>
             <a href={"/about"} className='hover:text-[#1D4ED8] transition-all duration-200 text-sm sm:text-base'>About</a>
-            <a href={"/report"} className='hover:text-[#1D4ED8] transition-all duration-200 text-sm sm:text-base'>Report</a>
+            <a href={"/feedback"} className='hover:text-[#1D4ED8] transition-all duration-200 text-sm sm:text-base'>feedback</a>
           </div>
           
           <div className='flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-6 lg:pt-15'>

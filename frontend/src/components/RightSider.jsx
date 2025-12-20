@@ -4,20 +4,22 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 const RightSider = () => {
-    const {dark,setDark,data}=useContext(AppContext);
+    const {dark,setDark,data,notificationOn,setNotificationOn,utoken}=useContext(AppContext);
     const [siderData,setSiderData]=useState([]);
     useEffect(()=>{
       findData();
     },[data]);
     const findData=()=>{
       setSiderData(data.slice(0,4))
-      console.log(siderData)
     }
   return (
    <div className={(dark ? "dark":"light") +" h-full w-[30%] border-[1px] border-gray-800 relative hidden lg:block"}>
     <div className='pt-10 px-4'>
       <div className='py-2.5 px-3.5 outfit border-1 border-gray-800 rounded-3xl'>
-        <p className='text-2xl  font-semibold'>What's happening ?</p>
+        <div className=' flex justify-between'>
+          <p className='text-2xl  font-semibold'>What's happening ?</p>
+          {dark?utoken&&<i onClick={()=>setNotificationOn(true)} class="fi fi-ss-bell text-white text-2xl"></i>:utoken&&<i onClick={()=>setNotificationOn(true)} class="fi fi-ss-bell text-2xl"></i>}
+        </div>
         <div className=' mt-6 flex flex-col gap-3'>
           {!siderData|| siderData.length==0?<div className='text-center text-gray-500 '>---Nothing to Show---</div>:
           siderData.map((e,i)=>(
