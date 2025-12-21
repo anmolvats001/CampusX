@@ -23,7 +23,7 @@ const Team = () => {
   return (
     <div className='px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-24 sm:mt-12 md:mt-16 lg:mt-20 w-full'>
       <div className="font-extrabold uppercase text-center pt-6 sm:pt-12 md:pt-10 pb-8 sm:pb-10 md:pb-12 text-xl sm:text-2xl">
-        <div>👨‍💻 The people behind CampusConnect</div>
+        <div> The people behind CampusConnect</div>
         
       <div className="pt-10">
         <div className='flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 pb-6 w-full'>
