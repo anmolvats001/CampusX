@@ -2,10 +2,12 @@ import React, { useContext } from 'react'
 import { AppContext } from '../Context/context'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RightSider = () => {
     const {dark,setDark,data,notificationOn,setNotificationOn,utoken}=useContext(AppContext);
     const [siderData,setSiderData]=useState([]);
+    const navigate=useNavigate();
     useEffect(()=>{
       findData();
     },[data]);
@@ -23,7 +25,7 @@ const RightSider = () => {
         <div className=' mt-6 flex flex-col gap-3'>
           {!siderData|| siderData.length==0?<div className='text-center text-gray-500 '>---Nothing to Show---</div>:
           siderData.map((e,i)=>(
-              <div key={i} className='cursor-pointer'>
+              <div key={i} className='cursor-pointer' onClick={()=>{navigate(`/issues/post-data/${e._id}`)}}>
                 <p className='line-clamp-1'>{e.data}</p>
                 <p className='text-[13px] text-gray-500'>({e.block} Block)</p>
               </div>

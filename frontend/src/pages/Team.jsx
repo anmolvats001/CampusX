@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-
+import anmol from "../assets/anmol.jpg"
+import ansh from "../assets/ansh.png"
+import anshuman from "../assets/anshuman.png"
 const Team = () => {
   useEffect(() => {
     window.scrollTo({
@@ -9,14 +11,14 @@ const Team = () => {
   }, []);
   
   const devs = [
-    { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year" },
+    { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol,x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/",git:"https://github.com/anmolvats001" },
     ];
     const Coordinators=[
-      { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year" },
-      { name: "Ansh Jain", role: "Content selector and UI designer", year: "CSE 2nd Year" },
-      { name: "Anshuhman Singh", role: "Content selector and Coordination", year: "CSE 2nd Year" },
+      { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol, insta:"https://www.instagram.com/anmolvats01/",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/"},
+      { name: "Ansh Jain", role: "Content selector and UI designer", year: "CSE 2nd Year",img:ansh ,insta:"https://www.instagram.com/ansh._jain_?utm_source=qr&igsh=MWFiaGN2cmEzbmN3bg==",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/ansh-jain8272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"},
+      { name: "Anshuhman Singh", role: "Content selector and Coordination", year: "CSE 2nd Year",img:anshuman,insta:"https://www.instagram.com/anshs4096?igsh=MXgxemY1dnhleWd4",x:"https://x.com/Anshuma20169588",in:"https://www.linkedin.com/in/anshuman-singh-91bb33356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
     ]
-  const img = "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&fm=jpg&q=60&w=400";
+  
 
   return (
     <div className='px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-24 sm:mt-12 md:mt-16 lg:mt-20 w-full'>
@@ -32,7 +34,7 @@ const Team = () => {
             <div key={i} className='w-56 sm:w-64 h-auto min-h-[18rem] sm:min-h-[20rem] md:h-72 flex flex-col gap-3 sm:gap-4 items-center bg-white shadow-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105'>
               <img
                 className='w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-cover rounded-full border-2 sm:border-3 md:border-4 border-[#10B981] shadow-md'
-                src={img}
+                src={e.img}
                 alt={e.name}
               />
               <div className="text-center">
@@ -43,9 +45,9 @@ const Team = () => {
                 <p className="text-xs font-light text-gray-500 mt-0.5">{e.year}</p>
               </div>
               <div className="flex gap-3 mt-2">
-                <i className="fi fi-brands-github text-gray-600 hover:text-gray-800 cursor-pointer text-base sm:text-lg"></i>
-                <i className="fi fi-brands-linkedin text-gray-600 hover:text-blue-700 cursor-pointer text-base sm:text-lg"></i>
-                <i className="fi fi-brands-twitter-alt text-gray-600 hover:text-blue-400 cursor-pointer text-base sm:text-lg"></i>
+                <i onClick={()=>window.open(e.git)} className="fi fi-brands-github text-gray-600 hover:text-gray-800 cursor-pointer text-base sm:text-lg"></i>
+                <i onClick={()=>window.open(e.in)} className="fi fi-brands-linkedin text-gray-600 hover:text-blue-700 cursor-pointer text-base sm:text-lg"></i>
+                <i onClick={()=>window.open(e.x)} className="fi fi-brands-twitter-alt text-gray-600 hover:text-blue-400 cursor-pointer text-base sm:text-lg"></i>
               </div>
             </div>
           ))}
@@ -63,7 +65,7 @@ const Team = () => {
             <div key={i} className='w-56 sm:w-64 h-auto min-h-[18rem] sm:min-h-[20rem] md:h-72 flex flex-col gap-3 sm:gap-4 items-center bg-white shadow-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105'>
               <img
                 className='w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-cover rounded-full border-2 sm:border-3 md:border-4 border-[#ef1742] shadow-md'
-                src={img}
+                src={e.img}
                 alt={e.name}
               />
               <div className="text-center">
@@ -74,9 +76,9 @@ const Team = () => {
                 <p className="text-xs font-light text-gray-500 mt-0.5">{e.department}</p>
               </div>
               <div className="flex gap-3 mt-2">
-                <i className="fi fi-brands-instagram text-gray-600 hover:text-pink-600 cursor-pointer text-base sm:text-lg"></i>
-                <i className="fi fi-brands-linkedin text-gray-600 hover:text-blue-700 cursor-pointer text-base sm:text-lg"></i>
-                <i className="fi fi-brands-twitter text-gray-600 hover:text-blue-400 cursor-pointer text-base sm:text-lg"></i>
+                <i onClick={()=>window.open(e.insta)} className="fi fi-brands-instagram text-gray-600 hover:text-pink-600 cursor-pointer text-base sm:text-lg"></i>
+                <i onClick={()=>window.open(e.in)} className="fi fi-brands-linkedin text-gray-600 hover:text-blue-700 cursor-pointer text-base sm:text-lg"></i>
+                <i onClick={()=>window.open(e.x)} className="fi fi-brands-twitter text-gray-600 hover:text-blue-400 cursor-pointer text-base sm:text-lg"></i>
               </div>
             </div>
           ))}

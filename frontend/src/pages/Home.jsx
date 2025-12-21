@@ -6,7 +6,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { data } from 'react-router-dom';
 import bg from "../assets/bg.jpeg";
-import feedback from "../assets/feedback.jpg"
+import feedback1 from "../assets/feedback1.jpeg"
+import feedback2 from "../assets/feedback2.jpeg"
+
 import IssuesAddressed from '../components/IssuesAddressed';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -199,8 +201,8 @@ function scrollright() {
         <i className="fi fi-br-angle-left absolute left-2 sm:left-4 md:left-8 lg:left-28 top-1/2 -translate-y-1/2 text-xl sm:text-2xl font-bold bg-white/80 rounded-full p-1 sm:p-2 cursor-pointer z-10" onClick={scrollleft}></i>
         <i className="fi fi-bs-angle-right absolute right-2 sm:right-4 md:right-8 lg:right-28 top-1/2 -translate-y-1/2 text-xl sm:text-2xl font-bold bg-white/80 rounded-full p-1 sm:p-2 cursor-pointer z-10" onClick={scrollright}></i>
         <div className='flex scroller h-[100%] overflow-x-scroll' ref={feedbackscroll}>
-        <img src={feedback} alt="" className='shrink-0 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 object-contain w-full' />
-        <img src={feedback} alt="" className='shrink-0 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 object-contain w-full' />
+        <img src={feedback1} alt="" className='shrink-0 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 object-contain w-full' />
+        <img src={feedback2} alt="" className='shrink-0 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 object-contain w-full' />
       </div>
       </div>
     </div>
