@@ -40,15 +40,15 @@ const Footer = () => {
             <div className='flex flex-col sm:flex-row gap-2 sm:gap-5 items-start sm:items-center'>
               <h3 className='font-semibold text-gray-400 whitespace-nowrap'>Follow us :</h3>
               <div className='flex gap-3 sm:gap-4 text-[#5673c2] flex-wrap'>
-                <a href='' className='hover:text-gray-400 transition-all duration-200 text-sm sm:text-base'>
+                <a href='https://www.instagram.com/camp_us.connect/' className='hover:text-gray-400 transition-all duration-200 text-sm sm:text-base'>
                   Instagram
                 </a>
                 <span className='text-gray-500'>|</span>
-                <a href='' className='hover:text-gray-400 transition-all duration-200 text-sm sm:text-base'>
+                <a href='https://www.facebook.com/profile.php?id=61585172416064' className='hover:text-gray-400 transition-all duration-200 text-sm sm:text-base'>
                   Facebook
                 </a>
                 <span className='text-gray-500'>|</span>
-                <a href='' className='hover:text-gray-400 transition-all duration-200 text-sm sm:text-base'>
+                <a href='https://www.linkedin.com/in/anmol-vats-821592336/' className='hover:text-gray-400 transition-all duration-200 text-sm sm:text-base'>
                   LinkedIn
                 </a>
               </div>

@@ -232,7 +232,7 @@ const IssueContent = ({e, i, search}) => {
                             agree
                         </div>
                     </div>
-                    <div
+                    <div onClick={()=>{navigator.clipboard.writeText(`http://localhost:5174/issues/post-data/${e._id}`);toast.success("Linked Copied")}}
                         className={
                             (dark ? "text-gray-500" : "text-gray-700") +
                             " flex items-center rounded-xl lg:rounded-3xl cursor-pointer hover:text-green-700 gap-1"

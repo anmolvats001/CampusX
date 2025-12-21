@@ -120,13 +120,13 @@ const Setting = () => {
             >
               <div className="p-1 hover:text-gray-300">
                 <a
-                  href="mailto:vatsanmol4@gmail.com"
+                  href="mailto:campusconnect0611@gmail.com"
                   className="hover:text-blue-400 transition-colors block py-1"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div className="flex items-center gap-2">
                     <i className="fi fi-sr-envelope text-xs"></i>
-                    <span>vatsanmol4@gmail.com</span>
+                    <span>campusconnect0611@gmail.com</span>
                   </div>
                 </a>
               </div>
@@ -144,7 +144,7 @@ const Setting = () => {
               </div>
               <div className="p-1 hover:text-gray-300">
                 <a
-                  href="#"
+                  href="https://www.facebook.com/profile.php?id=61585172416064"
                   className="hover:text-blue-400 transition-colors block py-1"
                   onClick={(e) => {
                     e.stopPropagation(); /* Handle Facebook click */
@@ -158,7 +158,7 @@ const Setting = () => {
               </div>
               <div className="p-1 hover:text-gray-300">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/camp_us.connect/"
                   className="hover:text-blue-400 transition-colors block py-1"
                   onClick={(e) => {
                     e.stopPropagation(); /* Handle Instagram click */

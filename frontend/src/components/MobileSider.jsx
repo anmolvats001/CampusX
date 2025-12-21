@@ -266,7 +266,7 @@ const MobileSider = () => {
                   
                   <div>
                     <p className="bold">{profileData.name}</p>
-                    <p className="text-[8px] text-gray-500">({profileData.branch})</p>
+                    <p className="text-[8px] text-gray-500">({profileData.work||profileData.branch})</p>
                   </div>
                   
                   <div className="h-full flex items-center">

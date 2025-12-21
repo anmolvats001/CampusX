@@ -50,15 +50,15 @@ const Contact = () => {
           <div className='flex gap-5 items-center'>
             <h3 className='font-semibold text-[#2563EB]'>Follow us :</h3>
             <div className='flex gap-4 text-[#1E3A8A]'>
-              <a href='' className='hover:text-[#2563EB] transition-all duration-200'>
+              <a href='https://www.instagram.com/camp_us.connect/' className='hover:text-[#2563EB] transition-all duration-200'>
                 Instagram
               </a>
               |
-              <a href='' className='hover:text-[#2563EB] transition-all duration-200'>
+              <a href='https://www.facebook.com/profile.php?id=61585172416064' className='hover:text-[#2563EB] transition-all duration-200'>
                 Facebook
               </a>
               |
-              <a href='' className='hover:text-[#2563EB] transition-all duration-200'>
+              <a href='https://www.linkedin.com/in/anmol-vats-821592336/' className='hover:text-[#2563EB] transition-all duration-200'>
                 LinkedIn
               </a>
             </div>
