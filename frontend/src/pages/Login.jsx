@@ -107,6 +107,8 @@ const Login = () => {
     let {data}=await axios.post(backendUrl+"/api/user/login",{add_no:addno,password});
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
+      localStorage.removeItem("itoken");
+      localStorage.removeItem("atoken");
       setuToken(data.utoken);
       findProfileData()
 
@@ -121,6 +123,8 @@ const Login = () => {
     let {data}=await axios.post(backendUrl+"/api/incharge/login",{email,password});
     if(data.success){
       localStorage.setItem("itoken",data.itoken);
+      localStorage.removeItem("atoken");
+      localStorage.removeItem("utoken");
       setiToken(data.itoken);
       findProfileData()
       toast.success(data.message);
@@ -134,6 +138,8 @@ const Login = () => {
     let {data}=await axios.post(backendUrl+"/api/admin/login",{email,password});
     if(data.success){
       localStorage.setItem("atoken",data.atoken);
+      localStorage.removeItem("utoken");
+      localStorage.removeItem("itoken");
       setaToken(data.atoken);
       findProfileData()
       toast.success(data.message);
