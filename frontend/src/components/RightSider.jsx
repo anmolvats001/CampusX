@@ -34,7 +34,7 @@ const RightSider = () => {
           </div>
           
       </div>
-      <div className='py-2.5 px-3.5 outfit text-gray-600 text-sm flex gap-2 mt-4'><a href="">+91 7983704504</a><p>|</p> <a href="">vatsanmol4@gmail.com</a><p>|</p> <a href="">policy</a></div>
+      <div className='py-2.5 px-3.5 outfit text-gray-600 text-sm flex gap-2 mt-4'><a href="tel:+91 7983704504">+91 7983704504</a><p>|</p> <a href="mailto:campusconnect0611@gmail.com">campusconnect0611@gmail.com</a><p>|</p> <a href="">policy</a></div>
       <div className='py-2.5 px-3.5 outfit text-gray-600 text-sm flex justify-center'><p>© 2025 CampusX</p></div>
     </div>
     </div>

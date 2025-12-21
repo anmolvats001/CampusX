@@ -308,6 +308,7 @@ catch (error) {
   const {userId,data}=req.body;
   const user=await userModel.findById(userId);
   const email=user.email;
+  console.log(email);
   await transporter.sendMail({
       to: process.env.EMAIL_USER,
       from: email,
