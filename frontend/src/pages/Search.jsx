@@ -3,18 +3,9 @@ import { AppContext } from "../Context/context";
 import IssueContent from "../components/IssueContent";
 
 const Search = () => {
-  const { data, dark, setcommvis ,findAllPost} = useContext(AppContext);
+  const { data,dark,setcommvis,findAllPost} = useContext(AppContext);
   const [filteredData, setFilteredData] = useState([]);
   
-  useEffect(() => {
-     findAllPost();
-    setcommvis(false);
-   
-    window.scrollTo({
-      top: 0,
-      behavior: "instant",
-    });
-  }, []);
   
   const find = (e) => {
     const value = e.target.value.toLowerCase();
@@ -23,9 +14,22 @@ const Search = () => {
     ));
   };
   useEffect(() => {
-    setFilteredData(data)
-  }, []);
-  
+  setcommvis(false);
+  window.scrollTo({ top: 0, behavior: "instant" });
+}, []);
+
+useEffect(() => {
+  if (findAllPost) {
+    findAllPost();
+  }
+}, [findAllPost]);
+
+useEffect(() => {
+  if (data) {
+    setFilteredData(data);
+  }
+}, [data]);
+
   return (
     <div
       className={`${

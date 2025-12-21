@@ -203,7 +203,7 @@ const IssueContent = ({e, i, search}) => {
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
                         (e.liked && "text-red-800")
                     }>
-                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleLike(e._id)}}}></i>
+                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleLike(e._id);find}}}></i>
                         <p className="text-xs ml-1">{e.likes.length}</p>
                     </div>
                     <div
