@@ -302,4 +302,25 @@ catch (error) {
     res.json({success:false,message:error.message})
 }
  }
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword,getNotification,deleteNotification};
+ const Feedback=async(req,res)=>{
+  try {
+    
+  const {userId,data}=req.body;
+  const user=await userModel.findById(userId);
+  const email=user.email;
+  await transporter.sendMail({
+      to: process.env.EMAIL_USER,
+      from: email,
+      subject: "Feedback sent",
+      html: `<h2>${user.name} has sent you the feedback</h2></br>
+      <h2>Data :</h2>
+      <h3>${data}</h3>
+      `,
+    });
+    res.json({success:true,message:"feedback sent"});
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
+ }
+export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword,getNotification,deleteNotification,Feedback};
