@@ -9,7 +9,7 @@ const Comment = () => {
       const [data,setData]=useState([]);
       const [inputData,setInputData]=useState(null);
       const [loading,setLoading]=useState(false);
-const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,commentData,setcommentData,findCommentData,utoken,setCurrentPost,currentPost,itoken,atoken} = useContext(AppContext);
+const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,commentData,setcommentData,findCommentData,utoken,setCurrentPost,currentPost,itoken,atoken,findAllPost} = useContext(AppContext);
 
     const handleInput = () => {
   const textarea = textareaRef.current;
@@ -26,7 +26,7 @@ const postComment=async(id)=>{
   setLoading(false)
   if(data.success){
     toast.success(data.message);
-   
+   findAllPost();
   }
   else{
     toast.error(data.message)

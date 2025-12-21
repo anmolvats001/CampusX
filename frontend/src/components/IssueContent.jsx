@@ -11,7 +11,7 @@ const IssueContent = ({e, i, search}) => {
         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
         console.log(data);
         if(data.success){
-            toast.success(data.message);
+            // toast.success(data.message);
             setData(prev =>
   prev.map(post =>
     post._id === id
@@ -34,7 +34,7 @@ const IssueContent = ({e, i, search}) => {
         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/agree",{postId:id},{headers:{utoken}});
         console.log(data);
         if(data.success){
-            toast.success(data.message);
+            // toast.success(data.message);
             setData(prev =>
   prev.map(post =>
     post._id === id

@@ -18,11 +18,6 @@ const Search = () => {
   window.scrollTo({ top: 0, behavior: "instant" });
 }, []);
 
-useEffect(() => {
-  if (findAllPost) {
-    findAllPost();
-  }
-}, [findAllPost]);
 
 useEffect(() => {
   if (data) {

@@ -14,12 +14,13 @@ const AddIncharge = () => {
   const [bio, setbio] = useState("");
   const [work, setwork] = useState("Water");
   const [address, setAddress] = useState("");
-  const { dark, adminlogin, setcommvis,atoken } = useContext(AppContext);
+  const { dark, adminlogin, setcommvis,atoken,findAllPost } = useContext(AppContext);
   const [loading,setLoading]=useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setcommvis(false);
+    findAllPost();
     window.scrollTo({
       top: 0,
       behavior: "instant",
