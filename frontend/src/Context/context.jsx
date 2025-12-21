@@ -154,7 +154,7 @@ export const AppProvider = ({ children }) => {
   if (utoken || itoken || atoken) {
     findAllPost();
   }
-}, [utoken, itoken, atoken]);
+}, [utoken, itoken, atoken,profileData]);
 useEffect(() => {
   if (!utoken && !itoken && !atoken) return;
   findProfileData();

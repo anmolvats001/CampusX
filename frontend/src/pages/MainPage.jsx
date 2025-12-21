@@ -3,6 +3,7 @@ import { AppContext } from "../Context/context";
 import IssueNavBar from "../components/IssueNavBar";
 import IssueContent from "../components/IssueContent";
 import Shrimmer from "../components/Shrimmer";
+import CommentShrimmer from "../components/CommentShrimmer";
 
 const MainPage = () => {
   const {
@@ -18,7 +19,7 @@ const MainPage = () => {
     studentLogin,setNotificationOn,utoken
   } = useContext(AppContext);
 
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -64,8 +65,8 @@ const MainPage = () => {
         </div>
 
         <div className="h-fit flex items-center pt-6 pb-16 lg:pb-4 lg:pt-20 flex-col gap-14 relative">
-          {loading ? (
-            <Shrimmer />
+          {(loading ||!data||!filteredData) ? (
+            <CommentShrimmer/>
           ) : filteredData.length === 0 ? (
             <p className="text-gray-500 text-center">No issues found</p>
           ) : (
