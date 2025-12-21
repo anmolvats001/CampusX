@@ -2,6 +2,7 @@ import React from 'react'
 import clock from "../assets/clock.jpeg"
 import computer from "../assets/computer.jpeg"
 import security from "../assets/security.jpeg"
+import horn from "../assets/horn.jpeg"
 const WhyCampusConnect = () => {
   return (
     <div className='px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-36 mt-8 sm:mt-12 md:mt-16 lg:mt-20 w-full'>
@@ -51,7 +52,7 @@ const WhyCampusConnect = () => {
         <div className='shrink-0 w-64 sm:w-72 md:w-80 h-auto min-h-[18rem] sm:min-h-[20rem] md:h-96 flex flex-col gap-2 sm:gap-3 items-center bg-white shadow-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] sm:hover:scale-110'>
           <img
             className='w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 object-cover rounded-full border-2 sm:border-3 md:border-4 border-[#2563EB] shadow-md'
-            src='https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?ixlib=rb-4.1.0&fm=jpg&q=60&w=3000'
+            src={horn}
             alt='Issue Support System'
           />
           <h1 className='text-center text-lg sm:text-xl md:text-2xl font-semibold text-[#1E3A8A]'>
