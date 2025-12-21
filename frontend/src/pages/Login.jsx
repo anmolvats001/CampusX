@@ -150,7 +150,7 @@ const Login = () => {
       findProfileData();
       // toast.success("Registered successfully")
       toast.success(data.message);
-      navigate("/issues/")
+      navigate("/issues/home")
     }
     else{
       toast.error(data.message);
