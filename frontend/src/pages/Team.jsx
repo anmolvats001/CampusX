@@ -16,7 +16,6 @@ const Team = () => {
     const Coordinators=[
       { name: "Ansh Jain", role: "UI/UX Designer", year: "CSE 2nd Year",img:ansh ,insta:"https://www.instagram.com/ansh._jain_?utm_source=qr&igsh=MWFiaGN2cmEzbmN3bg==",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/ansh-jain8272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"},
       { name: "Anshuhman Singh", role: "Project Lead", year: "CSE 2nd Year",img:anshuman,insta:"https://www.instagram.com/anshs4096?igsh=MXgxemY1dnhleWd4",x:"https://x.com/Anshuma20169588",in:"https://www.linkedin.com/in/anshuman-singh-91bb33356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
-      { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol, insta:"https://www.instagram.com/anmolvats01/",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/"},
       
     ]
   
@@ -27,9 +26,6 @@ const Team = () => {
         <div>👨‍💻 The people behind CampusConnect</div>
         
       <div className="pt-10">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-[#1E3A8A]">
-          Developer
-        </h2>
         <div className='flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 pb-6 w-full'>
           {devs.map((e, i) => ( 
             <div key={i} className='w-56 sm:w-64 h-auto min-h-[18rem] sm:min-h-[20rem] md:h-72 flex flex-col gap-3 sm:gap-4 items-center bg-white shadow-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105'>
@@ -58,9 +54,6 @@ const Team = () => {
       </div>
       
     <div className="mb-12 sm:mb-16 md:mb-20">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-[#1E3A8A]">
-          Content Handlers
-        </h2>
         <div className='flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 pb-6 w-full'>
           {Coordinators.map((e, i) => ( 
             <div key={i} className='w-56 sm:w-64 h-auto min-h-[18rem] sm:min-h-[20rem] md:h-72 flex flex-col gap-3 sm:gap-4 items-center bg-white shadow-lg rounded-xl sm:rounded-2xl p-4 sm:p-5 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] sm:hover:scale-105'>
