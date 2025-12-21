@@ -5,6 +5,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const formatDateForInput = (date) => {
+  if (!date) return "";
+  const d = new Date(date);
+  if (isNaN(d)) return "";
+  return d.toISOString().split("T")[0];
+};
+
 const EditProfile = () => {
   const [image, setimage] = useState(false);
   const {
@@ -30,7 +37,7 @@ const EditProfile = () => {
       formData.append("dob", profileData.dob);
       formData.append("bio", profileData.bio);
       image && formData.append("image", image);
-      console.log(formData)
+
       if (utoken) {
         const { data } = await axios.post(
           import.meta.env.VITE_BACKEND_URL + "/api/user/editprofile",
@@ -44,8 +51,8 @@ const EditProfile = () => {
           toast.error(data.message);
         }
       }
+
       if (atoken) {
-        console.log(profileData);
         const { data } = await axios.post(
           import.meta.env.VITE_BACKEND_URL + "/api/admin/editprofile",
           formData,
@@ -58,8 +65,8 @@ const EditProfile = () => {
           toast.error(data.message);
         }
       }
+
       if (itoken) {
-        console.log(profileData);
         const { data } = await axios.post(
           import.meta.env.VITE_BACKEND_URL + "/api/incharge/editprofile",
           formData,
@@ -81,6 +88,7 @@ const EditProfile = () => {
     setProfileOn(true);
     return () => setProfileOn(false);
   }, []);
+
   const renderFormFields = (data, setData, isStudent = false) => {
     if (!data) return null;
 
@@ -154,10 +162,11 @@ const EditProfile = () => {
             </p>
           </div>
           <input
-            type="date" className="w-fit border-2 border-gray-800 rounded-lg"
-            value={data.dob || ""}
+            type="date"
+            value={formatDateForInput(data.dob)}
+            className="w-fit border-2 border-gray-800 rounded-lg"
             onChange={(e) =>
-              setData((prev) => ({ ...prev, dob: e.target.value.toString() }))
+              setData((prev) => ({ ...prev, dob: e.target.value }))
             }
           />
 
@@ -255,10 +264,8 @@ const EditProfile = () => {
         dark ? "dark" : "light"
       } min-h-screen pb-16 lg:pb-0 w-full md:w-[75%] border border-gray-800 relative`}
     >
-      {/* Mobile Header Spacing */}
       <div className="h-16 sm:h-0"></div>
 
-      {/* Student Edit Profile */}
       {utoken && (
         <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
           {renderProfileHeader(profileData, setProfileData, "student")}
@@ -276,7 +283,6 @@ const EditProfile = () => {
         </div>
       )}
 
-      {/* Incharge Edit Profile */}
       {itoken && profileData && (
         <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
           {renderProfileHeader(profileData, setProfileData, "incharge")}
@@ -294,7 +300,6 @@ const EditProfile = () => {
         </div>
       )}
 
-      {/* Admin Edit Profile */}
       {atoken && profileData && (
         <div className="overflow-y-scroll w-full scroller h-full relative pb-10">
           {renderProfileHeader(profileData, setProfileData, "admin")}
