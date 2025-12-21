@@ -48,7 +48,7 @@ const deleteData=async()=>{
           {(!data)?<CommentShrimmer/>:
         data.length==0?(<div className="h-full overflow-y-scroll w-full pt-4 lg:pt-5 text-2xl font-bold scroller flex justify-center text-gray-500">No Notifications Yet</div>):(<div className="mt-4 flex flex-col gap-3">
             {data.map((e, i) => (
-              <div onClick={()=>navigate(`/issues/profile`)}
+              <div onClick={()=>{navigate(`/issues/profile`);setNotificationOn(false)}}
                 key={i}
                 className="w-full border-gray-800 border rounded-xl lg:rounded-2xl h-fit px-3 lg:px-3.5 py-2.5"
               >
