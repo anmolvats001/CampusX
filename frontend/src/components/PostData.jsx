@@ -17,7 +17,7 @@ const PostData = () => {
     utoken,
     findCommentData,
     itoken,
-    atoken,setVal
+    atoken,setVal,findProfileData
   } = useContext(AppContext);
   const [on, seton] = useState(false);
   const [onfile, setOnFile] = useState(null);
@@ -37,9 +37,10 @@ const { data } = await axios.post(
   formData,{headers:{itoken}});
     if(data.success){
       toast.success(data.message);
-      setVal("in-process")
+      setVal("in-process");
+       findProfileData();
       navigate("/issues/home");
-
+     
     }
     else{
       toast.error(data.message)

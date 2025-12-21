@@ -40,14 +40,16 @@ const IssueContent = ({e, i, search}) => {
     post._id === id
       ? {
           ...post,
-          likes: post.liked
-            ? post.likes.filter(() => false)
-            : [...post.likes, "x"],
-          liked: !post.liked
+          agrees: post.agreed
+            ? post.agrees.filter(() => false)
+            : [...post.agrees, "x"],
+          agreed: !post.agreed
         }
       : post
   )
-);}
+);
+
+            }
         else{
             console.log(data);
         }
