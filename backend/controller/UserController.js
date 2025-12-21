@@ -310,9 +310,10 @@ catch (error) {
   const email=user.email;
   console.log(email);
   await transporter.sendMail({
-      to: process.env.EMAIL_USER,
-      from: email,
-      subject: "Feedback sent",
+      from: `"CampusX Feedback" <${process.env.EMAIL_USER}>`,
+    to: process.env.EMAIL_USER,
+    replyTo: user.email,
+subject: "Feedback sent",
       html: `<h2>${user.name} has sent you the feedback</h2></br>
       <h2>Data :</h2>
       <h3>${data}</h3>
