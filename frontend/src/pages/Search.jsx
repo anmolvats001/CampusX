@@ -3,11 +3,13 @@ import { AppContext } from "../Context/context";
 import IssueContent from "../components/IssueContent";
 
 const Search = () => {
-  const { data, dark, setcommvis } = useContext(AppContext);
+  const { data, dark, setcommvis ,findAllPost} = useContext(AppContext);
   const [filteredData, setFilteredData] = useState([]);
   
   useEffect(() => {
-    setcommvis(false)
+     findAllPost();
+    setcommvis(false);
+   
     window.scrollTo({
       top: 0,
       behavior: "instant",

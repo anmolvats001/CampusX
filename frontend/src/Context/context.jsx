@@ -153,7 +153,7 @@ export const AppProvider = ({ children }) => {
     };
   useEffect(() => {
     findAllPost();
-  }, [utoken, itoken, atoken, profileData,data]);
+  }, [utoken, itoken, atoken, profileData]);
   useEffect(()=>{
     findProfileData();
   },[utoken, itoken, atoken])
@@ -234,7 +234,7 @@ export const AppProvider = ({ children }) => {
         findCommentData,
         setCurrentPost,
         currentPost,
-        setNotificationOn,notificationOn
+        setNotificationOn,notificationOn,findAllPost
       }}
     >
       {children}

@@ -8,7 +8,7 @@ import profile from "../assets/user.png"
 import setting from "../assets/settings.png"
 import { NavLink, useNavigate } from "react-router-dom";
 const Sider = () => {
-  const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,logout,profileData,utoken,itoken,atoken}=useContext(AppContext);
+  const {dark,setProfileOn,setFilter,setPostVis,inchargelogin,setInchargelogin,adminlogin,setAdminLogin,studentLogin,setStudentLogin,logout,profileData,utoken,itoken,atoken,    findAllPost}=useContext(AppContext);
   const navigate=useNavigate();
   
   return(
@@ -16,10 +16,10 @@ const Sider = () => {
       <div className=" h-full relative ">
         <img className="absolute pos right-10" src={!dark ?campusxblack :campusxwhite} alt="" />
         <div className={(dark?"bg-black ":"bg-white ")+" absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer z-[100]"}>
-          <NavLink to={"/issues/home"} onClick={()=>setFilter(null)} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
+          <NavLink to={"/issues/home"} onClick={()=>{setFilter(null);findAllPost()}} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
           {inchargelogin&&<NavLink to={"/issues/incharge-dashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
           {atoken&&<NavLink to={"/issues/adminDashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
-          <NavLink to={"/issues/search"} className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
+          <NavLink to={"/issues/search"}  className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
           {utoken && <div className="flex gap-1" onClick={()=>{setPostVis(true);navigate("/issues/home")}}>{dark ?<i class="fi fi-ss-add text-white"></i>:<i class="fi fi-ss-add"></i>} <p>Report</p></div>}
           {itoken && <div className="flex gap-1" onClick={()=>{navigate("/issues/resolve")}}>{dark ?<i class="fi fi-ss-problem-solving text-white"></i>:<i class="fi fi-ss-problem-solving"></i>} <p>Resolve</p></div>}
           {atoken && <div className="flex gap-1" onClick={()=>{navigate("/issues/incharges")}}>{dark ?<i class="fi fi-rr-leadership-alt text-white"></i>:<i class="fi fi-rr-leadership-alt"></i>} <p>Incharges</p></div>}
