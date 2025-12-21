@@ -23,6 +23,7 @@ const Login = () => {
   const [correctOtp,setCorrectOpt]=useState(false);
   const [otpfromback,setotpfromback]=useState(56);
   const [passwordon,setPasswordOn]=useState(false);
+  const [loading,setloading]=useState(false);
   const change = () => setSign(!sign);
   const changePasson=()=>setPasswordOn(!passwordon);
   const moveright = () => { 
@@ -75,6 +76,7 @@ const Login = () => {
     
     if (emailValue && emailValue !== "") {
       setotpverify(true);
+      setloading(true);
       const {data}=await axios.post(backendUrl+"/api/user/otp",{email:emailValue});
       if(!data.success){
         toast.error(data.message);
@@ -84,6 +86,7 @@ const Login = () => {
        setotpfromback(data.otp);
        toast.success("OTP sent successfully");
       }
+      setloading(false)
     } else {
       toast.error(data.message);
     }
@@ -247,12 +250,17 @@ const Login = () => {
                     className="border px-3 focus:outline-0 py-2 rounded-2xl w-full" 
                     value={email}
                   />
-                  <button
+                  {loading?<button
+                    className={(!sign&&"hidden")+" px-4 py-2 bg-blue-500 text-white rounded-lg w-full"}
+                  
+                  >
+                    ...
+                  </button>:<button
                     className={(!sign&&"hidden")+" px-4 py-2 bg-blue-500 text-white rounded-lg w-full"}
                     onClick={handleVerify}
                   >
                     Verify Email
-                  </button>
+                  </button>}
                 </div>
 
                 {otpverify && (
@@ -340,12 +348,19 @@ const Login = () => {
                 <div className="flex flex-col gap-1">
                   <div className="flex gap-2 relative">
                     <input onChange={(e)=>setemail(e.target.value)} id="email" ref={emaildata} placeholder='Enter the Email' type="email" className="border px-2 focus:outline-0 py-1 rounded-2xl w-full" value={email}/>
-                    <button
+                    {
+                      loading?<button
+                      className={(!sign&&" hidden")+" px-3 py-1 bg-blue-500 text-white absolute right-[-70px]"}
+                    
+                    >
+                      ...
+                    </button>:<button
                       className={(!sign&&" hidden")+" px-3 py-1 bg-blue-500 text-white absolute right-[-70px]"}
                       onClick={handleVerify}
                     >
                       verify
                     </button>
+                    }
                   </div>
 
                   {otpverify && (

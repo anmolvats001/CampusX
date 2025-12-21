@@ -201,8 +201,15 @@ const getOtp = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "OTP Verification",
-      html: `<h2>Your OTP is ${otp}</h2>`,
+      subject: ` [Campus Connect] Your Verification Code: ${otp}`,
+      html: `<h4>Hi User,</h4>
+      <h3>Welcome to Campus Connect! To complete your login or action on our platform, please use the following One-Time Password (OTP):</h3>
+      <h1>${otp}</h1>
+      <h3>Note: This code is valid for the next 10 minutes. Please do not share this OTP with anyone, including the Campus Connect team.</h3>
+      </br>
+      <h3 >If you did not request this code, you can safely ignore this email. Someone may have entered your email address by mistake.</h3>
+      <h3>Helping you resolve campus issues faster, The Campus Connect Team</h3>
+      `,
     });
 
     res.json({ success: true, message: "OTP sent" ,otp});
@@ -211,6 +218,40 @@ const getOtp = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+const getOtpforforgot = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Email required" });
+    }
+
+    const otp = generateOTP();
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: ` [Campus Connect] Reset your Campus Connect password`,
+      html: `<h4>Hi User,</h4>
+      <h3>We received a request to reset the password for your Campus Connect account. No changes have been made yet.</h3>
+      <h3>You can reset your password by verifying the otp give below-
+Otp:</h3>
+      <h1>${otp}</h1>
+      <h3>Didn't request this?</br>If you didn’t ask to reset your password, you can safely ignore this email. Your account remains secure as long as you don't click the link.</h3>
+      </br>
+      <h3 >Best regards,</br>
+The Campus Connect Team</br>
+Empowering students to build a better campus.</h3>
+      <h3>Helping you resolve campus issues faster, The Campus Connect Team</h3>
+      `,
+    });
+
+    res.json({ success: true, message: "OTP sent" ,otp});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 const deleteAccount = async (req, res) => {
   try {
     const { userId } = req.body;
@@ -343,4 +384,4 @@ subject: "Feedback sent",
   }
  }
 
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword,getNotification,deleteNotification,Feedback,changeforgotPassword};
+export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword,getNotification,deleteNotification,Feedback,changeforgotPassword,getOtpforforgot};

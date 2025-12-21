@@ -43,7 +43,7 @@ const Forgot = () => {
     
     if (emailValue && emailValue !== "") {
       setotpverify(true);
-      const {data}=await axios.post(backendUrl+"/api/user/otp",{email:emailValue});
+      const {data}=await axios.post(backendUrl+"/api/user/forgototp",{email:emailValue});
       if(!data.success){
         toast.error(data.message);
       }
