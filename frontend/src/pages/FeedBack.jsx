@@ -10,7 +10,8 @@ const FeedBack = () => {
   const [loading,setloading]=useState(false);
   const navigate=useNavigate();
   const postfeedback=async()=>{
-    if(!utoken){
+    if(!textdata||textdata===""){ return toast.error("Write Something")}
+    else if(!utoken){
       toast.error("You can Not send the feedback")
     }
     setloading(true)
