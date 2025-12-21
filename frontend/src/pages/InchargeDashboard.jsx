@@ -11,7 +11,6 @@ const InchargeDashboard = () => {
     
     useEffect(() => {
         setcommvis(false);
-        findProfileData();
         window.scrollTo({
             top: 0,
             behavior: "instant",

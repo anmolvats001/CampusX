@@ -15,7 +15,7 @@ const Profile = () => {
     setAdminLogin, 
     studentLogin, 
     setStudentLogin,  
-    setcommvis 
+    setcommvis ,
   } = useContext(AppContext);
   
   const [extend, setextend] = useState(false);

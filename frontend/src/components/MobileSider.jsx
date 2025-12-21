@@ -5,7 +5,7 @@ import campusxblack from "../assets/campusxblack.png"
 import { NavLink, useNavigate } from "react-router-dom";
 
 const MobileSider = () => {
-  const { dark, setProfileOn, setFilter, setPostVis, inchargelogin, adminlogin, studentLogin,logout ,profileData} = useContext(AppContext);
+  const { dark, setProfileOn, setFilter, setPostVis, inchargelogin, adminlogin, studentLogin,logout ,profileData,findAllPost} = useContext(AppContext);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -65,7 +65,7 @@ const MobileSider = () => {
                 <NavLink 
                   to="/issues/home" 
                   className="flex gap-1"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() =>{ findAllPost();setMenuOpen(false)}}
                 >
                   {dark ? <i className="fi fi-sr-house-blank text-white"></i> : <i className="fi fi-sr-house-blank"></i>}
                   <p className={dark ? "text-white" : "text-black"}>Home</p>
@@ -75,7 +75,7 @@ const MobileSider = () => {
                   <NavLink 
                     to="/issues/incharge-dashboard" 
                     className="flex gap-1"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={() => {findAllPost();setMenuOpen(false)}}
                   >
                     {dark ? <i className="fi fi-rr-dashboard-monitor text-white font-bold"></i> : <i className="fi fi-rr-dashboard-monitor font-bold"></i>}
                     <p className={dark ? "text-white" : "text-black"}>DashBoard</p>
@@ -86,7 +86,7 @@ const MobileSider = () => {
                   <NavLink 
                     to="/issues/adminDashboard" 
                     className="flex gap-1"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={() => {findAllPost();setMenuOpen(false)}}
                   >
                     {dark ? <i className="fi fi-rr-dashboard-monitor text-white font-bold"></i> : <i className="fi fi-rr-dashboard-monitor font-bold"></i>}
                     <p className={dark ? "text-white" : "text-black"}>DashBoard</p>
@@ -96,7 +96,7 @@ const MobileSider = () => {
                 <NavLink 
                   to="/issues/search" 
                   className="flex gap-1"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() =>{findAllPost(); setMenuOpen(false)}}
                 >
                   {dark ? <i className="fi fi-bs-search text-white"></i> : <i className="fi fi-bs-search"></i>}
                   <p className={dark ? "text-white" : "text-black"}>search</p>
@@ -115,7 +115,7 @@ const MobileSider = () => {
                 {inchargelogin && (
                   <p 
                     className="flex gap-1 cursor-pointer"
-                    onClick={() => { navigate("/issues/resolve"); setMenuOpen(false); }}
+                    onClick={() => { navigate("/issues/resolve"); setMenuOpen(false); findAllPost()}}
                   >
                     {dark ? <i className="fi fi-ss-problem-solving text-white"></i> : <i className="fi fi-ss-problem-solving"></i>}
                     <p className={dark ? "text-white" : "text-black"}>Resolve</p>

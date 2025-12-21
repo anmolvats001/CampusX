@@ -36,6 +36,7 @@ const EditProfile = () => {
       formData.append("gender", profileData.gender);
       formData.append("dob", profileData.dob);
       formData.append("bio", profileData.bio);
+      utoken&&formData.append("branch",profileData.branch);
       image && formData.append("image", image);
 
       if (utoken) {
@@ -231,7 +232,10 @@ const EditProfile = () => {
                     dark ? "text-gray-300" : "text-gray-800"
                   } w-full sm:w-fit border border-gray-700 px-2 py-1 md:px-1.5 rounded-lg focus:outline-0`}
                   value={
-                    atoken || itoken ? profileData.work : profileData?.branch
+                    atoken || itoken ? data.work : data?.branch
+                  }
+                  onChange={(e) =>
+                   atoken || itoken ? setData((prev) => ({ ...prev, work: e.target.value })):setData((prev) => ({ ...prev, branch: e.target.value }))
                   }
                 />
                 <textarea

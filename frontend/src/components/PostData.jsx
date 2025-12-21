@@ -17,7 +17,7 @@ const PostData = () => {
     utoken,
     findCommentData,
     itoken,
-    atoken,
+    atoken,setVal
   } = useContext(AppContext);
   const [on, seton] = useState(false);
   const [onfile, setOnFile] = useState(null);
@@ -37,7 +37,9 @@ const { data } = await axios.post(
   formData,{headers:{itoken}});
     if(data.success){
       toast.success(data.message);
-      navigate("/issues/home")
+      setVal("in-process")
+      navigate("/issues/home");
+
     }
     else{
       toast.error(data.message)
@@ -367,7 +369,7 @@ const { data } = await axios.post(
             <div className="py-4 px-4 flex flex-col sm:flex-row gap-4 items-center sm:items-start">
               <img
                 src={verifyImage}
-                className="h-fit max-h-[200px] sm:max-h-[250px] w-full sm:w-1/2 rounded-lg"
+                className="h-fit max-h-[200px] object-contain sm:max-h-[250px] w-full sm:w-1/2 rounded-lg"
                 alt="Verification proof"
               />
               <div className="w-full sm:w-1/2">

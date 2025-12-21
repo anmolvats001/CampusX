@@ -150,13 +150,17 @@ export const AppProvider = ({ children }) => {
     }
   
   }
-    };
-  useEffect(() => {
+    };useEffect(() => {
+  if (utoken || itoken || atoken) {
     findAllPost();
-  }, [utoken, itoken, atoken, profileData]);
-  useEffect(()=>{
-    findProfileData();
-  },[utoken, itoken, atoken])
+  }
+}, [utoken, itoken, atoken]);
+useEffect(() => {
+  if (!utoken && !itoken && !atoken) return;
+  findProfileData();
+}, [utoken, itoken, atoken]);
+
+
   const timeAgo = (dateString) => {
   const now = Date.now();
   const past = new Date(dateString).getTime();

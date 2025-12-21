@@ -3,7 +3,7 @@ import { AppContext } from '../Context/context';
 import IssueContent from '../components/IssueContent';
 
 const Resolve = () => {
-  const { data, dark, profileData,setProfileData, setcommvis } = useContext(AppContext);
+  const { data, dark, profileData,setProfileData, setcommvis ,findProfileData} = useContext(AppContext);
   const [filteredData, setFilteredData] = useState([]);
   
   useEffect(() => {
@@ -15,17 +15,17 @@ const Resolve = () => {
   }, []);
   
   useEffect(() => {
-    if (data) {
-      setFilteredData(
-        data.filter(item => 
-          !item.resolvedByIncharge &&
-          !item.resolvedByStudent &&
-          profileData.work.toLowerCase() === item.problem.toLowerCase()
-        )
-      );
-    }
-  }, [data, profileData]);
-  
+  if (!data || !profileData?.work) return;
+
+  setFilteredData(
+    data.filter(item =>
+      !item.resolvedByIncharge &&
+      !item.resolvedByStudent &&
+      profileData.work.toLowerCase() === item.problem.toLowerCase()
+    )
+  );
+}, [data, profileData?.work]);
+
   return (
     <div
       className={`${

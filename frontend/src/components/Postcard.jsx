@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
-  const { setcommvis ,setPostdata,utoken,findProfileData} = useContext(AppContext);
+  const { setcommvis ,setPostdata,utoken,findProfileData,setVal} = useContext(AppContext);
   const navigate=useNavigate()
   const isOpen = openMenuId === index;
   const deletePost=async(postId)=>{
@@ -103,7 +103,7 @@ const PostCard = ({ e, dark, openMenuId, setOpenMenuId, index }) => {
       {isOpen && (
         <div className={(dark ? "dark" : "light") + " absolute right-3 top-10 w-24 rounded-2xl shadow p-2"}>
           
-          {!e.resolvedByStudent&&<p className="cursor-pointer hover:bg-gray-900 p-1 text-green-600"onClick={()=>resolvePost(e._id)} >Resolved</p>}
+          {!e.resolvedByStudent&&<p className="cursor-pointer hover:bg-gray-900 p-1 text-green-600"onClick={()=>{resolvePost(e._id);setVal("resolved")}} >Resolved</p>}
           <p className="cursor-pointer hover:bg-gray-900 p-1 text-red-900" onClick={()=>deletePost(e._id)}>Delete</p>
         </div>
       )}

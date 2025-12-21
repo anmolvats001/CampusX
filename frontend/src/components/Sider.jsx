@@ -17,8 +17,8 @@ const Sider = () => {
         <img className="absolute pos right-10" src={!dark ?campusxblack :campusxwhite} alt="" />
         <div className={(dark?"bg-black ":"bg-white ")+" absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer z-[100]"}>
           <NavLink to={"/issues/home"} onClick={()=>{setFilter(null);findAllPost()}} className="flex gap-1">{dark ?<i class="fi fi-sr-house-blank text-white"></i>:<i class="fi fi-sr-house-blank"></i>}<p>Home</p></NavLink>
-          {inchargelogin&&<NavLink to={"/issues/incharge-dashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
-          {atoken&&<NavLink to={"/issues/adminDashboard"} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
+          {inchargelogin&&<NavLink to={"/issues/incharge-dashboard"}onClick={()=>findAllPost()} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
+          {atoken&&<NavLink to={"/issues/adminDashboard"}onClick={()=>findAllPost()} className="flex gap-1">{dark ?<i class="fi fi-rr-dashboard-monitor text-white font-bold"></i>:<i class="fi fi-rr-dashboard-monitor font-bold"></i>}<p>DashBoard</p></NavLink>}
           <NavLink to={"/issues/search"} onClick={()=>  findAllPost()}  className="flex gap-1">{dark ?<i class="fi fi-bs-search text-white"></i>:<i class="fi fi-bs-search"></i>} <p>search</p></NavLink>
           {utoken && <div className="flex gap-1" onClick={()=>{setPostVis(true);navigate("/issues/home")}}>{dark ?<i class="fi fi-ss-add text-white"></i>:<i class="fi fi-ss-add"></i>} <p>Report</p></div>}
           {itoken && <div className="flex gap-1" onClick={()=>{navigate("/issues/resolve")}}>{dark ?<i class="fi fi-ss-problem-solving text-white"></i>:<i class="fi fi-ss-problem-solving"></i>} <p>Resolve</p></div>}

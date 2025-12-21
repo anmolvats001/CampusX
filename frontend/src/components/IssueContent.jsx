@@ -6,13 +6,25 @@ import { toast } from 'react-toastify';
 import CommentShrimmer from './CommentShrimmer';
 
 const IssueContent = ({e, i, search}) => {
-    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost,atoken,itoken} = useContext(AppContext);
+    const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost,atoken,itoken,findAllPost,setData} = useContext(AppContext);
     const handleLike=async(id)=>{
         const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
         console.log(data);
         if(data.success){
             toast.success(data.message);
-            findData();
+            setData(prev =>
+  prev.map(post =>
+    post._id === id
+      ? {
+          ...post,
+          likes: post.liked
+            ? post.likes.filter(() => false)
+            : [...post.likes, "x"],
+          liked: !post.liked
+        }
+      : post
+  )
+);
         }
         else{
             console.log(data);
@@ -23,8 +35,19 @@ const IssueContent = ({e, i, search}) => {
         console.log(data);
         if(data.success){
             toast.success(data.message);
-            findData();
+            setData(prev =>
+  prev.map(post =>
+    post._id === id
+      ? {
+          ...post,
+          likes: post.liked
+            ? post.likes.filter(() => false)
+            : [...post.likes, "x"],
+          liked: !post.liked
         }
+      : post
+  )
+);}
         else{
             console.log(data);
         }
@@ -203,7 +226,7 @@ const IssueContent = ({e, i, search}) => {
                         " flex cursor-pointer items-center rounded-xl lg:rounded-3xl hover:text-red-800 " +
                         (e.liked && "text-red-800")
                     }>
-                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleLike(e._id);find}}}></i>
+                        <i className="fi fi-ss-social-network text-sm lg:text-base" onClick={()=>{if(itoken||atoken){toast.error("Incharge/Admin cant like")}else if(!search){handleLike(e._id);}}}></i>
                         <p className="text-xs ml-1">{e.likes.length}</p>
                     </div>
                     <div

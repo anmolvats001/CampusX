@@ -83,7 +83,7 @@ const getProfile = async (req, res) => {
 };
 const editProfile = async (req, res) => {
   try {
-    const { userId, name, address, dob, gender, phone,bio } = req.body;
+    const { userId, name, address, dob, gender, phone,bio,branch } = req.body;
     const imageFile = req.file;
     
     await userModel.findByIdAndUpdate(userId, {
@@ -92,7 +92,8 @@ const editProfile = async (req, res) => {
       address,
       dob,
       gender,
-      bio
+      bio,
+      branch
     });
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {

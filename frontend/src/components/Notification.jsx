@@ -78,7 +78,7 @@ const deleteData=async()=>{
         onClick={() => {
              deleteData();
           setNotificationOn(false);
-         
+         findProfileData();
         }}
       ></div>
     </>)
