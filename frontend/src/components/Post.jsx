@@ -145,7 +145,7 @@ const deleteimage = (index) => {
               ref={textref}
               onChange={(e) => findwords(e)}
               name=""
-              placeholder="Enter your thoughts ..."
+              placeholder="Enter your Complaint ..."
               className={`border border-gray-800 rounded-lg focus:outline-none w-full h-40 resize-none p-3 scroller text-sm sm:text-base ${
                 dark ? "text-gray-300" : "text-gray-800"
               }`}
@@ -210,6 +210,8 @@ const deleteimage = (index) => {
               <option value="administration">Administration</option>
               <option value="hygiene">Hygiene</option>
               <option value="security">Security</option>
+              <option value="building">Building</option>
+
             </select>
           </div>
           

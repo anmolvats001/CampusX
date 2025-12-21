@@ -193,7 +193,7 @@ const Setting = () => {
             <p className="text-sm sm:text-base">Give Feedback</p>
             <i className="fi fi-br-angle-small-right text-sm sm:text-base"></i>
           </div>
-          <div
+         {utoken&& <div
             onClick={deleteAccount}
             className={`flex justify-between py-2 px-3 rounded-lg cursor-pointer border-b border-gray-800 ${
               dark ? "hover:bg-gray-900" : "hover:bg-gray-100"
@@ -202,7 +202,7 @@ const Setting = () => {
             <p className="text-sm sm:text-base text-red-700">Delete Account</p>
             <i className="fi fi-br-angle-small-right text-sm sm:text-base"></i>
           </div>
-        </div>
+        }</div>
 
         {/* Logout Button */}
         <div className="px-4 sm:px-8 lg:px-20 py-6 sm:py-7 flex justify-end">

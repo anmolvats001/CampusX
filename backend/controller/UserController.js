@@ -165,11 +165,16 @@ const uploadPost = async (req, res) => {
           };
         })
       );
-
+      if(!uploadedImages||uploadedImages.length<=0){
+        return res.json({success:false,message:"Error occured"})
+      }
       await PostModel.findByIdAndUpdate(
         postId,
         { $push: { files: { $each: uploadedImages } } }
       );
+    }
+    else{
+      return res.json({success:false,message:"Error occured"})
     }
     await userModel.findByIdAndUpdate(
       userId,
