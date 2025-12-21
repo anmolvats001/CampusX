@@ -185,7 +185,7 @@ const Setting = () => {
           </div>
 
           {/* Give Feedback */}
-          <div
+          <div onClick={()=>navigate("/feedback")}
             className={`flex justify-between py-2 px-3 rounded-lg cursor-pointer border-b border-gray-800 ${
               dark ? "hover:bg-gray-900" : "hover:bg-gray-100"
             } transition-colors`}
