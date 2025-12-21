@@ -288,7 +288,7 @@ const Login = () => {
               />{passwordon?<i className="fi fi-rr-eye"></i>:<i class="fi fi-rs-crossed-eye"></i>}
             </div>
           </div>
-
+          
           <div className='gap-3 w-full flex flex-col items-center'>
             <button 
               className="px-6 py-2.5 bg-blue-600 text-white rounded-xl w-full" 
@@ -304,6 +304,7 @@ const Login = () => {
                 <>New user? <span className='text-blue-600 cursor-pointer font-medium' onClick={()=>{change();if(window.innerWidth >= 1024) moveright();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}> Sign Up</span></>
               )}
             </p>
+            {!sign &&<div onClick={()=>navigate("/forgotpass")} className='text-blue-500 cursor-pointer'>forgot password</div>}
           </div>
         </div>
       </div>
@@ -374,9 +375,9 @@ const Login = () => {
                 value={password}
               />{passwordon?<i onClick={changePasson} className="fi fi-rr-eye"></i>:<i onClick={changePasson} class="fi fi-rs-crossed-eye"></i>}
             </div>
-          
+          {!sign &&<div onClick={()=>navigate("/forgotpass")} className='text-blue-500 capitalize cursor-pointer'>forgot password</div>}
             </div>
-
+            
             <div className='gap-2 w-full flex flex-col items-center'>
               <button className="px-6 py-2 bg-blue-600 text-white rounded " onClick={()=>{handleSubmit()}}>
                 {sign ? "SignIn" : "LogIn"}
@@ -388,6 +389,7 @@ const Login = () => {
                   <>New user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveright();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}>signIn</span></>
                 )}
               </p>
+              
             </div>
           </div>
         </div>

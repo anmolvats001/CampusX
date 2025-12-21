@@ -154,4 +154,21 @@ const deleteIncharge=async(req,res)=>{
     res.json({success:false,message:error.message});
   }
 }
-export {login,getProfile,editProfile,checkPassword,changePassword,addIncharge,getAllIncharge,deleteIncharge};
+ const changeforgotPassword=async(req,res)=>{
+  try {
+    const {newPass,email}=req.body;
+  const user=await adminModel.findOne({email});
+  if(!user){
+    return res.json({success:false,message:"User not found"})
+  }
+  const salt=await bcrypt.genSalt(10);
+  const newPassword=await bcrypt.hash(newPass,salt);
+  await adminModel.findByIdAndUpdate(user._id,{password:newPassword});
+  res.json({success:true,message:"Password Changed"});
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
+ }
+
+export {login,getProfile,editProfile,checkPassword,changePassword,addIncharge,getAllIncharge,deleteIncharge,changeforgotPassword};

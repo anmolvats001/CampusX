@@ -1,5 +1,5 @@
 import express from "express";
-import { addIncharge, changePassword, checkPassword, deleteIncharge, editProfile, getAllIncharge, getProfile, login } from "../controller/adminController.js";
+import { addIncharge, changeforgotPassword, changePassword, checkPassword, deleteIncharge, editProfile, getAllIncharge, getProfile, login } from "../controller/adminController.js";
 import authAdmin from "../middleware/authAdmin.js";
 import upload from "../middleware/multer.js";
 const adminRouter=express.Router();
@@ -11,4 +11,6 @@ adminRouter.post("/checkpass",authAdmin,checkPassword);
 adminRouter.post("/changePass",authAdmin,changePassword);
 adminRouter.get("/all-incharge",authAdmin,getAllIncharge);
 adminRouter.post("/deleteincharge",authAdmin,deleteIncharge);
+adminRouter.post("/forgotpass",changeforgotPassword);
+
 export default adminRouter;

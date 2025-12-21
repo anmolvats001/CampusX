@@ -144,4 +144,21 @@ const AddToNotification=async(postId)=>{
   const post=await PostModel.findById(postId);
   const user=await userModel.findByIdAndUpdate(post.creator,{$push:{notification:postId}});
 }
-export { login,checkPassword,changePassword ,resolvePost,getProfile,editProfile,AddToNotification};
+ const changeforgotPassword=async(req,res)=>{
+  try {
+    const {newPass,email}=req.body;
+  const user=await InchargeModel.findOne({email});
+  if(!user){
+    return res.json({success:false,message:"User not found"})
+  }
+  const salt=await bcrypt.genSalt(10);
+  const newPassword=await bcrypt.hash(newPass,salt);
+  await InchargeModel.findByIdAndUpdate(user._id,{password:newPassword});
+  res.json({success:true,message:"Password Changed"});
+  } catch (error) {
+    console.log(error);
+    res.json({success:false,message:error.message})
+  }
+ }
+
+export { login,checkPassword,changePassword ,resolvePost,getProfile,editProfile,AddToNotification,changeforgotPassword};

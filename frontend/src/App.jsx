@@ -29,6 +29,7 @@ import AdminDashBoard from './pages/AdminDashBoard'
 import Incharges from './pages/Incharges'
 import AddIncharge from './pages/AddIncharge'
 import FeedBack from './pages/FeedBack'
+import Forgot from './pages/Forgot'
 const App = () => {
   return (
     <div>
@@ -57,6 +58,7 @@ const App = () => {
            <Route path='add-incharge'element={<AddIncharge/>}/>
         </Route>
         <Route path='/help' element={<><NavBar/><Help/> <Footer/> </>}/>
+        <Route path='/forgotpass' element={<><NavBar/><Forgot/> <Footer/> </>}/>
       </Routes>
        <ToastContainer position="top-center" autoClose={3000} />
     </div>
