@@ -82,7 +82,7 @@ const { data } = await axios.post(
     return () => {
       setcommvis(false);
     };
-  }, []);
+  }, [id]);
   const handleLike = async () => {
     const { data } = await axios.post(
       import.meta.env.VITE_BACKEND_URL + "/api/post/like-postuser",

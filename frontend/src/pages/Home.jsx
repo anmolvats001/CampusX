@@ -8,7 +8,10 @@ import { data } from 'react-router-dom';
 import bg from "../assets/bg.jpeg";
 import feedback1 from "../assets/feedback1.jpeg"
 import feedback2 from "../assets/feedback2.jpeg"
-
+import home1 from "../assets/home1.jpeg"
+import home2 from "../assets/home2.jpeg"
+import home3 from "../assets/home3.jpeg"
+import home4 from "../assets/home4.jpeg"
 import IssuesAddressed from '../components/IssuesAddressed';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -131,7 +134,7 @@ function scrollright() {
             <div className="rounded-full overflow-hidden z-10 mb-4 sm:mb-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-44">
               <img
                 className="w-full h-full object-cover rounded-full border-[2px] sm:border-[3px] border-black"
-                src={DrinkingWater}
+                src={home4}
                 alt=""
               />
             </div>
@@ -142,7 +145,7 @@ function scrollright() {
             <div className="rounded-full overflow-hidden z-10 mt-4 sm:mt-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-44 order-1 sm:order-2">
               <img
                 className="w-full h-full object-cover rounded-full border-[2px] sm:border-[3px] border-black"
-                src={Administrativeblock}
+                src={home1}
                 alt=""
               />
             </div>
@@ -151,7 +154,7 @@ function scrollright() {
             <div className="rounded-full overflow-hidden z-10 mt-4 sm:mt-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-44">
               <img
                 className="w-full h-full object-cover rounded-full border-[2px] sm:border-[3px] border-black"
-                src={Administrativeblock}
+                src={home2}
                 alt=""
               />
             </div>
@@ -162,7 +165,7 @@ function scrollright() {
             <div className="rounded-full overflow-hidden z-10 mt-4 sm:mt-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-44 order-1 sm:order-2">
               <img
                 className="w-full h-full object-cover rounded-full border-[2px] sm:border-[3px] border-black"
-                src={Administrativeblock}
+                src={home3}
                 alt=""
               />
             </div>
