@@ -72,7 +72,7 @@ const NavBar = () => {
                   />
                   <div className="hidden lg:block">
                     <p className="font-bold text-xs lg:text-sm whitespace-nowrap">{profileData.name}</p>
-                    <p className="text-[6px] lg:text-[8px] text-gray-500">({profileData.branch})</p>
+                    <p className="text-[6px] lg:text-[8px] text-gray-500">({profileData.branch||profileData.work})</p>
                   </div>
                 </div>
                 <div className={`hidden group-hover:flex flex-col gap-1 text-xs lg:text-sm absolute right-2 lg:right-8 top-0 bg-white px-3 py-2 rounded-xl shadow-lg z-100 whitespace-nowrap h-44`}>
