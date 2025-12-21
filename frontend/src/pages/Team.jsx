@@ -14,16 +14,17 @@ const Team = () => {
     { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol,x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/",git:"https://github.com/anmolvats001" },
     ];
     const Coordinators=[
+      { name: "Ansh Jain", role: "UI/UX Designer", year: "CSE 2nd Year",img:ansh ,insta:"https://www.instagram.com/ansh._jain_?utm_source=qr&igsh=MWFiaGN2cmEzbmN3bg==",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/ansh-jain8272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"},
+      { name: "Anshuhman Singh", role: "Project Lead", year: "CSE 2nd Year",img:anshuman,insta:"https://www.instagram.com/anshs4096?igsh=MXgxemY1dnhleWd4",x:"https://x.com/Anshuma20169588",in:"https://www.linkedin.com/in/anshuman-singh-91bb33356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
       { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol, insta:"https://www.instagram.com/anmolvats01/",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/"},
-      { name: "Ansh Jain", role: "Content selector and UI designer", year: "CSE 2nd Year",img:ansh ,insta:"https://www.instagram.com/ansh._jain_?utm_source=qr&igsh=MWFiaGN2cmEzbmN3bg==",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/ansh-jain8272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"},
-      { name: "Anshuhman Singh", role: "Content selector and Coordination", year: "CSE 2nd Year",img:anshuman,insta:"https://www.instagram.com/anshs4096?igsh=MXgxemY1dnhleWd4",x:"https://x.com/Anshuma20169588",in:"https://www.linkedin.com/in/anshuman-singh-91bb33356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
+      
     ]
   
 
   return (
     <div className='px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-24 sm:mt-12 md:mt-16 lg:mt-20 w-full'>
       <div className="font-extrabold uppercase text-center pt-6 sm:pt-12 md:pt-10 pb-8 sm:pb-10 md:pb-12 text-xl sm:text-2xl">
-        <div>👨‍💻 Meet Our Team</div>
+        <div>👨‍💻 The people behind CampusConnect</div>
         
       <div className="pt-10">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-[#1E3A8A]">
