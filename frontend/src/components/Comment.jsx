@@ -40,6 +40,8 @@ const postComment=async(id)=>{
 }
 const handleCommentLike=async(id)=>{
   // setLoading(true);
+      setcommvis(false);
+
   const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-comment",{commentId:id},{headers:{utoken}});
     toast.success(data.message);
     // setLoading(false);
