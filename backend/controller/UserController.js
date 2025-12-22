@@ -203,9 +203,10 @@ const getOtp = async (req, res) => {
     }
 
     const otp = generateOTP();
+    console.log(otp)
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: '"Campus Connect" <campusconnect743@gmail.com>',
       to: email,
       subject: ` [Campus Connect] Your Verification Code: ${otp}`,
       html: `<h4>Hi User,</h4>
@@ -233,7 +234,7 @@ const getOtp = async (req, res) => {
     const otp = generateOTP();
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: '"Campus Connect" <campusconnect743@gmail.com>',
       to: email,
       subject: ` [Campus Connect] Reset your Campus Connect password`,
       html: `<h4>Hi User,</h4>
