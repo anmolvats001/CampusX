@@ -207,7 +207,7 @@ const Forgot = () => {
                 placeholder='Enter the password' 
                 className=" focus:outline-0 px-3 py-2 flex-1 " 
                 value={password}
-              />{passwordon?<i className="fi fi-rr-eye"></i>:<i class="fi fi-rs-crossed-eye"></i>}
+              />{passwordon?<i onClick={changePasson} className="fi fi-rr-eye"></i>:<i onClick={changePasson} class="fi fi-rs-crossed-eye"></i>}
             </div>}
             <div className='flex justify-center'>{loading?<button  className='w-fit py-1 px-3'>...</button>:<button onClick={handleSubmit} className='w-fit py-1 px-3'>Change</button>}</div>
           </div>
