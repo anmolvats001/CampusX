@@ -7,54 +7,87 @@ import CommentShrimmer from './CommentShrimmer';
 
 const IssueContent = ({e, i, search}) => {
     const {timeAgo, dark, setPostdata, setcommvis, seton, setOnFile,utoken,commentData,setcommentData,findCommentData,setCurrentPost,currentPost,atoken,itoken,findAllPost,setData} = useContext(AppContext);
-    const handleLike=async(id)=>{
-        const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-postuser",{postId:id},{headers:{utoken}});
-        console.log(data);
-        if(data.success){
-            // toast.success(data.message);
-            setData(prev =>
-  prev.map(post =>
-    post._id === id
-      ? {
-          ...post,
-          likes: post.liked
-            ? post.likes.filter(() => false)
-            : [...post.likes, "x"],
-          liked: !post.liked
-        }
-      : post
-  )
-);
-        }
-        else{
-            console.log(data);
-        }
-    }
-    const handleAgree=async(id)=>{
-        const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/agree",{postId:id},{headers:{utoken}});
-        console.log(data);
-        if(data.success){
-            // toast.success(data.message);
-            setData(prev =>
-  prev.map(post =>
-    post._id === id
-      ? {
-          ...post,
-          agrees: post.agreed
-            ? post.agrees.filter(() => false)
-            : [...post.agrees, "x"],
-          agreed: !post.agreed
-        }
-      : post
-  )
-);
+    const handleLike = async (id) => {
 
-            }
-        else{
-            console.log(data);
-        }
-    }
+  setData(prev =>
+    prev.map(post =>
+      post._id === id
+        ? {
+            ...post,
+            liked: !post.liked,
+            likes: post.liked
+              ? post.likes.slice(0, -1)
+              : [...post.likes, "x"]
+          }
+        : post
+    )
+  );
+
+  try {
     
+    await axios.post(
+      import.meta.env.VITE_BACKEND_URL + "/api/post/like-postuser",
+      { postId: id },
+      { headers: { utoken } }
+    );
+  } catch (error) {
+
+    setData(prev =>
+      prev.map(post =>
+        post._id === id
+          ? {
+              ...post,
+              liked: !post.liked,
+              likes: post.liked
+                ? post.likes.slice(0, -1)
+                : [...post.likes, "x"]
+            }
+          : post
+      )
+    );
+    toast.error("Like failed");
+  }
+};
+
+   const handleAgree = async (id) => {
+  setData(prev =>
+    prev.map(post =>
+      post._id === id
+        ? {
+            ...post,
+            agreed: !post.agreed,
+            agrees: post.agreed
+              ? post.agrees.slice(0, -1)
+              : [...post.agrees, "x"]
+          }
+        : post
+    )
+  );
+
+  try {
+    await axios.post(
+      import.meta.env.VITE_BACKEND_URL + "/api/post/agree",
+      { postId: id },
+      { headers: { utoken } }
+    );
+  } catch (error) {
+    setData(prev =>
+      prev.map(post =>
+        post._id === id
+          ? {
+              ...post,
+              agreed: !post.agreed,
+              agrees: post.agreed
+                ? post.agrees.slice(0, -1)
+                : [...post.agrees, "x"]
+            }
+          : post
+      )
+    );
+    toast.error("Agree failed");
+  }
+};
+ 
     const navigate = useNavigate();
     return (
         <div 
