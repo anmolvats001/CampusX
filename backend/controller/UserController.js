@@ -223,8 +223,7 @@ const getOtp = async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, message: err.message });
   }
-};
-const getOtpforforgot = async (req, res) => {
+};const getOtpforforgot = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
