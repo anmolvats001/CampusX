@@ -5,11 +5,12 @@ import { gsap } from "gsap";
 import { AppContext } from '../Context/context';
 import { data, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Shrimmer from '../components/Shrimmer';
 const Login = () => {
   const [sign, setSign] = useState(false);
   const [otpverify, setotpverify] = useState(false);
   const [who,setWho]=useState("student");
-  const {setStudentLogin,setAdminLogin,setInchargelogin,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,findProfileData}=useContext(AppContext);
+  const {setStudentLogin,setAdminLogin,setInchargelogin,backendUrl,utoken,setuToken,itoken,setiToken,atoken,setaToken,findProfileData,setDark}=useContext(AppContext);
   const emaildata = useRef();
   const emaildataMobile = useRef();
   const navigate=useNavigate();
@@ -24,6 +25,8 @@ const Login = () => {
   const [otpfromback,setotpfromback]=useState(56);
   const [passwordon,setPasswordOn]=useState(false);
   const [loading,setloading]=useState(false);
+  const [loginloading,setloginloading]=useState(false);
+    const [loader,setShowLoader]=useState(true);
   const change = () => setSign(!sign);
   const changePasson=()=>setPasswordOn(!passwordon);
   const moveright = () => { 
@@ -85,13 +88,16 @@ const Login = () => {
 
        setotpfromback(data.otp);
        toast.success("OTP sent successfully");
+             setloginloading(false)
       }
-      setloading(false)
     } else {
       toast.error(data.message);
+                   setloginloading(false)
+
     }
   };
   const handleSubmit=async()=>{
+    
     if(!sign){
       
       if(who=="student")login_User();
@@ -103,7 +109,18 @@ const Login = () => {
       register_User();
     }
   }
+  
+  useEffect(() => {
+    setDark(false)
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+        setDark(true);
+      }, 1000); 
+  
+      return () => {clearTimeout(timer);}
+    }, []);
   const login_User=async()=>{
+    setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/user/login",{add_no:addno,password});
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
@@ -112,14 +129,19 @@ const Login = () => {
       setuToken(data.utoken);
       findProfileData()
 
-      toast.success(data.message);
+      
       navigate("/issues/home")
     }
     else{
-      toast.error(data.message)
+      toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
   const login_Incharge=async()=>{
+    setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/incharge/login",{email,password});
     if(data.success){
       localStorage.setItem("itoken",data.itoken);
@@ -127,14 +149,19 @@ const Login = () => {
       localStorage.removeItem("utoken");
       setiToken(data.itoken);
       findProfileData()
-      toast.success(data.message);
+      
       navigate("/issues/home");
     }
     else{
       toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
   const login_Admin=async()=>{
+    setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/admin/login",{email,password});
     if(data.success){
       localStorage.setItem("atoken",data.atoken);
@@ -142,31 +169,42 @@ const Login = () => {
       localStorage.removeItem("itoken");
       setaToken(data.atoken);
       findProfileData()
-      toast.success(data.message);
+      
       navigate("/issues/home");
     }
     else{
       toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
   const register_User=async()=>{
     try {
       if(correctOtp){
+        setloginloading(true)
     const {data}=await axios.post(backendUrl+"/api/user/register",{add_no:addno,email,password,name});
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
       setuToken(data.utoken);
       findProfileData();
       // toast.success("Registered successfully")
-      toast.success(data.message);
+      
       navigate("/issues/home")
     }
     else{
       toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
     else{
       toast.error("Verify otp first");
+             setloginloading(false)
+
     }
     } catch (error) {
       console.log(error)
@@ -184,7 +222,7 @@ const Login = () => {
   return (
     <div className="w-full min-h-screen bg-gray-300 flex justify-center items-center p-4 lg:p-0">
       {/* Mobile View (no blue part) */}
-      <div className="w-full max-w-md lg:hidden bg-white rounded-xl shadow-lg p-6">
+      {loader?<Shrimmer/>:<div className="w-full max-w-md lg:hidden bg-white rounded-xl shadow-lg p-6">
         <div className="flex flex-col items-center gap-8">
           <div className="flex flex-col gap-4 text-center w-full">
             <p className="capitalize text-2xl font-bold text-black">
@@ -304,12 +342,17 @@ const Login = () => {
           </div>
           
           <div className='gap-3 w-full flex flex-col items-center'>
-            <button 
+            {loginloading?<button 
+              className="px-8 py-2.5 bg-blue-600 text-white rounded-xl w-full" 
+            
+            >
+              ...
+            </button>:<button 
               className="px-6 py-2.5 bg-blue-600 text-white rounded-xl w-full" 
               onClick={handleSubmit}
             >
               {sign ? "Sign In" : "Log In"}
-            </button>
+            </button>}
             
             <p className='text-center text-sm'>
               {sign ? (
@@ -321,7 +364,7 @@ const Login = () => {
             {!sign &&<div onClick={()=>navigate("/forgotpass")} className='text-blue-500 cursor-pointer'>forgot password</div>}
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* Desktop/Laptop View (EXACTLY as before) */}
       <div className="hidden lg:flex h-screen w-[80%] bg-white">
@@ -400,9 +443,11 @@ const Login = () => {
             </div>
             
             <div className='gap-2 w-full flex flex-col items-center'>
-              <button className="px-6 py-2 bg-blue-600 text-white rounded " onClick={()=>{handleSubmit()}}>
+              {loginloading?<button className="px-6 py-2 bg-blue-600 text-white rounded ">
+                ...
+              </button>:<button className="px-6 py-2 bg-blue-600 text-white rounded " onClick={()=>{handleSubmit()}}>
                 {sign ? "SignIn" : "LogIn"}
-              </button>
+              </button>}
               <p className='text-start '>
                 {sign ? (
                   <>Already a user? <span className='text-blue-600 cursor-pointer' onClick={()=>{change();moveleft();setAddNo("");setemail("");setPassword(""),setCorrectOpt("");setName("");}}>login</span></>
