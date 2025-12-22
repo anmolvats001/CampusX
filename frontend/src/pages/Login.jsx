@@ -106,7 +106,7 @@ const Login = () => {
       
       register_User();
     }
-    setloading(false)
+    setloading(false);
   }
   
   useEffect(() => {
@@ -131,7 +131,9 @@ const Login = () => {
       navigate("/issues/home")
     }
     else{
-      toast.error(data.message)
+      toast.error(data.message);
+          setloading(false);
+
     }
   }
   const login_Incharge=async()=>{
@@ -147,6 +149,8 @@ const Login = () => {
     }
     else{
       toast.error(data.message);
+          setloading(false);
+
     }
   }
   const login_Admin=async()=>{
@@ -162,6 +166,8 @@ const Login = () => {
     }
     else{
       toast.error(data.message);
+          setloading(false);
+
     }
   }
   const register_User=async()=>{
@@ -178,10 +184,14 @@ const Login = () => {
     }
     else{
       toast.error(data.message);
+          setloading(false);
+
     }
   }
     else{
       toast.error("Verify otp first");
+          setloading(false);
+
     }
     } catch (error) {
       console.log(error)
