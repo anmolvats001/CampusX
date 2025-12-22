@@ -32,16 +32,18 @@ const postComment=async(id)=>{
     toast.error(data.message)
   }
    findCommentData(id);
-    setcommvis(false);
+    // setcommvis(false);
   }
   else{
     toast.error("Data is missing")
   }
 }
 const handleCommentLike=async(id)=>{
+  setLoading(true);
   const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-comment",{commentId:id},{headers:{utoken}});
     toast.success(data.message);
-    setcommvis(false);
+    setLoading(false);
+    // setcommvis(false);
     findCommentData(id);
 }
 useEffect(()=>{
