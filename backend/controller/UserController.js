@@ -4,7 +4,7 @@ import validator from "validator";
 import userModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import PostModel from "../models/posts.js"
-import { getTransporter } from "../middleware/nodemailer.js";
+import { sendEmail } from "../middleware/brevoMailer.js";
 import generateOTP from "../middleware/otpgenerator.js";
 import CommentModel from "../models/comment.js";
 const Userlogin = async (req, res) => {
@@ -196,7 +196,6 @@ const uploadPost = async (req, res) => {
   }
 };
 const getOtp = async (req, res) => {
-  
   try {
     const { email } = req.body;
     if (!email) {
@@ -205,20 +204,32 @@ const getOtp = async (req, res) => {
 
     const otp = generateOTP();
     console.log(otp)
-const transporter = getTransporter();
-    await transporter.sendMail({
-      from: '"Campus Connect" <campusconnect743@gmail.com>',
-      to: email,
-      subject: ` [Campus Connect] Your Verification Code: ${otp}`,
-      html: `<h4>Hi User,</h4>
-      <h3>Welcome to Campus Connect! To complete your login or action on our platform, please use the following One-Time Password (OTP):</h3>
-      <h1>${otp}</h1>
-      <h3>Note: This code is valid for the next 10 minutes. Please do not share this OTP with anyone, including the Campus Connect team.</h3>
-      </br>
-      <h3 >If you did not request this code, you can safely ignore this email. Someone may have entered your email address by mistake.</h3>
-      <h3>Helping you resolve campus issues faster, The Campus Connect Team</h3>
-      `,
-    });
+
+    await sendEmail({
+  to: email,
+  subject: `[Campus Connect] Your Verification Code: ${otp}`,
+  html: `
+    <h4>Hi User,</h4>
+    <h3>
+      Welcome to Campus Connect! To complete your login or action on our platform,
+      please use the following One-Time Password (OTP):
+    </h3>
+    <h1>${otp}</h1>
+    <h3>
+      Note: This code is valid for the next 10 minutes. Please do not share this OTP
+      with anyone, including the Campus Connect team.
+    </h3>
+    <br/>
+    <h3>
+      If you did not request this code, you can safely ignore this email.
+      Someone may have entered your email address by mistake.
+    </h3>
+    <h3>
+      Helping you resolve campus issues faster,<br/>
+      The Campus Connect Team
+    </h3>
+  `,
+});
 
     res.json({ success: true, message: "OTP sent" ,otp});
   } catch (err) {
@@ -233,24 +244,39 @@ const transporter = getTransporter();
     }
 
     const otp = generateOTP();
-const transporter = getTransporter();
-    await transporter.sendMail({
-      from: '"Campus Connect" <campusconnect743@gmail.com>',
-      to: email,
-      subject: ` [Campus Connect] Reset your Campus Connect password`,
-      html: `<h4>Hi User,</h4>
-      <h3>We received a request to reset the password for your Campus Connect account. No changes have been made yet.</h3>
-      <h3>You can reset your password by verifying the otp give below-
-Otp:</h3>
-      <h1>${otp}</h1>
-      <h3>Didn't request this?</br>If you didn’t ask to reset your password, you can safely ignore this email. Your account remains secure as long as you don't click the link.</h3>
-      </br>
-      <h3 >Best regards,</br>
-The Campus Connect Team</br>
-Empowering students to build a better campus.</h3>
-      <h3>Helping you resolve campus issues faster, The Campus Connect Team</h3>
-      `,
-    });
+
+    await sendEmail({
+  to: email,
+  subject: "[Campus Connect] Reset your Campus Connect password",
+  html: `
+    <h4>Hi User,</h4>
+
+    <h3>
+      We received a request to reset the password for your Campus Connect account.
+      No changes have been made yet.
+    </h3>
+
+    <h3>
+      You can reset your password by verifying the OTP given below:
+    </h3>
+
+    <h1>${otp}</h1>
+
+    <h3>
+      Didn't request this?<br/>
+      If you didn’t ask to reset your password, you can safely ignore this email.
+      Your account remains secure.
+    </h3>
+
+    <br/>
+
+    <h3>
+      Best regards,<br/>
+      The Campus Connect Team<br/>
+      Empowering students to build a better campus.
+    </h3>
+  `,
+});
 
     res.json({ success: true, message: "OTP sent" ,otp});
   } catch (err) {
@@ -357,11 +383,8 @@ catch (error) {
   const user=await userModel.findById(userId);
   const email=user.email;
   console.log(email);
-  const transporter = getTransporter();
-
-  await transporter.sendMail({
-      from: `"CampusX Feedback" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
+  await sendEmail({
+  to: "campusconnect743@gmail.com",
     replyTo: user.email,
 subject: "Feedback sent",
       html: `<h2>${user.name} has sent you the feedback</h2></br>
