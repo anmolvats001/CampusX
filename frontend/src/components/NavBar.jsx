@@ -86,7 +86,7 @@ const NavBar = () => {
 
 
         <div className='md:hidden flex items-center'>
-          {!studentLogin && (
+          {(!utoken ||!itoken||!atoken) && (
             <button
               onClick={login}
               className='rounded-full bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white px-3 py-1.5 font-semibold shadow-md text-xs whitespace-nowrap'
