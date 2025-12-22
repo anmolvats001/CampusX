@@ -88,11 +88,11 @@ const Login = () => {
 
        setotpfromback(data.otp);
        toast.success("OTP sent successfully");
-             setloginloading(false)
+             setloading(false)
       }
     } else {
       toast.error(data.message);
-                   setloginloading(false)
+       setloginloading(false)
 
     }
   };
