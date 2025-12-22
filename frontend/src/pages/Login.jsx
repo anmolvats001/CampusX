@@ -88,14 +88,16 @@ const Login = () => {
 
        setotpfromback(data.otp);
        toast.success("OTP sent successfully");
+             setloginloading(false)
       }
-      setloading(false)
     } else {
       toast.error(data.message);
+                   setloginloading(false)
+
     }
   };
   const handleSubmit=async()=>{
-    setloginloading(true);
+    
     if(!sign){
       
       if(who=="student")login_User();
@@ -106,7 +108,6 @@ const Login = () => {
       
       register_User();
     }
-    setloading(false)
   }
   
   useEffect(() => {
@@ -119,6 +120,7 @@ const Login = () => {
       return () => {clearTimeout(timer);}
     }, []);
   const login_User=async()=>{
+    setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/user/login",{add_no:addno,password});
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
@@ -131,10 +133,15 @@ const Login = () => {
       navigate("/issues/home")
     }
     else{
-      toast.error(data.message)
+      toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
   const login_Incharge=async()=>{
+    setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/incharge/login",{email,password});
     if(data.success){
       localStorage.setItem("itoken",data.itoken);
@@ -147,9 +154,14 @@ const Login = () => {
     }
     else{
       toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
   const login_Admin=async()=>{
+    setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/admin/login",{email,password});
     if(data.success){
       localStorage.setItem("atoken",data.atoken);
@@ -162,11 +174,16 @@ const Login = () => {
     }
     else{
       toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
   const register_User=async()=>{
     try {
       if(correctOtp){
+        setloginloading(true)
     const {data}=await axios.post(backendUrl+"/api/user/register",{add_no:addno,email,password,name});
     if(data.success){
       localStorage.setItem("utoken",data.utoken);
@@ -178,10 +195,16 @@ const Login = () => {
     }
     else{
       toast.error(data.message);
+             setloginloading(false)
+
     }
+                 setloginloading(false)
+
   }
     else{
       toast.error("Verify otp first");
+             setloginloading(false)
+
     }
     } catch (error) {
       console.log(error)
