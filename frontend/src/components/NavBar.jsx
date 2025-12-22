@@ -136,7 +136,7 @@ const NavBar = () => {
               Help
             </NavLink>
             
-            {studentLogin && (
+            {utoken && (
               <>
                 <div className="border-t border-gray-200 pt-3 mt-1">
                   <div className="cursor-pointer hover:opacity-80 py-2 text-sm" onClick={()=>{setProfileOn(true); navigate("/issues/profile"); setMobileMenuOpen(false)}}>
