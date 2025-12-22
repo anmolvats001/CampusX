@@ -126,6 +126,7 @@ export const AppProvider = ({ children }) => {
     }
   };
   const findCommentData = async (id) => {
+    setcommentData(null)
     if(utoken){
       const { data } = await axios.post(
       import.meta.env.VITE_BACKEND_URL + "/api/post/allcomments",

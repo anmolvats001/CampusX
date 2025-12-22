@@ -46,7 +46,7 @@ const handleCommentLike=async(id)=>{
 }
 useEffect(()=>{
   setData(commentData);
-  return ()=>setcommentData(null);
+
 },[commentData])
   return (
     <>
