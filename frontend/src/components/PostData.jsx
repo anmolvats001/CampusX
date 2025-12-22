@@ -65,41 +65,93 @@ const { data } = await axios.post(
         setData(data.postdata);
     }
   };
-  const handleAgree = async () => {
-    const { data } = await axios.post(
+  const handleLike = async (id) => {
+
+  setData(prev =>
+    prev.map(post =>
+      post._id === id
+        ? {
+            ...post,
+            liked: !post.liked,
+            likes: post.liked
+              ? post.likes.slice(0, -1)
+              : [...post.likes, "x"]
+          }
+        : post
+    )
+  );
+
+  try {
+    
+    await axios.post(
+      import.meta.env.VITE_BACKEND_URL + "/api/post/like-postuser",
+      { postId: id },
+      { headers: { utoken } }
+    );
+  } catch (error) {
+
+    setData(prev =>
+      prev.map(post =>
+        post._id === id
+          ? {
+              ...post,
+              liked: !post.liked,
+              likes: post.liked
+                ? post.likes.slice(0, -1)
+                : [...post.likes, "x"]
+            }
+          : post
+      )
+    );
+    toast.error("Like failed");
+  }
+};
+
+   const handleAgree = async (id) => {
+  setData(prev =>
+    prev.map(post =>
+      post._id === id
+        ? {
+            ...post,
+            agreed: !post.agreed,
+            agrees: post.agreed
+              ? post.agrees.slice(0, -1)
+              : [...post.agrees, "x"]
+          }
+        : post
+    )
+  );
+
+  try {
+    await axios.post(
       import.meta.env.VITE_BACKEND_URL + "/api/post/agree",
       { postId: id },
       { headers: { utoken } }
     );
-    console.log(data);
-    if (data.success) {
-      toast.success(data.message);
-      findData();
-    } else {
-      console.log(data);
-    }
-  };
-
+  } catch (error) {
+    setData(prev =>
+      prev.map(post =>
+        post._id === id
+          ? {
+              ...post,
+              agreed: !post.agreed,
+              agrees: post.agreed
+                ? post.agrees.slice(0, -1)
+                : [...post.agrees, "x"]
+            }
+          : post
+      )
+    );
+    toast.error("Agree failed");
+  }
+};
   useEffect(() => {
     findData();
     return () => {
       setcommvis(false);
     };
   }, [id]);
-  const handleLike = async () => {
-    const { data } = await axios.post(
-      import.meta.env.VITE_BACKEND_URL + "/api/post/like-postuser",
-      { postId: id },
-      { headers: { utoken } }
-    );
-    console.log(data);
-    if (data.success) {
-      toast.success(data.message);
-      findData();
-    } else {
-      console.log(data);
-    }
-  };
+  
   return (
     <div
       className={`${
