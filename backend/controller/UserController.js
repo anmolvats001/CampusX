@@ -4,7 +4,7 @@ import validator from "validator";
 import userModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import PostModel from "../models/posts.js"
-import transporter from "../middleware/nodemailer.js";
+import { getTransporter } from "../middleware/nodemailer.js";
 import generateOTP from "../middleware/otpgenerator.js";
 import CommentModel from "../models/comment.js";
 const Userlogin = async (req, res) => {
@@ -196,6 +196,7 @@ const uploadPost = async (req, res) => {
   }
 };
 const getOtp = async (req, res) => {
+  
   try {
     const { email } = req.body;
     if (!email) {
@@ -204,7 +205,7 @@ const getOtp = async (req, res) => {
 
     const otp = generateOTP();
     console.log(otp)
-
+const transporter = getTransporter();
     await transporter.sendMail({
       from: '"Campus Connect" <campusconnect743@gmail.com>',
       to: email,
@@ -232,7 +233,7 @@ const getOtp = async (req, res) => {
     }
 
     const otp = generateOTP();
-
+const transporter = getTransporter();
     await transporter.sendMail({
       from: '"Campus Connect" <campusconnect743@gmail.com>',
       to: email,
@@ -356,6 +357,8 @@ catch (error) {
   const user=await userModel.findById(userId);
   const email=user.email;
   console.log(email);
+  const transporter = getTransporter();
+
   await transporter.sendMail({
       from: `"CampusX Feedback" <${process.env.EMAIL_USER}>`,
     to: process.env.EMAIL_USER,
