@@ -79,7 +79,7 @@ const MainPage = () => {
         
         {studentLogin && (
           <div
-            className={`${!dark ? "bg-black text-white" : "bg-white text-black"} sticky bottom-36 lg:bottom-10 right-6 lg:right-10 w-16 h-16 float-right flex justify-center items-center rounded-full cursor-pointer`}
+            className={`${!dark ? "bg-black text-white" : "bg-white text-black"} sticky bottom-48 lg:bottom-10 right-6 lg:right-10 w-16 h-16 float-right flex justify-center items-center rounded-full cursor-pointer`}
             onClick={() => setPostVis(true)}
           >
             <p className="text-4xl font-bold">+</p>
