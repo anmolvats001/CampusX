@@ -1,8 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import anmol from "../assets/anmol.jpg"
 import ansh from "../assets/ansh.png"
 import anshuman from "../assets/anshuman.png"
+import Shrimmer from "../components/Shrimmer";
+import { AppContext } from "../Context/context";
 const Team = () => {
+      const [loader,setShowLoader]=useState(true);
+  const {setDark}=useContext(AppContext)
+    useEffect(() => {
+      setDark(false)
+        const timer = setTimeout(() => {
+          setShowLoader(false);
+          setDark(true);
+        }, 1000); 
+    
+        return () => {clearTimeout(timer);}
+      }, []);
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -20,11 +33,11 @@ const Team = () => {
 
   return (
     <div className='px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-24 sm:mt-12 md:mt-16 lg:mt-20 w-full'>
-      <div className="font-extrabold uppercase text-center pt-6 sm:pt-12 md:pt-10 pb-8 sm:pb-10 md:pb-12 text-xl sm:text-2xl">
+      {loader?<Shrimmer/>:<div className="font-extrabold uppercase text-center pt-6 sm:pt-12 md:pt-10 pb-8 sm:pb-10 md:pb-12 text-xl sm:text-2xl">
         <div>The people behind Campus Connect</div>
         
         
-      </div>
+      </div>}
       
     <div className="mb-12 sm:mb-16 md:mb-20">
         <div className='flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 pb-6 w-full'>
