@@ -16,11 +16,14 @@ Campus complaints (maintenance, hostel, academic, etc.) often get lost between d
 
 ## Live Demo
 
-`<add live link here>`
+https://campusx-1.onrender.com/
 
 ## Screenshots
 
-`<add screenshots of the Student, Department, and Admin dashboards here>`
+<img width="1868" height="969" alt="image" src="https://github.com/user-attachments/assets/c8a37d6c-bcbc-46f0-b83b-5fc0cdbcb3d2" />
+<img width="1886" height="960" alt="image" src="https://github.com/user-attachments/assets/1fd188b8-d1c2-48c5-acaf-f78e75b1c16c" />
+<img width="1882" height="973" alt="image" src="https://github.com/user-attachments/assets/3547fe3c-c37b-42ed-80dd-20afa85f78e3" />
+
 
 ## Architecture
 
@@ -54,7 +57,7 @@ MongoDB   Multer (file uploads)
 
 ```bash
 # Clone the repo
-git clone <repo-url>
+git clone https://github.com/anmolvats001/CampusX.git
 cd campus-connect
 
 # Backend setup
