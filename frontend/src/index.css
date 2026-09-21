@@ -74,45 +74,12 @@ button:hover {
   font-size:20px
 }
 .light {
-  background-color: #FFFFFF;
-  color: #0F172A;
+  background-color: white;
+  color: black;
 }
 .dark {
-  background-color: #0B0F17;
-  color: #F8FAFC;
-}
-.dark .border-theme {
-  border-color: #1F2937;
-}
-.light .border-theme {
-  border-color: #E2E8F0;
-}
-.glass-panel-dark {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-.glass-panel-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-}
-.badge-resolved {
-  background: rgba(16, 185, 129, 0.12);
-  color: #10B981;
-  border: 1px solid rgba(16, 185, 129, 0.28);
-}
-.badge-inprocess {
-  background: rgba(245, 158, 11, 0.12);
-  color: #F59E0B;
-  border: 1px solid rgba(245, 158, 11, 0.28);
-}
-.badge-pending {
-  background: rgba(239, 68, 68, 0.12);
-  color: #EF4444;
-  border: 1px solid rgba(239, 68, 68, 0.28);
+  background-color: black;
+  color: white;
 }
 .pos {
   top: -70px;

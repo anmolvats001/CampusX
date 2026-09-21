@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../Context/context";
-import campusxwhite from "../assets/campusxwhite.png";
-import campusxblack from "../assets/campusxblack.png";
+import campusxwhite from "../assets/campusxwhite.png"
+import campusxblack from "../assets/campusxblack.png"
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Sider = () => {
@@ -11,227 +11,165 @@ const Sider = () => {
     setFilter,
     setPostVis,
     inchargelogin,
-    atoken,
-    utoken,
-    itoken,
+    adminlogin,
     logout,
     profileData,
+    utoken,
+    itoken,
+    atoken,
+    findAllPost
   } = useContext(AppContext);
   const navigate = useNavigate();
-
-  const getNavLinkClass = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium transition-all duration-200 cursor-pointer ${
-      isActive
-        ? "bg-blue-600/15 text-blue-500 font-semibold shadow-sm"
-        : dark
-        ? "text-slate-300 hover:bg-slate-800/60 hover:text-white"
-        : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-    }`;
-
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  
   return (
-    <aside
-      className={`hidden lg:flex flex-col justify-between w-[25%] xl:w-[22%] min-h-screen border-r px-5 xl:px-8 py-6 z-30 transition-colors ${
-        dark ? "bg-[#0B0F17] border-slate-800 text-slate-100" : "bg-white border-slate-200 text-slate-900"
-      }`}
-    >
-      {/* Top Header & Navigation Links */}
-      <div className="flex flex-col gap-6">
-        {/* Logo */}
-        <div
-          className="flex items-center gap-2 cursor-pointer pt-2"
-          onClick={() => navigate("/issues/home")}
-        >
-          <img
-            className="h-10 w-auto object-contain"
-            src={!dark ? campusxblack : campusxwhite}
-            alt="Campus Connect Logo"
-          />
-        </div>
-
-        {/* Navigation Menu */}
-        <nav className="flex flex-col gap-1.5 mt-2">
-          <NavLink
-            to={"/issues/home"}
-            onClick={() => setFilter(null)}
-            className={getNavLinkClass}
-          >
-            <i className="fi fi-sr-house-blank text-lg"></i>
-            <span>Home</span>
+    <div className={(dark ? "dark" : "light") + " pl-32 min-h-screen border-[1px] w-[25%] border-gray-800 hidden lg:block overflow-y-scroll scroller"}>
+      <div className="h-full relative">
+        <img className="absolute pos right-10 cursor-pointer" onClick={() => navigate("/issues/home")} src={!dark ? campusxblack : campusxwhite} alt="CampusX" />
+        <div className={(dark ? "bg-black " : "bg-white ") + "absolute top-24 text-xl capitalize flex flex-col gap-7 issues-page cursor-pointer z-[100]"}>
+          <NavLink to={"/issues/home"} onClick={() => { setFilter(null); }} className="flex gap-1">
+            {dark ? <i className="fi fi-sr-house-blank text-white"></i> : <i className="fi fi-sr-house-blank"></i>}
+            <p>Home</p>
           </NavLink>
-
           {inchargelogin && (
-            <NavLink to={"/issues/incharge-dashboard"} className={getNavLinkClass}>
-              <i className="fi fi-rr-dashboard-monitor text-lg"></i>
-              <span>Dashboard</span>
+            <NavLink to={"/issues/incharge-dashboard"} className="flex gap-1">
+              {dark ? <i className="fi fi-rr-dashboard-monitor text-white font-bold"></i> : <i className="fi fi-rr-dashboard-monitor font-bold"></i>}
+              <p>DashBoard</p>
             </NavLink>
           )}
-
           {atoken && (
-            <NavLink to={"/issues/adminDashboard"} className={getNavLinkClass}>
-              <i className="fi fi-rr-dashboard-monitor text-lg"></i>
-              <span>Dashboard</span>
+            <NavLink to={"/issues/adminDashboard"} className="flex gap-1">
+              {dark ? <i className="fi fi-rr-dashboard-monitor text-white font-bold"></i> : <i className="fi fi-rr-dashboard-monitor font-bold"></i>}
+              <p>DashBoard</p>
             </NavLink>
           )}
-
-          <NavLink to={"/issues/search"} className={getNavLinkClass}>
-            <i className="fi fi-bs-search text-lg"></i>
-            <span>Search</span>
+          <NavLink to={"/issues/search"} className="flex gap-1">
+            {dark ? <i className="fi fi-bs-search text-white"></i> : <i className="fi fi-bs-search"></i>}
+            <p>search</p>
           </NavLink>
-
           {utoken && (
-            <div
-              onClick={() => {
-                setPostVis(true);
-                navigate("/issues/home");
-              }}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-base font-medium transition-all duration-200 cursor-pointer ${
-                dark
-                  ? "text-slate-300 hover:bg-slate-800/60 hover:text-white"
-                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-              }`}
-            >
-              <i className="fi fi-ss-add text-lg text-blue-500"></i>
-              <span>Report Issue</span>
+            <div className="flex gap-1" onClick={() => { setPostVis(true); navigate("/issues/home"); }}>
+              {dark ? <i className="fi fi-ss-add text-white"></i> : <i className="fi fi-ss-add"></i>}
+              <p>Report</p>
             </div>
           )}
-
           {itoken && (
-            <NavLink to={"/issues/resolve"} className={getNavLinkClass}>
-              <i className="fi fi-ss-problem-solving text-lg text-amber-500"></i>
-              <span>Resolve</span>
-            </NavLink>
+            <div className="flex gap-1" onClick={() => { navigate("/issues/resolve"); }}>
+              {dark ? <i className="fi fi-ss-problem-solving text-white"></i> : <i className="fi fi-ss-problem-solving"></i>}
+              <p>Resolve</p>
+            </div>
           )}
-
           {atoken && (
-            <NavLink to={"/issues/incharges"} className={getNavLinkClass}>
-              <i className="fi fi-rr-leadership-alt text-lg"></i>
-              <span>Incharges</span>
-            </NavLink>
+            <div className="flex gap-1" onClick={() => { navigate("/issues/incharges"); }}>
+              {dark ? <i className="fi fi-rr-leadership-alt text-white"></i> : <i className="fi fi-rr-leadership-alt"></i>}
+              <p>Incharges</p>
+            </div>
           )}
-
           {atoken && (
-            <NavLink to={"/issues/add-incharge"} className={getNavLinkClass}>
-              <i className="fi fi-sr-person-circle-plus text-lg text-emerald-500"></i>
-              <span>Add Incharge</span>
-            </NavLink>
+            <div className="flex gap-1" onClick={() => { navigate("/issues/add-incharge"); }}>
+              {dark ? <i className="fi fi-sr-person-circle-plus text-white"></i> : <i className="fi fi-ss-problem-solving"></i>}
+              <p>Add Incharges</p>
+            </div>
           )}
-
-          {/* Filter Accordion */}
-          <div className="group">
-            <div
-              className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-medium transition-all duration-200 cursor-pointer ${
-                dark
-                  ? "text-slate-300 hover:bg-slate-800/60 hover:text-white"
-                  : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <i className="fi fi-rr-filter text-lg"></i>
-                <span>Categories</span>
+          <div>
+            <div className="group">
+              <div className="flex gap-1 items-center cursor-pointer">
+                {dark 
+                  ? <i className="fi fi-sr-play text-white"></i>
+                  : <i className="fi fi-sr-play"></i>
+                }
+                <p>Filter</p>
               </div>
-              <i className="fi fi-rr-angle-small-down text-sm transition-transform duration-200 group-hover:rotate-180"></i>
-            </div>
 
-            <div className="flex flex-col gap-1 pl-10 pr-2 max-h-0 overflow-hidden opacity-0 group-hover:max-h-72 group-hover:opacity-100 transition-all duration-300">
-              {[
-                { id: "all", label: "All Categories" },
-                { id: "water", label: "Water & Taps" },
-                { id: "hygiene", label: "Hygiene & Sanitation" },
-                { id: "food", label: "Food & Canteen" },
-                { id: "building", label: "Infrastructure" },
-                { id: "security", label: "Safety & Security" },
-                { id: "administration", label: "Administration" },
-              ].map((cat) => (
-                <div
-                  key={cat.id}
-                  onClick={() => {
-                    navigate("/issues/home");
-                    setFilter(cat.id);
-                  }}
-                  className="py-1.5 px-2 rounded-lg text-xs font-medium text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 cursor-pointer transition-colors"
-                >
-                  {cat.label}
-                </div>
-              ))}
+              <div
+                className={`
+                 flex flex-col gap-3 text-lg text-gray-500 ml-6
+                  max-h-0 overflow-hidden
+                  opacity-0
+                  transition-all duration-300 ease-in-out
+                  group-hover:max-h-96 
+                  group-hover:opacity-100
+                  group-hover:my-2
+                `}
+              >
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("all"); }}>All</div>
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("water"); }}>water</div>
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("administration"); }}>administration</div>
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("building"); }}>building</div>
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("hygiene"); }}>hygiene</div>
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("safety"); }}>safety</div>
+                <div className="hover:text-gray-300 cursor-pointer" onClick={() => { navigate("/issues/home"); setFilter("food"); }}>food</div>
+              </div>
             </div>
           </div>
-
           {utoken && (
-            <NavLink
-              to={"/issues/profile"}
-              onClick={() => setProfileOn(true)}
-              className={getNavLinkClass}
-            >
-              <i className="fi fi-sr-user text-lg"></i>
-              <span>Profile</span>
+            <NavLink to={"/issues/profile"} onClick={() => setProfileOn(true)} className="flex gap-1">
+              {dark ? <i className="fi fi-sr-user text-white"></i> : <i className="fi fi-sr-user"></i>}
+              <p>Profile</p>
             </NavLink>
           )}
-
-          <NavLink to={"/issues/setting"} className={getNavLinkClass}>
-            <i className="fi fi-sr-settings text-lg"></i>
-            <span>Settings</span>
+          <NavLink to={"/issues/setting"} className="flex gap-1">
+            {dark ? <i className="fi fi-sr-settings text-white"></i> : <i className="fi fi-sr-settings"></i>}
+            <p>setting</p>
           </NavLink>
-        </nav>
-      </div>
+        </div>
 
-      {/* User Profile Card at Bottom */}
-      <div className="relative group pt-4 border-t border-slate-700/30">
-        <div
-          className={`flex items-center justify-between p-2.5 rounded-2xl border transition-all cursor-pointer ${
-            dark
-              ? "bg-slate-900/80 border-slate-800 hover:border-slate-700"
-              : "bg-slate-50 border-slate-200 hover:border-slate-300"
-          }`}
+        {/* Profile section at bottom with click toggle */}
+        <div 
+          className="absolute bottom-6 px-4 py-3 flex border border-gray-800 rounded-2xl cursor-pointer hover:border-gray-600 transition-colors"
+          onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
         >
-          <div className="flex items-center gap-3 min-w-0">
-            <img
-              src={
-                profileData?.profile ||
-                "https://imgs.search.brave.com/OrD16cB7BwEj3DZfFr7OHRQyABsYifutWhl975vIvII/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYXJ0cy5jb20v/ZmlsZXMvMTAvRGVm/YXVsdC1Qcm9maWxl/LVBpY3R1cmUtUE5H/LUltYWdlLVRyYW5z/cGFyZW50LUJhY2tn/cm91bmQucG5n"
-              }
-              className="w-10 h-10 rounded-full object-cover ring-2 ring-blue-500/30 shrink-0"
-              alt="Avatar"
+          <div className="flex gap-1.5 items-center">
+            <img 
+              src={`${profileData?.profile || 'https://via.placeholder.com/40'}`} 
+              className="rounded-full w-10 h-10 object-cover" 
+              alt="" 
             />
-            <div className="min-w-0 flex-1">
-              <p className="font-semibold text-sm truncate">{profileData?.name || "User"}</p>
-              <p className="text-xs text-slate-400 truncate">
-                {atoken || itoken ? profileData?.work : profileData?.branch || "Student"}
-              </p>
+
+            <div>
+              <p className="bold text-sm">{profileData?.name || "User"}</p>
+              <p className="text-[8px] text-gray-500">({(atoken || itoken) ? profileData?.work : profileData?.branch || "Student"})</p>
+            </div>
+
+            <div className="h-full flex items-center ml-1">
+              {dark ? (
+                <i className="fi fi-br-angle-small-right text-white"></i>
+              ) : (
+                <i className="fi fi-br-angle-small-right"></i>
+              )}
             </div>
           </div>
 
-          <i className="fi fi-rr-menu-dots text-slate-400 hover:text-slate-200 px-1"></i>
-        </div>
-
-        {/* Dropdown Popup */}
-        <div
-          className={`hidden group-hover:flex flex-col gap-1 absolute bottom-full left-0 right-0 mb-2 p-2 rounded-xl shadow-xl border z-50 transition-all ${
-            dark
-              ? "bg-[#111827] border-slate-700 text-slate-200"
-              : "bg-white border-slate-200 text-slate-800"
-          }`}
-        >
-          <div
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium hover:bg-blue-500/10 hover:text-blue-400 cursor-pointer transition-colors"
-            onClick={() => {
-              setProfileOn(true);
-              navigate("/issues/profile");
-            }}
-          >
-            <i className="fi fi-rr-user"></i>
-            <span>View Profile</span>
-          </div>
-
-          <div
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-red-500 hover:bg-red-500/10 cursor-pointer transition-colors"
-            onClick={() => logout()}
-          >
-            <i className="fi fi-rr-sign-out-alt"></i>
-            <span>Logout</span>
-          </div>
+          {/* Toggle dropdown on click */}
+          {profileDropdownOpen && (
+            <div
+              className={`${!dark ? "dark" : "light"} flex flex-col gap-2 text-sm absolute -right-9 bottom-12 px-4 py-3 rounded-xl shadow-lg z-[102] border border-gray-700 min-w-[130px]`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div 
+                className="cursor-pointer hover:opacity-80" 
+                onClick={() => {
+                  setProfileOn(true);
+                  navigate("/issues/profile");
+                  setProfileDropdownOpen(false);
+                }}
+              >
+                View Profile
+              </div>
+              <div 
+                className="cursor-pointer hover:opacity-80 text-red-600" 
+                onClick={() => {
+                  logout();
+                  setProfileDropdownOpen(false);
+                }}
+              >
+                Logout
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
 

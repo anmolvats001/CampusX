@@ -20,20 +20,15 @@ const IssuesLayout = () => {
   }, [itoken, utoken, atoken]);
   
   return (
-    <div className={`w-screen h-screen ${dark ? "bg-[#0B0F17] text-slate-100" : "bg-[#F8FAFC] text-slate-800"}`}>
+    <div className="w-screen h-screen bg-black">
       {/* Mobile Sider (three-dot menu) - Only shows on mobile */}
       <MobileSider />
       
       <div 
-        onClick={() => setDark(!dark)} 
-        className={`${
-          dark 
-            ? "bg-slate-800/90 text-amber-400 border border-slate-700 hover:bg-slate-700" 
-            : "bg-white text-amber-500 border border-slate-200 shadow-md hover:bg-slate-50"
-        } fixed bottom-9 right-5 rounded-full p-3.5 z-100 mb-9 lg:mb-0 cursor-pointer transition-all duration-300 hover:scale-110 shadow-lg flex items-center justify-center`}
-        title={dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        onClick={() => { dark ? setDark(false) : setDark(true) }} 
+        className={(dark ? "dark" : "light") + ' fixed bottom-9 right-5 rounded-full px-4 text-2xl py-3 z-100 mb-9 lg:mb-0 cursor-pointer'}
       >
-        {dark ? <i className="fi fi-ss-moon-stars text-xl"></i> : <i className="fi fi-sr-sun text-xl"></i>}
+        {dark ? <i className="fi fi-ss-moon-stars white text-white"></i> : <i className="fi fi-sr-sun text-yellow-600 text-3xl"></i>}
       </div>
 
       <div className="h-screen fixed overflow-y-hidden">

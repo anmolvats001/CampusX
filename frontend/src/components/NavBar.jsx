@@ -8,6 +8,7 @@ const NavBar = () => {
   const {setStudentLogin, setAdminLogin, setInchargelogin, studentLogin,logout,utoken,itoken,atoken,profileData,dark} = useContext(AppContext);
   const {setProfileOn} = useContext(AppContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const login = () => {
     navigate("/login");
@@ -21,7 +22,7 @@ const NavBar = () => {
     <>
       <div className={`w-screen max-w-[100vw] h-16 flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 font-medium fixed top-0 z-50 transition-all duration-300 border-b ${
         dark 
-          ? 'bg-[#0B0F17] text-white border-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.3)]' 
+          ? 'bg-black text-white border-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.3)]' 
           : 'bg-white text-[#1E293B] border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.05)]'
       }`}>
         <div className='flex items-center gap-2 sm:gap-3 cursor-pointer' onClick={navigator}>
@@ -75,8 +76,11 @@ const NavBar = () => {
                 Login
               </button>
             ) : (
-              <div className="px-1 py-1 lg:px-2 lg:py-2 flex rounded-2xl group relative">
-                <div className="flex gap-2 cursor-pointer items-center">
+              <div 
+                className="px-1 py-1 lg:px-2 lg:py-2 flex rounded-2xl relative cursor-pointer"
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              >
+                <div className="flex gap-2 items-center">
                   <img 
                     src={`${profileData?.profile || 'https://via.placeholder.com/40'}`} 
                     className="rounded-full w-7 h-7 lg:w-9 lg:h-9 object-cover" 
@@ -87,12 +91,34 @@ const NavBar = () => {
                     <p className="text-[6px] lg:text-[8px] text-gray-500">({profileData?.branch||profileData?.work})</p>
                   </div>
                 </div>
-                <div className={`hidden group-hover:flex flex-col gap-1 text-xs lg:text-sm absolute right-0 top-full mt-1 ${
-                  dark ? 'bg-[#151D2A] text-white border-gray-800' : 'bg-white text-gray-800 border-gray-100'
-                } border px-3 py-2 rounded-xl shadow-lg z-50 whitespace-nowrap min-w-[130px]`}>
-                  <div className="cursor-pointer hover:text-[#2563EB] px-2 py-1 transition-colors" onClick={()=>{setProfileOn(true); navigate("/issues/profile")}}>View Profile</div>
-                  <div className="cursor-pointer hover:opacity-80 text-red-600 px-2 py-1 transition-colors" onClick={()=>logout()}>Logout</div>
-                </div>
+                {profileDropdownOpen && (
+                  <div 
+                    className={`flex flex-col gap-1 text-xs lg:text-sm absolute right-0 top-full mt-1 ${
+                      dark ? 'bg-black text-white border-gray-800' : 'bg-white text-gray-800 border-gray-100'
+                    } border px-3 py-2 rounded-xl shadow-lg z-50 whitespace-nowrap min-w-[130px]`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div 
+                      className="cursor-pointer hover:text-[#2563EB] px-2 py-1 transition-colors" 
+                      onClick={() => {
+                        setProfileOn(true); 
+                        navigate("/issues/profile");
+                        setProfileDropdownOpen(false);
+                      }}
+                    >
+                      View Profile
+                    </div>
+                    <div 
+                      className="cursor-pointer hover:opacity-80 text-red-600 px-2 py-1 transition-colors" 
+                      onClick={() => {
+                        logout();
+                        setProfileDropdownOpen(false);
+                      }}
+                    >
+                      Logout
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
