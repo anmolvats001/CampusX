@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import anmol from "../assets/anmol.jpg"
-import ansh from "../assets/ansh.png"
-import anshuman from "../assets/anshuman.png"
+import anmol from "../assets/anmol.webp";
+import ansh from "../assets/ansh.webp";
+import anshuman from "../assets/anshuman.webp";
 import Shrimmer from "../components/Shrimmer";
 import { AppContext } from "../Context/context";
 const Team = () => {
@@ -32,6 +32,8 @@ const Team = () => {
                 className='w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-cover rounded-full border-2 sm:border-3 md:border-4 border-[#ef1742] shadow-md'
                 src={e.img}
                 alt={e.name}
+                loading="eager"
+                decoding="async"
               />
               <div className="text-center">
                 <h1 className='text-lg sm:text-xl md:text-2xl font-semibold text-[#1E3A8A]'>

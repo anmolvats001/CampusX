@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import userflow from "../assets/user-flow.svg";
+import userflow from "../assets/user-flow.webp";
 import { AppContext } from "../Context/context";
 import Shrimmer from "../components/Shrimmer";
 
@@ -18,6 +18,8 @@ const Help = () => {
                 <img
                   src={userflow}
                   alt="User Flow Chart"
+                  loading="eager"
+                  decoding="async"
                   className="
                     min-w-[2000px]  
                     h-auto          
