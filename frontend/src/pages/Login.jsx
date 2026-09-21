@@ -213,7 +213,7 @@ const Login = () => {
   return (
     <div className="w-full min-h-screen bg-gray-300 flex justify-center items-center p-4 lg:p-0">
       {/* Mobile View (no blue part) */}
-      {loader?<Shrimmer/>:<div className="w-full max-w-md lg:hidden bg-white rounded-xl shadow-lg p-6">
+      <div className="w-full max-w-md lg:hidden bg-white rounded-xl shadow-lg p-6">
         <div className="flex flex-col items-center gap-8">
           <div className="flex flex-col gap-4 text-center w-full">
             <p className="capitalize text-2xl font-bold text-black">
@@ -355,7 +355,7 @@ const Login = () => {
             {!sign &&<div onClick={()=>navigate("/forgotpass")} className='text-blue-500 cursor-pointer'>forgot password</div>}
           </div>
         </div>
-      </div>}
+      </div>
 
       {/* Desktop/Laptop View (EXACTLY as before) */}
       <div className="hidden lg:flex h-screen w-[80%] bg-white">
