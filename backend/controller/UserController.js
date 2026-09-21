@@ -190,10 +190,22 @@ const uploadPost = async (req, res) => {
     const postId = newPost._id;
     await userModel.findByIdAndUpdate(userId, { $push: { posts: postId } });
 
+    const populatedPost = await PostModel.findById(postId)
+      .populate({
+        path: "creator",
+        select: "name profile branch",
+      })
+      .lean();
+
     return res.status(201).json({
       success: true,
       message: "Post uploaded successfully",
       postId,
+      post: {
+        ...populatedPost,
+        liked: false,
+        agreed: false,
+      },
     });
   } catch (error) {
     console.error("uploadPost error:", error);

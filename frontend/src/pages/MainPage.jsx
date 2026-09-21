@@ -16,7 +16,10 @@ const MainPage = () => {
     on,
     onfile,
     seton,
-    studentLogin,setNotificationOn,utoken
+    studentLogin,
+    setNotificationOn,
+    utoken,
+    findAllPost,
   } = useContext(AppContext);
 
   const [filteredData, setFilteredData] = useState(null);
@@ -25,6 +28,9 @@ const MainPage = () => {
   useEffect(() => {
     setcommvis(false);
     window.scrollTo({ top: 0, behavior: "instant" });
+    if (findAllPost) {
+      findAllPost();
+    }
   }, []);
 
   useEffect(() => {

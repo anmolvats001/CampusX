@@ -7,7 +7,7 @@ const AllPost = async (req, res) => {
     const targetUserId = userId ? userId.toString() : null;
 
     const posts = await PostModel.find()
-      .sort({ publishedOn: -1 })
+      .sort({ _id: -1 })
       .populate({
         path: "creator",
         select: "name profile branch",
@@ -45,7 +45,7 @@ const AllPost = async (req, res) => {
 const InchargeAndAdminPost = async (req, res) => {
   try {
     const posts = await PostModel.find()
-      .sort({ publishedOn: -1 })
+      .sort({ _id: -1 })
       .populate({
         path: "creator",
         select: "name profile branch",

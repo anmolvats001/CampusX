@@ -7,7 +7,17 @@ import Shrimmer from "./Shrimmer";
 import { compressImage } from "../utils/imageCompressor";
 
 const Post = () => {
-  const { postvis, setPostVis, dark, profileData, setProfileData, utoken, findProfileData } = useContext(AppContext);
+  const {
+    postvis,
+    setPostVis,
+    dark,
+    profileData,
+    setProfileData,
+    utoken,
+    findProfileData,
+    findAllPost,
+    setData,
+  } = useContext(AppContext);
   const [words, setWords] = useState(0);
   const textref = useRef();
   const [textdata, setttextdata] = useState(null);
@@ -44,9 +54,15 @@ const Post = () => {
 
         if (res.data.success) {
           toast.success("Post has been posted");
-          navigate("/issues/home");
+          if (res.data.post && setData) {
+            setData((prev) => [res.data.post, ...(Array.isArray(prev) ? prev : [])]);
+          }
+          if (findAllPost) {
+            findAllPost();
+          }
           findProfileData();
           setPostVis(false);
+          navigate("/issues/home");
         } else {
           toast.error(res.data.message);
           setLoading(false);
