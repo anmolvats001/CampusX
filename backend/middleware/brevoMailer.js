@@ -155,11 +155,14 @@ export const sendEmail = async ({ to, subject, html, replyTo }) => {
   // Render Free Tier blocks outbound SMTP ports (25, 465, 587) with a firewall.
   // Therefore, on Render, prioritize HTTPS REST APIs (Brevo / Resend) if configured!
   if (isRender) {
+    let lastApiError = null;
+
     if (hasBrevo) {
       try {
         return await sendViaBrevo({ to, subject, html, replyTo, cleanUser });
       } catch (brevoErr) {
-        console.warn("Render Brevo API failed, checking alternatives:", brevoErr.message);
+        console.error("Render Brevo API error:", brevoErr.message);
+        lastApiError = brevoErr;
       }
     }
 
@@ -167,8 +170,13 @@ export const sendEmail = async ({ to, subject, html, replyTo }) => {
       try {
         return await sendViaResend({ to, subject, html, replyTo, cleanUser });
       } catch (resendErr) {
-        console.warn("Render Resend API failed:", resendErr.message);
+        console.error("Render Resend API error:", resendErr.message);
+        lastApiError = resendErr;
       }
+    }
+
+    if (lastApiError && !hasSMTP) {
+      throw lastApiError;
     }
 
     if (hasSMTP) {
@@ -176,10 +184,17 @@ export const sendEmail = async ({ to, subject, html, replyTo }) => {
         return await sendViaSMTP({ to, subject, html, replyTo, cleanUser });
       } catch (smtpErr) {
         console.error("Render SMTP failed:", smtpErr.message);
+        if (lastApiError) {
+          throw lastApiError;
+        }
         throw new Error(
-          "Email delivery timed out. Render Free Tier blocks outbound SMTP ports (465/587). Please use Brevo API Key (BREVO_API_KEY) or Resend (RESEND_API_KEY) in Render Environment variables."
+          "Email delivery timed out. Render Free Tier blocks outbound SMTP ports (465/587). Please check your BREVO_API_KEY in Render Environment variables."
         );
       }
+    }
+
+    if (lastApiError) {
+      throw lastApiError;
     }
   } else {
     // Strategy for Localhost / Standard Servers:
