@@ -3,86 +3,62 @@ import { AppContext } from "../Context/context";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { compressMultipleImages } from "../utils/imageCompressor";
+import Shrimmer from "./Shrimmer";
+import { compressImage } from "../utils/imageCompressor";
 
 const Post = () => {
-  const { postvis, setPostVis, dark, profileData, utoken, findProfileData } = useContext(AppContext);
+  const { postvis, setPostVis, dark, profileData, setProfileData, utoken, findProfileData } = useContext(AppContext);
   const [words, setWords] = useState(0);
   const textref = useRef();
-  const [textdata, setTextdata] = useState("");
+  const [textdata, setttextdata] = useState(null);
   const [images, setImages] = useState([]);
+  const [location, setLocation] = useState(null);
   const [imageFiles, setImageFiles] = useState([]);
-  const [location, setLocation] = useState("");
-  const [floor, setFloor] = useState("0");
-  const [problem, setProblem] = useState("");
+  const [floor, setFloor] = useState(null);
+  const [problem, setProblem] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [statusMessage, setStatusMessage] = useState("");
   const fileInputRef = useRef();
   const navigate = useNavigate();
 
-  const maxwords = 650;
-
   const postData = async () => {
-    if (!textdata.trim()) {
-      toast.error("Please enter a description for your complaint");
-      return;
-    }
-    if (!location || location === "Block") {
-      toast.error("Please select a valid location block");
-      return;
-    }
-    if (!problem || problem === "Problem") {
-      toast.error("Please select a problem category");
-      return;
-    }
-    if (imageFiles.length === 0) {
-      toast.error("Please attach at least one photo");
-      return;
-    }
-
     try {
-      setLoading(true);
-      setStatusMessage("Optimizing images for faster upload...");
-
-      // Compress photos on client side (reduces 10MB to ~150KB in milliseconds)
-      const compressedFiles = await compressMultipleImages(
-        imageFiles,
-        (current, total) => {
-          setStatusMessage(`Optimizing photo ${current} of ${total}...`);
-        }
-      );
-
-      setStatusMessage("Uploading post...");
       const formData = new FormData();
-      formData.append("data", textdata.trim());
-      formData.append("floor", floor || "0");
+
+      formData.append("data", textdata);
+      formData.append("floor", floor);
       formData.append("problem", problem);
       formData.append("block", location);
 
-      compressedFiles.forEach((file) => {
+      imageFiles.forEach((file) => {
         formData.append("images", file);
       });
-
-      const res = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/user/post",
-        formData,
-        { headers: { utoken } }
-      );
-
-      if (res.data?.success) {
-        toast.success("Post published successfully!");
-        setPostVis(false);
-        findProfileData();
-        navigate("/issues/home");
+      if (!problem || !textdata || !location || imageFiles.length === 0) {
+        toast.error("credential missing");
       } else {
-        toast.error(res.data?.message || "Failed to publish post");
+        setLoading(true);
+        const res = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/user/post",
+          formData,
+          { headers: { utoken } }
+        );
+
+        if (res.data.success) {
+          toast.success("Post has been posted");
+          navigate("/issues/home");
+          findProfileData();
+          setPostVis(false);
+        } else {
+          toast.error(res.data.message);
+          setLoading(false);
+          setPostVis(false);
+          navigate("/issues/home");
+        }
+        setLoading(false);
       }
     } catch (error) {
-      console.error("Upload error:", error);
-      toast.error(error.response?.data?.message || "Post upload failed");
-    } finally {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Post failed");
       setLoading(false);
-      setStatusMessage("");
     }
   };
 
@@ -92,280 +68,206 @@ const Post = () => {
   };
 
   const handlePickImages = () => {
-    fileInputRef.current?.click();
+    fileInputRef.current.click();
   };
 
-  const handleImagesSelected = (e) => {
-    const files = Array.from(e.target.files || []);
+  const handleImagesSelected = async (e) => {
+    let files = Array.from(e.target.files);
     if (files.length + images.length > 4) {
-      toast.info("You can upload a maximum of 4 images.");
+      alert("You can upload maximum 4 images.");
+      files = files.slice(0, 4 - images.length);
     }
-    const remainingSlots = 4 - images.length;
-    const selectedFiles = files.slice(0, remainingSlots);
-
-    const urls = selectedFiles.map((file) => URL.createObjectURL(file));
+    const compressedFiles = await Promise.all(
+      files.map((file) => compressImage(file))
+    );
+    const urls = compressedFiles.map((file) => URL.createObjectURL(file));
     setImages((prev) => [...prev, ...urls]);
-    setImageFiles((prev) => [...prev, ...selectedFiles]);
-    // Reset file input so same file can be re-selected if needed
-    e.target.value = "";
+    setImageFiles((prev) => [...prev, ...compressedFiles]);
   };
 
-  const handleTextChange = (e) => {
+  let maxwords = 650;
+  const findwords = (e) => {
     let val = e.target.value;
-    if (val.length > maxwords) {
+    setttextdata(e.target.value);
+    let len = val.length;
+    setWords(val.length);
+    if (len > maxwords) {
       val = val.substring(0, maxwords);
       e.target.value = val;
+      setWords(maxwords);
     }
-    setTextdata(val);
-    setWords(val.length);
   };
 
-  if (!postvis) return null;
-
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-sm animate-fadeIn">
-      {/* Click outside to close (disabled while uploading) */}
+    <>
       <div
-        className="absolute inset-0"
+        className="absolute w-screen z-99 h-full top-0 bg-black opacity-70"
         onClick={() => {
           if (!loading) setPostVis(false);
         }}
-      />
+      ></div>
 
-      {/* Modal Container */}
       <div
-        className={`relative z-10 w-full max-w-2xl max-h-[90vh] flex flex-col rounded-2xl shadow-2xl border transition-all duration-300 ${
-          dark
-            ? "bg-[#111827] border-slate-700/80 text-slate-100"
-            : "bg-white border-slate-200 text-slate-900"
-        }`}
+        className={`${dark ? "dark" : "light"} 
+          absolute w-[95%] sm:w-[85%] md:w-[70%] lg:w-[60%] xl:w-[50%] 
+          h-[80vh] sm:h-[75vh] md:h-[65%] 
+          left-1/2 top-1/2 
+          -translate-x-1/2 -translate-y-1/2
+          px-3 sm:px-4 py-2.5 sm:py-3
+          border-2 rounded-xl z-100 border-gray-800 bg-inherit`}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-700/40">
-          <div className="flex items-center gap-3">
-            <img
-              src={profileData?.profile}
-              className="w-10 h-10 rounded-full object-cover ring-2 ring-blue-500/40"
-              alt="Avatar"
-            />
+        {loading ? (
+          <Shrimmer />
+        ) : (
+          <div className="h-full overflow-y-scroll w-full pt-3 sm:pt-5 scroller px-2 sm:px-4">
             <div>
-              <p className="font-semibold text-sm sm:text-base leading-snug">
-                {profileData?.name || "Student"}
-              </p>
-              <p className="text-xs text-blue-500 font-medium">
-                {profileData?.branch || "Campus Connect Member"}
-              </p>
-            </div>
-          </div>
-          <button
-            disabled={loading}
-            onClick={() => setPostVis(false)}
-            className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer ${
-              dark
-                ? "hover:bg-slate-800 text-slate-300"
-                : "hover:bg-slate-100 text-slate-600"
-            }`}
-          >
-            <i className="fi fi-br-cross-small text-lg"></i>
-          </button>
-        </div>
-
-        {/* Modal Body */}
-        <div className="p-5 overflow-y-auto scroller flex-1 flex flex-col gap-4">
-          {/* Textarea */}
-          <div className="flex flex-col gap-1.5">
-            <textarea
-              ref={textref}
-              disabled={loading}
-              value={textdata}
-              onChange={handleTextChange}
-              placeholder="Describe the issue in detail (location, problem, what needs fixing)..."
-              className={`w-full h-36 sm:h-40 rounded-xl p-3.5 text-sm sm:text-base resize-none border focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all ${
-                dark
-                  ? "bg-slate-900/70 border-slate-700/80 text-slate-100 placeholder-slate-400"
-                  : "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
-              }`}
-            ></textarea>
-            <div className="flex justify-between items-center text-xs px-1 text-slate-400">
-              <span>Be specific to help incharge resolve faster</span>
-              <span
-                className={`font-mono ${
-                  words >= maxwords - 20 ? "text-amber-500 font-bold" : ""
-                }`}
-              >
-                {words}/{maxwords}
-              </span>
-            </div>
-          </div>
-
-          {/* Selectors and Action Row */}
-          <div className="flex flex-wrap gap-2.5 items-center">
-            {/* Image Picker Trigger */}
-            <button
-              type="button"
-              disabled={loading || images.length >= 4}
-              onClick={handlePickImages}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium border transition-all cursor-pointer ${
-                images.length >= 4
-                  ? "opacity-50 cursor-not-allowed border-slate-700 bg-slate-800 text-slate-400"
-                  : dark
-                  ? "bg-slate-800 border-slate-700 text-slate-200 hover:bg-slate-700"
-                  : "bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100"
-              }`}
-            >
-              <i className="fi fi-sr-add-image text-sm"></i>
-              <span>Add Photos</span>
-              <span className="text-[11px] px-1.5 py-0.5 rounded-full bg-blue-500/20 font-bold">
-                {images.length}/4
-              </span>
-            </button>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              ref={fileInputRef}
-              onChange={handleImagesSelected}
-              className="hidden"
-            />
-
-            {/* Location Select */}
-            <select
-              disabled={loading}
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer ${
-                dark
-                  ? "bg-slate-800 border-slate-700 text-slate-200"
-                  : "bg-slate-100 border-slate-200 text-slate-800"
-              }`}
-            >
-              <option value="">Select Block</option>
-              <option value="KC">KC Block</option>
-              <option value="AB">AB Block</option>
-              <option value="bhabha">Bhabha Block</option>
-              <option value="RJ">RJ Block</option>
-              <option value="ground">Campus Ground</option>
-            </select>
-
-            {/* Floor Select (only if not Ground) */}
-            {location !== "ground" && (
-              <select
-                disabled={loading}
-                value={floor}
-                onChange={(e) => setFloor(e.target.value)}
-                className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer ${
-                  dark
-                    ? "bg-slate-800 border-slate-700 text-slate-200"
-                    : "bg-slate-100 border-slate-200 text-slate-800"
-                }`}
-              >
-                <option value="0">Ground Floor</option>
-                <option value="1">1st Floor</option>
-                <option value="2">2nd Floor</option>
-                <option value="3">3rd Floor</option>
-                {(location === "KC" || !location) && <option value="4">4th Floor</option>}
-                {(location === "KC" || !location) && <option value="5">5th Floor</option>}
-                {(location === "KC" || !location) && <option value="6">6th Floor</option>}
-              </select>
-            )}
-
-            {/* Problem Category Select */}
-            <select
-              disabled={loading}
-              value={problem}
-              onChange={(e) => setProblem(e.target.value)}
-              className={`px-3 py-2 rounded-xl text-xs sm:text-sm font-medium border focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer ${
-                dark
-                  ? "bg-slate-800 border-slate-700 text-slate-200"
-                  : "bg-slate-100 border-slate-200 text-slate-800"
-              }`}
-            >
-              <option value="">Problem Category</option>
-              <option value="water">Drinking Water / Taps</option>
-              <option value="hygiene">Washroom / Hygiene</option>
-              <option value="food">Canteen / Food</option>
-              <option value="building">Infrastructure / Electricity</option>
-              <option value="security">Safety / Security</option>
-              <option value="administration">Administration</option>
-            </select>
-          </div>
-
-          {/* Image Previews */}
-          {images.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {images.map((src, i) => (
-                <div
-                  key={i}
-                  className="relative group aspect-square rounded-xl overflow-hidden border border-slate-700/60 bg-slate-900 shadow-sm"
-                >
+              <div className="flex gap-2 px-1 sm:px-2.5 justify-between">
+                <div className="flex gap-2">
                   <img
-                    src={src}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    alt={`Preview ${i + 1}`}
+                    src={profileData?.profile}
+                    className="w-7 h-7 sm:w-8 sm:h-8 object-cover rounded-full"
+                    alt=""
                   />
-                  {!loading && (
-                    <button
-                      type="button"
-                      onClick={() => deleteimage(i)}
-                      className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-600/90 hover:bg-red-700 text-white flex items-center justify-center text-xs shadow-md transition-all duration-200 hover:scale-110"
-                      title="Remove image"
-                    >
-                      <i className="fi fi-br-cross-small"></i>
-                    </button>
-                  )}
-                  <div className="absolute bottom-1 left-1.5 text-[10px] px-1.5 py-0.5 rounded bg-black/60 text-white font-mono">
-                    Photo {i + 1}
+                  <div>
+                    <p className="font-semibold text-xs sm:text-sm">{profileData?.name}</p>
+                    <p className="text-xs text-gray-400">({profileData?.branch})</p>
                   </div>
+                </div>
+                <div
+                  className="rounded-full p-1 cursor-pointer"
+                  onClick={() => {
+                    setPostVis(false);
+                  }}
+                >
+                  <i
+                    className={
+                      (dark ? "text-white" : "text-black") + " fi fi-br-cross-small"
+                    }
+                  ></i>
+                </div>
+              </div>
+            </div>
+            
+            <div className="w-full flex flex-col gap-2 mt-3 sm:mt-3.5">
+              <textarea
+                ref={textref}
+                onChange={(e) => findwords(e)}
+                name=""
+                placeholder="Enter your Complaint ..."
+                className={`border border-gray-800 rounded-lg focus:outline-none w-full h-40 resize-none p-3 scroller text-sm sm:text-base ${
+                  dark ? "text-gray-300" : "text-gray-800"
+                }`}
+              ></textarea>
+              <div className="flex justify-end">
+                <p className="text-gray-500 text-xs">
+                  ({words}/{maxwords})
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap gap-2 px-1 sm:px-2 mt-4 sm:mt-7 text-white">
+              <div
+                onClick={handlePickImages}
+                className="flex justify-center items-center bg-gray-600 px-3 py-2 gap-1 rounded-lg text-xs sm:text-sm cursor-pointer"
+              >
+                <i className="fi fi-sr-add-image"></i>
+                <p>Images</p>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                ref={fileInputRef}
+                onChange={handleImagesSelected}
+                className="hidden"
+              />
+
+              <select
+                className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
+                onChange={(e) => {
+                  if (e.target.value.toLowerCase() !== "block") setLocation(e.target.value);
+                  else setLocation(null);
+                }}
+              >
+                <option value="Block">Location</option>
+                <option value="ground">Ground</option>
+                <option value="KC">KC</option>
+                <option value="AB">AB</option>
+                <option value="bhabha">Bhabha</option>
+                <option value="RJ">RJ</option>
+              </select>
+              
+              {location !== "ground" && (
+                <select
+                  className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
+                  onChange={(e) => {
+                    if (e.target.value.toLowerCase() !== "floor") setFloor(e.target.value);
+                    else setFloor(null);
+                  }}
+                >
+                  <option value="0">Floor</option>
+                  <option value="1">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  {(location === "KC" || !location) && <option value="4">4</option>}
+                  {(location === "KC" || !location) && <option value="5">5</option>}
+                  {(location === "KC" || !location) && <option value="6">6</option>}
+                </select>
+              )}
+              
+              <select
+                className="capitalize bg-gray-600 px-3 py-2 rounded-lg focus:outline-none text-xs sm:text-sm"
+                onChange={(e) => {
+                  if (e.target.value.toLowerCase() !== "problem") setProblem(e.target.value);
+                  else setProblem(null);
+                }}
+              >
+                <option value="Block">Problem</option>
+                <option value="food">Food</option>
+                <option value="water">Water</option>
+                <option value="administration">Administration</option>
+                <option value="hygiene">Hygiene</option>
+                <option value="security">Security</option>
+                <option value="building">Building</option>
+              </select>
+            </div>
+            
+            <div className="flex flex-wrap gap-3 px-2 sm:px-4 py-3 sm:py-5">
+              {images.map((e, i) => (
+                <div className="w-20 h-20 sm:w-28 sm:h-28 relative" key={i}>
+                  <div
+                    className="absolute -top-1 -right-1 rounded-full w-5 h-5 flex items-center justify-center bg-red-500 text-white cursor-pointer"
+                    onClick={() => {
+                      deleteimage(i);
+                    }}
+                  >
+                    <i
+                      className={
+                        (dark ? "text-white" : "text-black") + " fi fi-br-cross-small text-xs"
+                      }
+                    ></i>
+                  </div>
+                  <img src={e} className="w-full h-full rounded-lg object-cover" alt="" />
                 </div>
               ))}
             </div>
-          )}
-
-          {/* Loading status text & animation */}
-          {loading && (
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs sm:text-sm font-medium animate-pulse">
-              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              <span>{statusMessage || "Submitting your issue..."}</span>
+            
+            <div className="flex px-4 sm:px-8 justify-end pt-3">
+              <p
+                onClick={postData}
+                className={
+                  (dark ? "light" : "dark") +
+                  " w-fit px-4 py-2 font-semibold rounded-full cursor-pointer text-sm sm:text-base"
+                }
+              >
+                Post
+              </p>
             </div>
-          )}
-        </div>
-
-        {/* Modal Footer */}
-        <div className="flex items-center justify-between px-5 py-4 border-t border-slate-700/40 bg-slate-900/20">
-          <button
-            type="button"
-            disabled={loading}
-            onClick={() => setPostVis(false)}
-            className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
-              dark
-                ? "hover:bg-slate-800 text-slate-400"
-                : "hover:bg-slate-100 text-slate-600"
-            }`}
-          >
-            Cancel
-          </button>
-
-          <button
-            type="button"
-            disabled={loading}
-            onClick={postData}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-md hover:shadow-blue-500/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-          >
-            {loading ? (
-              <>
-                <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>Publishing...</span>
-              </>
-            ) : (
-              <>
-                <i className="fi fi-ss-paper-plane text-xs"></i>
-                <span>Publish Complaint</span>
-              </>
-            )}
-          </button>
-        </div>
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 

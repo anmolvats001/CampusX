@@ -6,52 +6,145 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 const Comment = () => {
       const textareaRef = useRef();
-      const [data,setData]=useState([]);
-      const [inputData,setInputData]=useState(null);
-      const [loading,setLoading]=useState(false);
-const { commvisible, setcommvis, dark,timeAgo ,profileon,setDark,commentData,setcommentData,findCommentData,utoken,setCurrentPost,currentPost,itoken,atoken,findAllPost} = useContext(AppContext);
+      const [inputData, setInputData] = useState("");
+      const [loading, setLoading] = useState(false);
+      const {
+        commvisible,
+        setcommvis,
+        dark,
+        timeAgo,
+        profileon,
+        setDark,
+        commentData,
+        setcommentData,
+        findCommentData,
+        utoken,
+        setCurrentPost,
+        currentPost,
+        itoken,
+        atoken,
+        findAllPost,
+        profileData,
+        setData: setGlobalData,
+      } = useContext(AppContext);
 
-    const handleInput = () => {
-  const textarea = textareaRef.current;
+  const handleInput = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    textarea.style.height = "auto";
+    const newHeight = Math.max(textarea.scrollHeight, 30);
+    textarea.style.height = `${Math.min(newHeight, 100)}px`;
+  };
 
-  textarea.style.height = "auto";
-  const newHeight = Math.max(textarea.scrollHeight, 30);
+  const postComment = async (id) => {
+    if (!inputData || !inputData.trim()) {
+      toast.error("Data is missing");
+      return;
+    }
 
-  textarea.style.height = `${Math.min(newHeight, 100)}px`;
-};
-const postComment=async(id)=>{
-  if(inputData){
-    setLoading(true);
-  const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/comment-post",{data:inputData,postId:id},{headers:{utoken}});
-  setLoading(false)
-  if(data.success){
-    toast.success(data.message);
-   findAllPost();
-  }
-  else{
-    toast.error(data.message)
-  }
-   findCommentData(id);
-    // setcommvis(false);
-  }
-  else{
-    toast.error("Data is missing")
-  }
-}
-const handleCommentLike=async(id)=>{
-  // setLoading(true);
-      setcommvis(false);
+    const commentText = inputData.trim();
+    // Instant UI clear
+    setInputData("");
+    if (textareaRef.current) {
+      textareaRef.current.value = "";
+      textareaRef.current.style.height = "auto";
+    }
 
-  const {data}=await axios.post(import.meta.env.VITE_BACKEND_URL+"/api/post/like-comment",{commentId:id},{headers:{utoken}});
-    toast.success(data.message);
-    // setLoading(false);
-    setcommvis(false);
-    findCommentData(id);
-}
-useEffect(()=>{
-  setData(commentData);
+    // Optimistic comment display
+    const tempId = "temp-" + Date.now();
+    const optimisticComment = {
+      _id: tempId,
+      data: commentText,
+      creator: {
+        name: profileData?.name || "User",
+        profile: profileData?.profile || "",
+        branch: profileData?.branch || "",
+      },
+      publishedOn: new Date().toISOString(),
+      likes: [],
+      liked: false,
+    };
 
-},[commentData])
+    setcommentData((prev) => [...(prev || []), optimisticComment]);
+
+    // Optimistically update comments count in global feed
+    if (setGlobalData) {
+      setGlobalData((prev) =>
+        Array.isArray(prev)
+          ? prev.map((post) =>
+              post._id === id
+                ? { ...post, comments: [...(post.comments || []), tempId] }
+                : post
+            )
+          : prev
+      );
+    }
+
+    try {
+      const { data } = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/post/comment-post",
+        { data: commentText, postId: id },
+        { headers: { utoken } }
+      );
+
+      if (data.success && data.comment) {
+        toast.success(data.message);
+        setcommentData((prev) =>
+          (prev || []).map((c) => (c._id === tempId ? data.comment : c))
+        );
+      } else {
+        toast.error(data.message || "Failed to post comment");
+        setcommentData((prev) => (prev || []).filter((c) => c._id !== tempId));
+      }
+    } catch (error) {
+      toast.error("Failed to post comment");
+      setcommentData((prev) => (prev || []).filter((c) => c._id !== tempId));
+    }
+  };
+
+  const handleCommentLike = async (id) => {
+    // Instant optimistic like toggle
+    setcommentData((prev) =>
+      (prev || []).map((c) => {
+        if (c._id === id) {
+          const isLiked = c.liked;
+          return {
+            ...c,
+            liked: !isLiked,
+            likes: isLiked
+              ? (c.likes || []).slice(0, -1)
+              : [...(c.likes || []), "x"],
+          };
+        }
+        return c;
+      })
+    );
+
+    try {
+      await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/post/like-comment",
+        { commentId: id },
+        { headers: { utoken } }
+      );
+    } catch (error) {
+      setcommentData((prev) =>
+        (prev || []).map((c) => {
+          if (c._id === id) {
+            const isLiked = c.liked;
+            return {
+              ...c,
+              liked: !isLiked,
+              likes: isLiked
+                ? (c.likes || []).slice(0, -1)
+                : [...(c.likes || []), "x"],
+            };
+          }
+          return c;
+        })
+      );
+      toast.error("Like failed");
+    }
+  };
   return (
     <>
       <div

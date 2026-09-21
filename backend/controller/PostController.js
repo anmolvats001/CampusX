@@ -198,6 +198,11 @@ const addComment = async (req, res) => {
     const commentId = newComment._id;
     await PostModel.findByIdAndUpdate(postId, { $push: { comments: commentId } });
 
+    await newComment.populate({
+      path: "creator",
+      select: "name profile branch",
+    });
+
     res.json({ success: true, message: "commented successfully", comment: newComment });
   } catch (error) {
     res.json({ success: false, message: error.message });
