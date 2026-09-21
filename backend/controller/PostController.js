@@ -1,234 +1,314 @@
-
 import PostModel from "../models/posts.js";
 import CommentModel from "../models/comment.js";
+
 const AllPost = async (req, res) => {
   try {
     const { userId } = req.body;
+    const targetUserId = userId ? userId.toString() : null;
 
-const posts = await PostModel.find().populate({
-  path: "creator",
-  select: "name profile branch"
-});
+    const posts = await PostModel.find()
+      .sort({ publishedOn: -1 })
+      .populate({
+        path: "creator",
+        select: "name profile branch",
+      })
+      .lean();
+
     const postdata = posts.map((post) => {
-      const liked = post.likes.some(
-        (id) => id.toString() === userId.toString()
-      );
-      const agreed = post.agrees.some(
-        (id) => id.toString() === userId.toString()
-      );
+      const liked = targetUserId
+        ? (post.likes || []).some((id) => id.toString() === targetUserId)
+        : false;
+      const agreed = targetUserId
+        ? (post.agrees || []).some((id) => id.toString() === targetUserId)
+        : false;
       return {
-        ...post.toObject(),
-        liked,agreed
+        ...post,
+        liked,
+        agreed,
       };
     });
 
     res.json({
       success: true,
       message: "got posts",
-      postdata
+      postdata,
     });
   } catch (error) {
-    console.error(error);
+    console.error("AllPost error:", error);
     res.json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
-const InchargeAndAdminPost=async(req,res)=>{
+
+const InchargeAndAdminPost = async (req, res) => {
   try {
-    const posts = await PostModel.find().populate({
-  path: "creator",
-  select: "name profile branch"
-});
-    
+    const posts = await PostModel.find()
+      .sort({ publishedOn: -1 })
+      .populate({
+        path: "creator",
+        select: "name profile branch",
+      })
+      .lean();
+
     res.json({
       success: true,
       message: "got posts",
-      postdata:posts
+      postdata: posts,
     });
   } catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message})
+    console.error("InchargeAndAdminPost error:", error);
+    res.json({ success: false, message: error.message });
   }
-}
-const getPostData=async(req,res)=>{
-  try {
-    const {postId,userId}=req.body;
-  const post=await PostModel.findById(postId).populate({
-    path:"creator",
-    select:"name branch profile"
-  });
-  let postdata={};
-      const liked = post.likes.some(
-        (id) => id.toString() === userId.toString()
-      );
-      const agreed = post.agrees.some(
-        (id) => id.toString() === userId.toString()
-      );
-        postdata={...post}
-  res.json({success:true,message:"got post",postdata:{...postdata._doc,liked,agreed}})
-  } catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message});
-  }
-}
-const getPostDataInchargeOrAdmin=async(req ,res )=>{
-  try {
-    const {postId}=req.body;
-  const post=await PostModel.findById(postId).populate({
-    path:"creator",
-    select:"name branch profile"
-  });
-  let postdata={};
-        postdata={...post}
-  res.json({success:true,message:"got post",postdata:{...postdata._doc}})
-  } catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message});
-  }
-}
-const handleLike=async(req,res)=>{
-  try {
-    
-  const {userId,postId}=req.body;
-  if(!postId||!userId){
-    return res.json({succes:false,message:"post/user is missing"});
-  }
-  const post=await PostModel.findById(postId);
-  const exist= post.likes.includes(userId);
+};
 
-  if(exist){
-    await PostModel.findByIdAndUpdate(postId,{$pull:{likes:userId}});
-    res.json({success:true,message:"Post UnLiked"});
-  }
-  else{
-    await PostModel.findByIdAndUpdate(postId,{$push:{likes:userId}});
-    res.json({success:true,message:"Post Liked"});
-  }
-  
-  } catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message})
-  }
-}
-const handleAgree=async(req,res)=>{
+const getPostData = async (req, res) => {
   try {
-    
-  const {userId,postId}=req.body;
-  if(!postId||!userId){
-    return res.json({succes:false,message:"post/user is missing"});
-  }
-  const post=await PostModel.findById(postId);
-  const exist= post.agrees.includes(userId);
+    const { postId, userId } = req.body;
+    const targetUserId = userId ? userId.toString() : null;
 
-  if(exist){
-    await PostModel.findByIdAndUpdate(postId,{$pull:{agrees:userId}});
-    res.json({success:true,message:"You Disagreed"});
-  }
-  else{
-    await PostModel.findByIdAndUpdate(postId,{$push:{agrees:userId}});
-    res.json({success:true,message:"You Agreed"});
-  }
-  
-  } catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message})
-  }
-}
+    const post = await PostModel.findById(postId)
+      .populate({
+        path: "creator",
+        select: "name branch profile",
+      })
+      .lean();
 
-const addComment=async(req ,res )=>{
-  try {
-  const {postId,userId,data}=req.body;
-  if(!data){
-    return res.json({succes:false,message:"data missing"});
-  }
-  const newComment=await CommentModel.create({
-    data:data,
-    creator:userId,
-    post:postId
-  });
-  const commentId=newComment._id;
-  await PostModel.findByIdAndUpdate(postId,{$push:{comments:commentId}});
-  res.json({success:true,message:"commented successfully"});
-  } catch (error) {
-    res.json({succes:false,message:error.message});
-  }
-}
-const AllComments=async(req,res)=>{
-  try {
-    const {postId,userId}=req.body;
-    if(!postId){
-      return res.json({success:false,message:"cant find the post"})
+    if (!post) {
+      return res.json({ success: false, message: "Post not found" });
     }
 
-    const post=await PostModel.findById(postId).populate({
-      path:"comments",
-      populate:{
-        path:"creator",
-        select:"name profile branch"
-      }
+    const liked = targetUserId
+      ? (post.likes || []).some((id) => id.toString() === targetUserId)
+      : false;
+    const agreed = targetUserId
+      ? (post.agrees || []).some((id) => id.toString() === targetUserId)
+      : false;
+
+    res.json({
+      success: true,
+      message: "got post",
+      postdata: { ...post, liked, agreed },
     });
-    
-        const commentdata = post.comments.map((comment) => {
-      const liked = comment.likes.some(
-        (id) => id.toString() === userId.toString()
-      );
+  } catch (error) {
+    console.error("getPostData error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const getPostDataInchargeOrAdmin = async (req, res) => {
+  try {
+    const { postId } = req.body;
+    const post = await PostModel.findById(postId)
+      .populate({
+        path: "creator",
+        select: "name branch profile",
+      })
+      .lean();
+
+    if (!post) {
+      return res.json({ success: false, message: "Post not found" });
+    }
+
+    res.json({ success: true, message: "got post", postdata: post });
+  } catch (error) {
+    console.error("getPostDataInchargeOrAdmin error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const handleLike = async (req, res) => {
+  try {
+    const { userId, postId } = req.body;
+    if (!postId || !userId) {
+      return res.json({ success: false, message: "post/user is missing" });
+    }
+
+    const post = await PostModel.findById(postId).select("likes");
+    if (!post) {
+      return res.json({ success: false, message: "Post not found" });
+    }
+
+    const exist = post.likes.some((id) => id.toString() === userId.toString());
+
+    const updated = await PostModel.findByIdAndUpdate(
+      postId,
+      exist ? { $pull: { likes: userId } } : { $push: { likes: userId } },
+      { new: true }
+    ).select("likes");
+
+    res.json({
+      success: true,
+      message: exist ? "Post UnLiked" : "Post Liked",
+      liked: !exist,
+      likesCount: updated ? updated.likes.length : 0,
+    });
+  } catch (error) {
+    console.error("handleLike error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const handleAgree = async (req, res) => {
+  try {
+    const { userId, postId } = req.body;
+    if (!postId || !userId) {
+      return res.json({ success: false, message: "post/user is missing" });
+    }
+
+    const post = await PostModel.findById(postId).select("agrees");
+    if (!post) {
+      return res.json({ success: false, message: "Post not found" });
+    }
+
+    const exist = post.agrees.some((id) => id.toString() === userId.toString());
+
+    const updated = await PostModel.findByIdAndUpdate(
+      postId,
+      exist ? { $pull: { agrees: userId } } : { $push: { agrees: userId } },
+      { new: true }
+    ).select("agrees");
+
+    res.json({
+      success: true,
+      message: exist ? "You Disagreed" : "You Agreed",
+      agreed: !exist,
+      agreesCount: updated ? updated.agrees.length : 0,
+    });
+  } catch (error) {
+    console.error("handleAgree error:", error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const addComment = async (req, res) => {
+  try {
+    const { postId, userId, data } = req.body;
+    if (!data) {
+      return res.json({ success: false, message: "data missing" });
+    }
+
+    const newComment = await CommentModel.create({
+      data,
+      creator: userId,
+      post: postId,
+    });
+
+    const commentId = newComment._id;
+    await PostModel.findByIdAndUpdate(postId, { $push: { comments: commentId } });
+
+    res.json({ success: true, message: "commented successfully", comment: newComment });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const AllComments = async (req, res) => {
+  try {
+    const { postId, userId } = req.body;
+    if (!postId) {
+      return res.json({ success: false, message: "cant find the post" });
+    }
+
+    const post = await PostModel.findById(postId)
+      .populate({
+        path: "comments",
+        populate: {
+          path: "creator",
+          select: "name profile branch",
+        },
+      })
+      .lean();
+
+    if (!post) {
+      return res.json({ success: false, message: "cant find the post" });
+    }
+
+    const targetUserId = userId ? userId.toString() : null;
+    const commentdata = (post.comments || []).map((comment) => {
+      const liked = targetUserId
+        ? (comment.likes || []).some((id) => id.toString() === targetUserId)
+        : false;
 
       return {
-        ...comment.toObject(),
-        liked
+        ...comment,
+        liked,
       };
     });
 
-    res.json({success:true,message:"got comment",comments:commentdata})
+    res.json({ success: true, message: "got comment", comments: commentdata });
   } catch (error) {
-    res.json({success:false,message:error.message})
+    res.json({ success: false, message: error.message });
   }
-}
-const AllCommentsInchargeorAdmin=async(req,res)=>{
+};
+
+const AllCommentsInchargeorAdmin = async (req, res) => {
   try {
-    const {postId}=req.body;
-    if(!postId){
-      return res.json({success:false,message:"cant find the post"})
+    const { postId } = req.body;
+    if (!postId) {
+      return res.json({ success: false, message: "cant find the post" });
     }
 
-    const post=await PostModel.findById(postId).populate({
-      path:"comments",
-      populate:{
-        path:"creator",
-        select:"name profile branch"
-      }
-    });
-    
+    const post = await PostModel.findById(postId)
+      .populate({
+        path: "comments",
+        populate: {
+          path: "creator",
+          select: "name profile branch",
+        },
+      })
+      .lean();
 
-    res.json({success:true,message:"got comment",comments:post.comments})
+    if (!post) {
+      return res.json({ success: false, message: "cant find the post" });
+    }
+
+    res.json({ success: true, message: "got comment", comments: post.comments || [] });
   } catch (error) {
-    res.json({success:false,message:error.message})
+    res.json({ success: false, message: error.message });
   }
-}
+};
 
-const likeComment=async(req,res)=>{
+const likeComment = async (req, res) => {
   try {
-    const {commentId,userId}=req.body;
-    if(!commentId||!userId){
-    return res.json({succes:false,message:"comment/user is missing"});
-  }
-  const post=await CommentModel.findById(commentId);
-  const exist= post.likes.includes(userId);
+    const { commentId, userId } = req.body;
+    if (!commentId || !userId) {
+      return res.json({ success: false, message: "comment/user is missing" });
+    }
 
-  if(exist){
-    await CommentModel.findByIdAndUpdate(commentId,{$pull:{likes:userId}});
-    res.json({success:true,message:"comment UnLiked"});
-  }
-  else{
-    await CommentModel.findByIdAndUpdate(commentId,{$push:{likes:userId}});
-    res.json({success:true,message:"comment Liked"});
-  }
-  
+    const post = await CommentModel.findById(commentId).select("likes");
+    if (!post) {
+      return res.json({ success: false, message: "comment not found" });
+    }
+
+    const exist = post.likes.some((id) => id.toString() === userId.toString());
+
+    await CommentModel.findByIdAndUpdate(
+      commentId,
+      exist ? { $pull: { likes: userId } } : { $push: { likes: userId } }
+    );
+
+    res.json({
+      success: true,
+      message: exist ? "comment UnLiked" : "comment Liked",
+      liked: !exist,
+    });
   } catch (error) {
-   console.log(error);
-   res.json({success:false,message:error.message}) 
+    console.error("likeComment error:", error);
+    res.json({ success: false, message: error.message });
   }
-}
-export {AllPost,getPostData,handleLike,addComment,AllComments,likeComment,handleAgree,InchargeAndAdminPost,getPostDataInchargeOrAdmin,AllCommentsInchargeorAdmin};
+};
+
+export {
+  AllPost,
+  getPostData,
+  handleLike,
+  addComment,
+  AllComments,
+  likeComment,
+  handleAgree,
+  InchargeAndAdminPost,
+  getPostDataInchargeOrAdmin,
+  AllCommentsInchargeorAdmin,
+};

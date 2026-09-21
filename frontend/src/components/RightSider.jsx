@@ -1,44 +1,107 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../Context/context'
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from "react";
+import { AppContext } from "../Context/context";
+import { useNavigate } from "react-router-dom";
 
 const RightSider = () => {
-    const {dark,setDark,data,notificationOn,setNotificationOn,utoken}=useContext(AppContext);
-    const [siderData,setSiderData]=useState([]);
-    const navigate=useNavigate();
-    useEffect(()=>{
-      findData();
-    },[data]);
-    const findData=()=>{
-      setSiderData(data.slice(0,4))
-    }
-  return (
-   <div className={(dark ? "dark":"light") +" h-full w-[30%] border-[1px] border-gray-800 relative hidden lg:block"}>
-    <div className='pt-10 px-4'>
-      <div className='py-2.5 px-3.5 outfit border-1 border-gray-800 rounded-3xl'>
-        <div className=' flex justify-between'>
-          <p className='text-2xl  font-semibold'>What's happening ?</p>
-          {dark?utoken&&<i onClick={()=>setNotificationOn(true)} class="fi fi-ss-bell text-white text-2xl"></i>:utoken&&<i onClick={()=>setNotificationOn(true)} class="fi fi-ss-bell text-2xl"></i>}
-        </div>
-        <div className=' mt-6 flex flex-col gap-3'>
-          {!siderData|| siderData.length==0?<div className='text-center text-gray-500 '>---Nothing to Show---</div>:
-          siderData.map((e,i)=>(
-              <div key={i} className='cursor-pointer' onClick={()=>{navigate(`/issues/post-data/${e._id}`)}}>
-                <p className='line-clamp-1'>{e.data}</p>
-                <p className='text-[13px] text-gray-500'>({e.block} Block)</p>
-              </div>
-            ))
-          }
-          </div>
-          
-      </div>
-      <div className='py-2.5 px-3.5 outfit text-gray-600 text-sm flex gap-2 mt-4'><a className='text-xs' href="tel:+91 7983704504">+91 7983704504</a><p>|</p> <a href="mailto:campusconnect0611@gmail.com" className='text-xs'>campusconnect0611@gmail.com</a><p>|</p> <a href="">policy</a></div>
-      <div className='py-2.5 px-3.5 outfit text-gray-600 text-sm flex justify-center'><p>© 2025 CampusX</p></div>
-    </div>
-    </div>
-  )
-}
+  const { dark, data, setNotificationOn, utoken } = useContext(AppContext);
+  const [siderData, setSiderData] = useState([]);
+  const navigate = useNavigate();
 
-export default RightSider
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setSiderData(data.slice(0, 5));
+    } else {
+      setSiderData([]);
+    }
+  }, [data]);
+
+  return (
+    <aside
+      className={`hidden lg:flex flex-col justify-between w-[30%] xl:w-[28%] min-h-screen border-l px-6 py-6 transition-colors ${
+        dark ? "bg-[#0B0F17] border-slate-800 text-slate-100" : "bg-white border-slate-200 text-slate-900"
+      }`}
+    >
+      <div className="flex flex-col gap-6">
+        {/* Card Header & Content */}
+        <div
+          className={`p-5 rounded-2xl border transition-all ${
+            dark
+              ? "bg-[#111827] border-slate-800 shadow-md shadow-black/20"
+              : "bg-slate-50 border-slate-200 shadow-sm"
+          }`}
+        >
+          <div className="flex items-center justify-between pb-3 border-b border-slate-700/30">
+            <div className="flex items-center gap-2">
+              <i className="fi fi-rr-flame text-amber-500 text-lg"></i>
+              <h2 className="text-base font-bold tracking-tight">Recent Complaints</h2>
+            </div>
+            {utoken && (
+              <button
+                type="button"
+                onClick={() => setNotificationOn(true)}
+                className={`p-2 rounded-xl transition-all cursor-pointer ${
+                  dark
+                    ? "hover:bg-slate-800 text-slate-300 hover:text-white"
+                    : "hover:bg-slate-200 text-slate-600 hover:text-slate-900"
+                }`}
+                title="Notifications"
+              >
+                <i className="fi fi-rr-bell text-lg"></i>
+              </button>
+            )}
+          </div>
+
+          <div className="mt-4 flex flex-col gap-2.5">
+            {!siderData || siderData.length === 0 ? (
+              <p className="text-center text-xs text-slate-500 py-6">No recent complaints</p>
+            ) : (
+              siderData.map((e, i) => (
+                <div
+                  key={e._id || i}
+                  onClick={() => navigate(`/issues/post-data/${e._id}`)}
+                  className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
+                    dark
+                      ? "border-slate-800/60 hover:border-slate-700 hover:bg-slate-800/50"
+                      : "border-slate-200 hover:border-slate-300 hover:bg-white"
+                  }`}
+                >
+                  <p className="text-xs sm:text-sm font-medium line-clamp-2 leading-snug">
+                    {e.data}
+                  </p>
+                  <div className="flex items-center gap-2 mt-1.5 text-[11px] text-slate-400">
+                    <span className="px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 font-semibold">
+                      {e.block} Block
+                    </span>
+                    {e.problem && (
+                      <span className="capitalize text-slate-400">
+                        {e.problem}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Links */}
+      <footer className="pt-6 border-t border-slate-700/20 text-xs text-slate-500 flex flex-col gap-2">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <a href="tel:+917983704504" className="hover:text-blue-500 transition-colors">
+            +91 7983704504
+          </a>
+          <span>•</span>
+          <a href="mailto:campusconnect0611@gmail.com" className="hover:text-blue-500 transition-colors">
+            Support Email
+          </a>
+          <span>•</span>
+          <span className="cursor-pointer hover:text-blue-500 transition-colors">Privacy</span>
+        </div>
+        <p className="text-[11px] text-slate-500 font-medium">© 2025 Campus Connect. All rights reserved.</p>
+      </footer>
+    </aside>
+  );
+};
+
+export default RightSider;

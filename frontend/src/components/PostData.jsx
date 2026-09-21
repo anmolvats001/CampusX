@@ -5,6 +5,7 @@ import { AppContext } from "../Context/context";
 import { toast } from "react-toastify";
 import axios from "axios";
 import CommentShrimmer from "./CommentShrimmer";
+import { compressImage } from "../utils/imageCompressor";
 
 const PostData = () => {
   const { id } = useParams();
@@ -17,134 +18,125 @@ const PostData = () => {
     utoken,
     findCommentData,
     itoken,
-    atoken,setVal,findProfileData
+    atoken,
+    setVal,
+    findProfileData,
   } = useContext(AppContext);
   const [on, seton] = useState(false);
   const [onfile, setOnFile] = useState(null);
   const [data, setData] = useState({});
   const [verifyImage, setVerifyImage] = useState(null);
-  const [image,setimage]=useState(null);
-  const [loading,setLoading]=useState(false);
+  const [image, setimage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const resolvePost=async()=>{
-    setLoading(true)
-    const formData = new FormData();
-formData.append("postId", id);
-formData.append("image", image);
 
-const { data } = await axios.post(
-  import.meta.env.VITE_BACKEND_URL + "/api/incharge/resolve-post",
-  formData,{headers:{itoken}});
-    if(data.success){
-      toast.success(data.message);
-      setVal("in-process");
-       findProfileData();
-      navigate("/issues/home");
-     
+  const resolvePost = async () => {
+    if (!image) {
+      toast.error("Please attach a verification image");
+      return;
     }
-    else{
-      toast.error(data.message)
-    }
-    setLoading
-  }
-  const findData = async () => {
-    if(utoken){
-        
-    const { data } = await axios.post(
-      import.meta.env.VITE_BACKEND_URL + "/api/post/getPostData",
-      { postId: id },
-      { headers: { utoken } }
-    );
-    console.log(data);
-    setData(data.postdata);
-    }
-    if (itoken || atoken) {
-      const { data } = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/post/postData-inchargeoradmin"
-      ,{ postId: id });
-        setData(data.postdata);
+    setLoading(true);
+    try {
+      const compressedImage = await compressImage(image);
+      const formData = new FormData();
+      formData.append("postId", id);
+      formData.append("image", compressedImage);
+
+      const res = await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/incharge/resolve-post",
+        formData,
+        { headers: { itoken } }
+      );
+      if (res.data?.success) {
+        toast.success(res.data.message);
+        setVal("in-process");
+        findProfileData();
+        navigate("/issues/home");
+      } else {
+        toast.error(res.data?.message || "Failed to resolve");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to resolve post");
+    } finally {
+      setLoading(false);
     }
   };
-  const handleLike = async (id) => {
 
-  setData(prev =>
-    prev.map(post =>
-      post._id === id
-        ? {
-            ...post,
-            liked: !post.liked,
-            likes: post.liked
-              ? post.likes.slice(0, -1)
-              : [...post.likes, "x"]
-          }
-        : post
-    )
-  );
+  const findData = async () => {
+    try {
+      if (utoken) {
+        const { data: resData } = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/post/getPostData",
+          { postId: id },
+          { headers: { utoken } }
+        );
+        setData(resData?.postdata || {});
+      } else if (itoken || atoken) {
+        const { data: resData } = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/post/postData-inchargeoradmin",
+          { postId: id }
+        );
+        setData(resData?.postdata || {});
+      }
+    } catch (err) {
+      console.error("findData error:", err);
+    }
+  };
 
-  try {
-    
-    await axios.post(
-      import.meta.env.VITE_BACKEND_URL + "/api/post/like-postuser",
-      { postId: id },
-      { headers: { utoken } }
-    );
-  } catch (error) {
+  const handleLike = async (postId) => {
+    setData((prev) => {
+      if (!prev || !prev._id) return prev;
+      const isLiked = prev.liked;
+      const newLikes = isLiked
+        ? (prev.likes || []).slice(0, -1)
+        : [...(prev.likes || []), "x"];
+      return {
+        ...prev,
+        liked: !isLiked,
+        likes: newLikes,
+      };
+    });
 
-    setData(prev =>
-      prev.map(post =>
-        post._id === id
-          ? {
-              ...post,
-              liked: !post.liked,
-              likes: post.liked
-                ? post.likes.slice(0, -1)
-                : [...post.likes, "x"]
-            }
-          : post
-      )
-    );
-    toast.error("Like failed");
-  }
-};
+    try {
+      await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/post/like-postuser",
+        { postId: postId },
+        { headers: { utoken } }
+      );
+    } catch (error) {
+      console.error(error);
+      findData();
+      toast.error("Like failed");
+    }
+  };
 
-   const handleAgree = async (id) => {
-  setData(prev =>
-    prev.map(post =>
-      post._id === id
-        ? {
-            ...post,
-            agreed: !post.agreed,
-            agrees: post.agreed
-              ? post.agrees.slice(0, -1)
-              : [...post.agrees, "x"]
-          }
-        : post
-    )
-  );
+  const handleAgree = async (postId) => {
+    setData((prev) => {
+      if (!prev || !prev._id) return prev;
+      const isAgreed = prev.agreed;
+      const newAgrees = isAgreed
+        ? (prev.agrees || []).slice(0, -1)
+        : [...(prev.agrees || []), "x"];
+      return {
+        ...prev,
+        agreed: !isAgreed,
+        agrees: newAgrees,
+      };
+    });
 
-  try {
-    await axios.post(
-      import.meta.env.VITE_BACKEND_URL + "/api/post/agree",
-      { postId: id },
-      { headers: { utoken } }
-    );
-  } catch (error) {
-    setData(prev =>
-      prev.map(post =>
-        post._id === id
-          ? {
-              ...post,
-              agreed: !post.agreed,
-              agrees: post.agreed
-                ? post.agrees.slice(0, -1)
-                : [...post.agrees, "x"]
-            }
-          : post
-      )
-    );
-    toast.error("Agree failed");
-  }
-};
+    try {
+      await axios.post(
+        import.meta.env.VITE_BACKEND_URL + "/api/post/agree",
+        { postId: postId },
+        { headers: { utoken } }
+      );
+    } catch (error) {
+      console.error(error);
+      findData();
+      toast.error("Agree failed");
+    }
+  };
   useEffect(() => {
     findData();
     return () => {

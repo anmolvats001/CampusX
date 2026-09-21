@@ -1,9 +1,10 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import adminModel from "../models/admin.js";
 import bcrypt from "bcrypt";
-import {v2 as cloudinary} from "cloudinary"
+import { v2 as cloudinary } from "cloudinary";
 import InchargeModel from "../models/incharge.js";
-import PostModel from "../models/posts.js"
+import PostModel from "../models/posts.js";
+import fs from "fs";
 const login =async(req ,res )=>{
     try {
        const { email, password} = req.body;
@@ -41,10 +42,9 @@ const getProfile = async (req, res) => {
   }
 };
 const editProfile = async (req, res) => {
+  const imageFile = req.file;
   try {
     const { adminId, name, address, dob, gender, phone,bio } = req.body;
-    const imageFile = req.file;
-    console.log(name,address)
     await adminModel.findByIdAndUpdate(adminId, {
       name,
       phone,
@@ -55,7 +55,11 @@ const editProfile = async (req, res) => {
     });
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        folder: "campus_connect/admin",
         resource_type: "image",
+        fetch_format: "auto",
+        quality: "auto:good",
+        transformation: [{ width: 500, height: 500, crop: "fill" }]
       });
       const imageUrl = imageUpload.secure_url;
       await adminModel.findByIdAndUpdate(adminId, { profile: imageUrl });
@@ -68,6 +72,10 @@ const editProfile = async (req, res) => {
       success: false,
       message: error.message,
     });
+  } finally {
+    if (imageFile && imageFile.path) {
+      fs.promises.unlink(imageFile.path).catch(() => {});
+    }
   }
 };
 const checkPassword=async(req,res)=>{
@@ -107,10 +115,9 @@ const checkPassword=async(req,res)=>{
   }
  }
 const addIncharge=async(req,res)=>{
-  try {
-    
-  const {name,password,bio,work,email,address,adminId}=req.body;
   const imageFile=req.file;
+  try {
+  const {name,password,bio,work,email,address,adminId}=req.body;
   const salt=await bcrypt.genSalt(10);
   const newpass=await bcrypt.hash(password,salt);
   const incharge=await InchargeModel.create({
@@ -118,7 +125,11 @@ const addIncharge=async(req,res)=>{
   });
   if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        folder: "campus_connect/incharge",
         resource_type: "image",
+        fetch_format: "auto",
+        quality: "auto:good",
+        transformation: [{ width: 500, height: 500, crop: "fill" }]
       });
       const imageUrl = imageUpload.secure_url;
       await InchargeModel.findByIdAndUpdate(incharge._id,{profile:imageUrl});
@@ -127,6 +138,10 @@ const addIncharge=async(req,res)=>{
   } catch (error) {
     console.log(error)
     res.json({success:false,message:error.message})
+  } finally {
+    if (imageFile && imageFile.path) {
+      fs.promises.unlink(imageFile.path).catch(() => {});
+    }
   }
 }
 const getAllIncharge=async(req,res)=>{

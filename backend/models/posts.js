@@ -15,5 +15,10 @@ const PostSchema=new mongoose.Schema({
     agrees:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
     comments:[{type:mongoose.Schema.Types.ObjectId,ref:"comment"}],
 })
+
+PostSchema.index({ publishedOn: -1 });
+PostSchema.index({ creator: 1 });
+PostSchema.index({ problem: 1, resolvedByStudent: 1, resolvedByIncharge: 1 });
+
 const PostModel= mongoose.model("post",PostSchema);
 export default PostModel;

@@ -7,5 +7,8 @@ const CommentSchema=new mongoose.Schema({
     data:{type:String,required:true},
     likes:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
 });
+
+CommentSchema.index({ post: 1, publishedOn: -1 });
+
 const CommentModel=mongoose.model("comment",CommentSchema);
 export default CommentModel;

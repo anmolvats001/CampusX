@@ -1,10 +1,8 @@
 import express from "express"
 import cors from "cors"
+import compression from "compression";
 import dotenv from "dotenv";
 dotenv.config();
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS);
-
 import connectDb from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 import inchargeRouter from "./routes/inchargeRoute.js";
@@ -16,7 +14,9 @@ const app = express();
 connectDb();
 connectCloudinary();
 app.use(cors());
-app.use(express.json());
+app.use(compression());
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 app.use("/api/incharge",inchargeRouter);
 app.use("/api/user",userRouter);
 app.use("/api/admin",adminRouter);

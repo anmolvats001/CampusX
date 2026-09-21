@@ -5,39 +5,24 @@ import anshuman from "../assets/anshuman.png"
 import Shrimmer from "../components/Shrimmer";
 import { AppContext } from "../Context/context";
 const Team = () => {
-      const [loader,setShowLoader]=useState(true);
-  const {setDark}=useContext(AppContext)
-    useEffect(() => {
-      setDark(false)
-        const timer = setTimeout(() => {
-          setShowLoader(false);
-          setDark(true);
-        }, 1000); 
-    
-        return () => {clearTimeout(timer);}
-      }, []);
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "instant"
     });
   }, []);
-  
- 
-    const Coordinators=[
-      { name: "Anshuhman Singh", role: "Project Lead", year: "CSE 2nd Year",img:anshuman,insta:"https://www.instagram.com/anshs4096?igsh=MXgxemY1dnhleWd4",x:"https://x.com/Anshuma20169588",in:"https://www.linkedin.com/in/anshuman-singh-91bb33356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
-       { name: "Ansh Jain", role: "UI/UX Designer", year: "CSE 2nd Year",img:ansh ,insta:"https://www.instagram.com/ansh._jain_?utm_source=qr&igsh=MWFiaGN2cmEzbmN3bg==",x:"https://x.com/anshjain5812",in:"https://www.linkedin.com/in/ansh-jain8272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"},
-       { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol, insta:"https://www.instagram.com/anmolvats01/",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/"},
-    ]
-  
+
+  const Coordinators=[
+    { name: "Anshuhman Singh", role: "Project Lead", year: "CSE 2nd Year",img:anshuman,insta:"https://www.instagram.com/anshs4096?igsh=MXgxemY1dnhleWd4",x:"https://x.com/Anshuma20169588",in:"https://www.linkedin.com/in/anshuman-singh-91bb33356?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" },
+    { name: "Ansh Jain", role: "UI/UX Designer", year: "CSE 2nd Year",img:ansh ,insta:"https://www.instagram.com/ansh._jain_?utm_source=qr&igsh=MWFiaGN2cmEzbmN3bg==",x:"https://x.com/anshjain5812",in:"https://www.linkedin.com/in/ansh-jain8272?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"},
+    { name: "Anmol Vats", role: "Full Stack Developer", year: "CSE 2nd Year",img:anmol, insta:"https://www.instagram.com/anmolvats01/",x:"https://x.com/anmol_vats01",in:"https://www.linkedin.com/in/anmol-vats-821592336/"},
+  ]
 
   return (
     <div className='px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-24 sm:mt-12 md:mt-16 lg:mt-20 w-full'>
-      {loader?<Shrimmer/>:<div className="font-extrabold uppercase text-center pt-6 sm:pt-12 md:pt-10 pb-8 sm:pb-10 md:pb-12 text-xl sm:text-2xl">
+      <div className="font-extrabold uppercase text-center pt-6 sm:pt-12 md:pt-10 pb-8 sm:pb-10 md:pb-12 text-xl sm:text-2xl">
         <div>The people behind Campus Connect</div>
-        
-        
-      </div>}
+      </div>
       
     <div className="mb-12 sm:mb-16 md:mb-20">
         <div className='flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 pb-6 w-full'>

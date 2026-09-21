@@ -58,108 +58,106 @@ export const AppProvider = ({ children }) => {
     navigate("/");
   };
   const findProfileData = async () => {
-    if(utoken){
-      const { data } = await axios.get(
-      import.meta.env.VITE_BACKEND_URL + "/api/user/profile",
-      { headers: { utoken } }
-    );
-    if (!data) {
-      toast.error("data not found");
-    } else {
-      setProfileData({
-        ...data.UserData,
-        posts: [...data.UserData.posts].reverse(),
-      });
-    }
-    }
-    else if (atoken){
-      const { data } = await axios.get(
-      import.meta.env.VITE_BACKEND_URL + "/api/admin/profile",
-      { headers: { atoken } }
-    );
-    if (!data) {
-      toast.error("data not found");
-      console.log(data)
-    } else {
-      setProfileData({
-        ...data.UserData
-      });
-    }
-    }
-    else if (itoken){
-       const { data } = await axios.get(
-      import.meta.env.VITE_BACKEND_URL + "/api/incharge/profile",
-      { headers: { itoken } }
-    );
-    if (!data) {
-      toast.error("data not found");
-      console.log(data)
-    } else {
-      setProfileData({
-        ...data.UserData
-      });
-      console.log(data)
-    }
+    try {
+      if (utoken) {
+        const { data } = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/user/profile",
+          { headers: { utoken } }
+        );
+        if (!data || !data.UserData) {
+          toast.error("data not found");
+        } else {
+          setProfileData({
+            ...data.UserData,
+            posts: data.UserData.posts || [],
+          });
+        }
+      } else if (atoken) {
+        const { data } = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/admin/profile",
+          { headers: { atoken } }
+        );
+        if (data?.UserData) {
+          setProfileData({
+            ...data.UserData,
+          });
+        }
+      } else if (itoken) {
+        const { data } = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/incharge/profile",
+          { headers: { itoken } }
+        );
+        if (data?.UserData) {
+          setProfileData({
+            ...data.UserData,
+          });
+        }
+      }
+    } catch (err) {
+      console.error("findProfileData error:", err);
     }
   };
+
   const findAllPost = async () => {
-    if (utoken) {
-      const { data } = await axios.get(
-        import.meta.env.VITE_BACKEND_URL + "/api/post/alluser-post",
-        { headers: { utoken } }
-      );
-      if (data.success) {
-        setData([...data.postdata].reverse());
-        // console.log(data.postdata)
-      } else {
-        console.log(data);
+    try {
+      if (utoken) {
+        const { data } = await axios.get(
+          import.meta.env.VITE_BACKEND_URL + "/api/post/alluser-post",
+          { headers: { utoken } }
+        );
+        if (data?.success) {
+          setData(data.postdata || []);
+        }
+      } else if (itoken || atoken) {
+        const { data } = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/post/all-post"
+        );
+        if (data?.success) {
+          setData(data.postdata || []);
+        }
       }
-    } else if (itoken || atoken) {
-      const { data } = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/post/all-post"
-      );
-      if (data.success) {
-        setData([...data.postdata].reverse());
-      } else {
-        console.log(data);
-      }
+    } catch (err) {
+      console.error("findAllPost error:", err);
     }
   };
+
   const findCommentData = async (id) => {
-    setcommentData(null)
-    if(utoken){
-      const { data } = await axios.post(
-      import.meta.env.VITE_BACKEND_URL + "/api/post/allcomments",
-      { postId: id },
-      { headers: { utoken } }
-    );
+    setcommentData(null);
     setCurrentPost(id);
-    console.log(data);
-    if (data.success) {
-      setcommentData([...data.comments].reverse());
+    try {
+      if (utoken) {
+        const { data } = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/post/allcomments",
+          { postId: id },
+          { headers: { utoken } }
+        );
+        if (data?.success) {
+          setcommentData(data.comments || []);
+        }
+      } else if (itoken || atoken) {
+        const { data } = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/post/allcommentforinchargeandadmin",
+          { postId: id }
+        );
+        if (data?.success) {
+          setcommentData(data.comments || []);
+        }
+      }
+    } catch (err) {
+      console.error("findCommentData error:", err);
     }
-  }
-  if(itoken|| atoken){
-    const { data } = await axios.post(
-      import.meta.env.VITE_BACKEND_URL + "/api/post/allcommentforinchargeandadmin",
-      { postId: id },
-    );
-    setCurrentPost(id);
-    console.log(data);
-    if (data.success) {
-      setcommentData([...data.comments].reverse());
+  };
+
+  useEffect(() => {
+    if (utoken || itoken || atoken) {
+      findAllPost();
     }
-  
-  }
-    };useEffect(() => {
-  if (utoken || itoken || atoken) {
-    findAllPost();
-  }
-}, [utoken, itoken, atoken,profileData]);
-useEffect(() => {
-  if (!utoken && !itoken && !atoken) return;
-  findProfileData();
-}, [utoken, itoken, atoken]);
+  }, [utoken, itoken, atoken]);
+
+  useEffect(() => {
+    if (!utoken && !itoken && !atoken) return;
+    findProfileData();
+  }, [utoken, itoken, atoken]);
 
 
   const timeAgo = (dateString) => {

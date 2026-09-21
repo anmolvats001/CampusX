@@ -1,80 +1,72 @@
-import { useContext } from "react"
-import { AppContext } from "../Context/context"
-import { NavLink } from "react-router-dom"
+import { useContext } from "react";
+import { AppContext } from "../Context/context";
 
 const IssueNavBar = () => {
-    const {dark, val, setVal} = useContext(AppContext);
+    const { dark, val, setVal } = useContext(AppContext);
     
+    const navItems = [
+        { id: "home", label: "All Issues", icon: "fi-rr-house-blank", activeIcon: "fi-sr-house-blank" },
+        { id: "in-process", label: "In Process", icon: "fi-rr-hourglass-end", activeIcon: "fi-sr-hourglass-end" },
+        { id: "resolved", label: "Resolved", icon: "fi-rr-check-circle", activeIcon: "fi-sr-check-circle" },
+        { id: "pending", label: "Pending", icon: "fi-rr-clock", activeIcon: "fi-sr-clock" },
+    ];
+
     return (
         <>
             {/* Desktop IssueNavBar (top navigation) */}
-            <div className={`${dark ? "text-white" : "text-black"} hidden lg:block h-16 w-[45%] px-8 backdrop-blur-xl fixed border border-gray-800 z-99`}>
-                <div className="flex issues-nav justify-between items-center h-full cursor-pointer">
-                    <div 
-                        onClick={() => {setVal("home")}} 
-                        className={`hover:text-lg transition-all duration-300 ease-in-out ${val === "home" ? "border-b-4 border-b-white bg-gray-700 px-3 rounded-lg py-1" : ""} ${!dark && val === "home" ? "border-b-4 border-b-black text-white" : ""}`}
-                    >
-                        Home
-                    </div>
-                    <div 
-                        onClick={() => {setVal("in-process")}}
-                        className={`hover:text-lg transition-all capitalize duration-300 ease-in-out ${val === "in-process" ? "border-b-4 border-b-white bg-gray-700 px-3 rounded-lg py-1" : ""} ${!dark && val === "in-process" ? "border-b-4 border-b-black text-white" : ""}`}
-                    >
-                        in process
-                    </div>
-                    <div 
-                        onClick={() => {setVal("resolved")}}
-                        className={`hover:text-lg transition-all duration-300 ease-in-out ${val === "resolved" ? "border-b-4 border-b-white bg-gray-700 px-3 rounded-lg py-1" : ""} ${!dark && val === "resolved" ? "border-b-4 border-b-black text-white" : ""}`}
-                    >
-                        Resolved
-                    </div>
-                    <div 
-                        onClick={() => {setVal("pending")}}
-                        className={`hover:text-lg transition-all duration-300 ease-in-out ${val === "pending" ? "border-b-4 border-b-white bg-gray-700 px-3 rounded-lg py-1" : ""} ${!dark && val === "pending" ? "border-b-4 border-b-black text-white" : ""}`}
-                    >
-                        Pending
-                    </div>
+            <div className={`${
+                dark ? "bg-[#0B0F17]/80 border-slate-800 text-slate-100" : "bg-white/80 border-slate-200 text-slate-900"
+            } hidden lg:block h-16 w-[45%] px-6 backdrop-blur-md fixed border-b z-40 transition-colors`}>
+                <div className="flex justify-between items-center h-full gap-2">
+                    {navItems.map((item) => {
+                        const isActive = val === item.id;
+                        return (
+                            <button
+                                key={item.id}
+                                type="button"
+                                onClick={() => setVal(item.id)}
+                                className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                                    isActive
+                                        ? "bg-blue-600 text-white shadow-md shadow-blue-500/25 scale-[1.02]"
+                                        : dark
+                                        ? "text-slate-400 hover:text-slate-100 hover:bg-slate-800/60"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                                }`}
+                            >
+                                <i className={`fi ${isActive ? item.activeIcon : item.icon} text-xs`}></i>
+                                <span>{item.label}</span>
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
             
-            {/* Mobile Bottom Navigation (replaces Sider) */}
-            <div className={`lg:hidden fixed bottom-0 left-0 right-0 h-16 ${dark ? "bg-black text-white" : "bg-white text-black"} border-t border-gray-300 dark:border-gray-800 z-40`}>
+            {/* Mobile Bottom Navigation */}
+            <div className={`lg:hidden fixed bottom-0 left-0 right-0 h-16 ${
+                dark ? "bg-[#0B0F17]/90 border-slate-800 text-white" : "bg-white/90 border-slate-200 text-slate-900"
+            } backdrop-blur-md border-t z-40`}>
                 <div className="flex justify-around items-center h-full px-2">
-                    <div 
-                        onClick={() => {setVal("home")}}
-                        className={`flex flex-col items-center justify-center h-full w-full ${val === "home" ? (dark ? "bg-gray-800" : "bg-gray-200") : ""}`}
-                    >
-                        <i className={`fi ${val === "home" ? "fi-sr-house-blank" : "fi-rr-house-blank"} text-lg`}></i>
-                        <span className="text-xs mt-1">Home</span>
-                    </div>
-                    
-                    <div 
-                        onClick={() => {setVal("in-process")}}
-                        className={`flex flex-col items-center justify-center h-full w-full ${val === "in-process" ? (dark ? "bg-gray-800" : "bg-gray-200") : ""}`}
-                    >
-                        <i className={`fi ${val === "in-process" ? "fi-sr-hourglass-end" : "fi-rr-hourglass-end"} text-lg`}></i>
-                        <span className="text-xs mt-1">In Process</span>
-                    </div>
-                    
-                    <div 
-                        onClick={() => {setVal("resolved")}}
-                        className={`flex flex-col items-center justify-center h-full w-full ${val === "resolved" ? (dark ? "bg-gray-800" : "bg-gray-200") : ""}`}
-                    >
-                        <i className={`fi ${val === "resolved" ? "fi-sr-check-circle" : "fi-rr-check-circle"} text-lg`}></i>
-                        <span className="text-xs mt-1">Resolved</span>
-                    </div>
-                    
-                    <div 
-                        onClick={() => {setVal("pending")}}
-                        className={`flex flex-col items-center justify-center h-full w-full ${val === "pending" ? (dark ? "bg-gray-800" : "bg-gray-200") : ""}`}
-                    >
-                        <i className={`fi ${val === "pending" ? "fi-sr-clock" : "fi-rr-clock"} text-lg`}></i>
-                        <span className="text-xs mt-1">Pending</span>
-                    </div>
+                    {navItems.map((item) => {
+                        const isActive = val === item.id;
+                        return (
+                            <div 
+                                key={item.id}
+                                onClick={() => setVal(item.id)}
+                                className={`flex flex-col items-center justify-center h-full w-full py-1 transition-all duration-200 cursor-pointer ${
+                                    isActive 
+                                        ? "text-blue-500 font-semibold" 
+                                        : dark ? "text-slate-400 hover:text-slate-200" : "text-slate-500 hover:text-slate-800"
+                                }`}
+                            >
+                                <i className={`fi ${isActive ? item.activeIcon : item.icon} text-lg`}></i>
+                                <span className="text-[10px] mt-0.5">{item.label}</span>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default IssueNavBar
+export default IssueNavBar;

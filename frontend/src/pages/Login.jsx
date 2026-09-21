@@ -26,7 +26,6 @@ const Login = () => {
   const [passwordon,setPasswordOn]=useState(false);
   const [loading,setloading]=useState(false);
   const [loginloading,setloginloading]=useState(false);
-    const [loader,setShowLoader]=useState(true);
   const change = () => setSign(!sign);
   const changePasson=()=>setPasswordOn(!passwordon);
   const moveright = () => { 
@@ -110,16 +109,7 @@ const Login = () => {
       register_User();
     }
   }
-  
-  useEffect(() => {
-    setDark(false)
-      const timer = setTimeout(() => {
-        setShowLoader(false);
-        setDark(true);
-      }, 1000); 
-  
-      return () => {clearTimeout(timer);}
-    }, []);
+
   const login_User=async()=>{
     setloginloading(true)
     let {data}=await axios.post(backendUrl+"/api/user/login",{add_no:addno,password});

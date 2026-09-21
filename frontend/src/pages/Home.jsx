@@ -23,7 +23,6 @@ const Home = () => {
   const contentbox=useRef();
   const data=useRef();
   const feedbackscroll=useRef();
-  const [loader,setShowLoader]=useState(true);
   const {dark,setDark}=useContext(AppContext);
   useEffect(() => {
     window.scrollTo({
@@ -45,22 +44,14 @@ const scrollToDiv = () => {
     });
   };
 
-function scrollright() {
-  feedbackscroll.current.scrollBy({
-    left:window.innerWidth,
-    behavior: "smooth",
-  });
-}
-useEffect(() => {
-  setDark(false)
-    const timer = setTimeout(() => {
-      setShowLoader(false);
-      setDark(true);
-    }, 1000); 
+  function scrollright() {
+    feedbackscroll.current.scrollBy({
+      left: window.innerWidth,
+      behavior: "smooth",
+    });
+  }
 
-    return () => {clearTimeout(timer);}
-  }, []);
-  useEffect(()=>{
+  useEffect(() => {
     
    let tl=gsap.timeline();
     tl.from(mainheading.current,{
@@ -137,8 +128,7 @@ useEffect(() => {
     </div>
   </div>
 </div>
-{
-     loader?<Shrimmer/>: <div className="px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-12 sm:mt-16 md:mt-20">
+      <div className="px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-12 sm:mt-16 md:mt-20">
         <p className="text-center capitalize font-bold text-[#1E293B] text-xl sm:text-2xl md:text-3xl mt-6 sm:mt-9">
           Your voice matters — let's fix ABES together 🔊
         </p>
@@ -185,7 +175,7 @@ useEffect(() => {
             </div>
           </div>
         </div>
-      </div>}
+      </div>
       <div className="px-4 sm:px-6 md:px-12 lg:px-24 xl:px-36 mt-12 sm:mt-16 md:mt-20 lg:mt-24" ref={targetRef}>
         <p className="text-center font-bold text-2xl sm:text-3xl md:text-4xl mt-6 sm:mt-9 text-[#1E293B]">
           <span className="text-[#2563EB] text-3xl sm:text-4xl md:text-5xl">I</span>ssues{" "}

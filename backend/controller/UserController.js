@@ -3,10 +3,11 @@ import jwt from "jsonwebtoken";
 import validator from "validator";
 import userModel from "../models/user.js";
 import bcrypt from "bcrypt";
-import PostModel from "../models/posts.js"
+import PostModel from "../models/posts.js";
 import { sendEmail } from "../middleware/brevoMailer.js";
 import generateOTP from "../middleware/otpgenerator.js";
 import CommentModel from "../models/comment.js";
+import fs from "fs";
 const Userlogin = async (req, res) => {
   try {
     const { add_no, password } = req.body;
@@ -15,9 +16,8 @@ const Userlogin = async (req, res) => {
       return res.json({ success: false, message: "User not found" });
     }
     const isMatched = await bcrypt.compare(password, user.password);
-    console.log("ismatch",isMatched)
     if (isMatched) {
-      const utoken = jwt.sign({userId:user._id}, process.env.JWT_SECRET);
+      const utoken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
       res.json({
         success: true,
         message: "Login successfully",
@@ -27,7 +27,7 @@ const Userlogin = async (req, res) => {
       res.json({ success: false, message: "wrong credential" });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -47,32 +47,36 @@ const regiser = async (req, res) => {
       });
     }
     const salt = await bcrypt.genSalt(10);
-    const hashedPass =await bcrypt.hash(password, salt);
+    const hashedPass = await bcrypt.hash(password, salt);
     const UserData = { email, name, password: hashedPass, add_no };
     const newUser = new userModel(UserData);
     const user = await newUser.save();
-    const utoken = jwt.sign({userId:user._id}, process.env.JWT_SECRET);
+    const utoken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     return res.json({
       success: true,
       message: "Registered Successfully",
-      utoken:utoken,
+      utoken: utoken,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
 const getProfile = async (req, res) => {
   try {
     const { userId } = req.body;
-    const UserData = await userModel.findById(userId).populate({
-  path: "posts",
-  populate: {
-    path: "creator",
-    model: "user",
-    select:"name profile branch"
-  }
-})
+    const UserData = await userModel
+      .findById(userId)
+      .populate({
+        path: "posts",
+        options: { sort: { publishedOn: -1 } },
+        populate: {
+          path: "creator",
+          model: "user",
+          select: "name profile branch",
+        },
+      })
+      .lean();
     res.json({ success: true, message: "Profile got successfully ", UserData });
   } catch (error) {
     res.json({
@@ -82,10 +86,10 @@ const getProfile = async (req, res) => {
   }
 };
 const editProfile = async (req, res) => {
+  const imageFile = req.file;
   try {
-    const { userId, name, address, dob, gender, phone,bio,branch } = req.body;
-    const imageFile = req.file;
-    
+    const { userId, name, address, dob, gender, phone, bio, branch } = req.body;
+
     await userModel.findByIdAndUpdate(userId, {
       name,
       phone,
@@ -93,23 +97,30 @@ const editProfile = async (req, res) => {
       dob,
       gender,
       bio,
-      branch
+      branch,
     });
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        folder: "campus_connect/profiles",
         resource_type: "image",
+        fetch_format: "auto",
+        quality: "auto:good",
+        transformation: [{ width: 500, height: 500, crop: "fill", gravity: "face" }],
       });
       const imageUrl = imageUpload.secure_url;
-      console
       await userModel.findByIdAndUpdate(userId, { profile: imageUrl });
     }
     return res.json({ success: true, message: "Edited Successfully" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.json({
       success: false,
       message: error.message,
     });
+  } finally {
+    if (imageFile && imageFile.path) {
+      fs.promises.unlink(imageFile.path).catch(() => {});
+    }
   }
 };
 const deletePost = async (req, res) => {
@@ -117,13 +128,13 @@ const deletePost = async (req, res) => {
     const { postId, userId } = req.body;
     const userData = await userModel.findById(userId);
     userData.posts = userData.posts.filter(
-  post => post.toString() !== postId.toString()
-);
+      (post) => post.toString() !== postId.toString(),
+    );
     await userModel.findByIdAndUpdate(userId, userData);
-    const post=await PostModel.findById(postId);
-    post.comments.map(async(e)=>{
+    const post = await PostModel.findById(postId);
+    post.comments.map(async (e) => {
       await CommentModel.findByIdAndDelete(e);
-    })
+    });
     await PostModel.findByIdAndDelete(postId);
     res.json({ success: true, message: "Post deleted successfully" });
   } catch (error) {
@@ -131,84 +142,92 @@ const deletePost = async (req, res) => {
   }
 };
 const uploadPost = async (req, res) => {
+  const imageFiles = req.files || [];
   try {
-    const { data, block, problem, floor } = req.body;
-    const {userId} = req.body;
-    const imageFiles = req.files;
-    console.log(userId,data,block,problem)
+    const { data, block, problem, floor, userId } = req.body;
+
     if (!data || !block || !problem) {
       return res.status(400).json({
         success: false,
-        message: "Credential missing"
+        message: "Credential missing",
       });
     }
+
+    if (!imageFiles || imageFiles.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please attach at least one image",
+      });
+    }
+
+    // Concurrent uploads to Cloudinary with optimized delivery presets
+    const uploadedImages = await Promise.all(
+      imageFiles.map(async (file) => {
+        const uploadResult = await cloudinary.uploader.upload(file.path, {
+          folder: "campus_connect/posts",
+          resource_type: "image",
+          fetch_format: "auto",
+          quality: "auto:good",
+          transformation: [{ width: 1600, height: 1600, crop: "limit" }],
+        });
+
+        return {
+          src: uploadResult.secure_url,
+          type: "image",
+        };
+      })
+    );
+
     const newPost = await PostModel.create({
       creator: userId,
       data,
       block,
       problem,
-      files: [],floor
+      files: uploadedImages,
+      floor: floor || "0",
     });
 
     const postId = newPost._id;
-
-    if (imageFiles && imageFiles.length > 0) {
-      const uploadedImages = await Promise.all(
-        imageFiles.map(async (file) => {
-          const uploadResult = await cloudinary.uploader.upload(file.path, {
-            resource_type: "image"
-          });
-
-          return {
-            src: uploadResult.secure_url,
-            type: "image"
-          };
-        })
-      );
-      if(!uploadedImages||uploadedImages.length<=0){
-        return res.json({success:false,message:"Error occured"})
-      }
-      await PostModel.findByIdAndUpdate(
-        postId,
-        { $push: { files: { $each: uploadedImages } } }
-      );
-    }
-    else{
-      return res.json({success:false,message:"Error occured"})
-    }
-    await userModel.findByIdAndUpdate(
-      userId,
-      { $push: { posts: postId } }
-    );
+    await userModel.findByIdAndUpdate(userId, { $push: { posts: postId } });
 
     return res.status(201).json({
       success: true,
       message: "Post uploaded successfully",
-      postId
+      postId,
     });
-
   } catch (error) {
-    console.error(error);
+    console.error("uploadPost error:", error);
     return res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
+  } finally {
+    // Always clean up temp files from disk
+    if (imageFiles && imageFiles.length > 0) {
+      imageFiles.forEach((file) => {
+        if (file && file.path) {
+          fs.promises.unlink(file.path).catch(() => {});
+        }
+      });
+    }
   }
 };
 const getOtp = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return res.status(400).json({ success: false, message: "Email required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Email required" });
     }
 
     const otp = generateOTP();
-    console.log(otp)
+    console.log(otp);
 
     await sendEmail({
-  to: email,
-  subject: `[Campus Connect] Your Verification Code: ${otp}`,
-  html: `
+      to: email,
+      subject: `[Campus Connect] Your Verification Code: ${otp}`,
+      html: `
     <h4>Hi User,</h4>
     <h3>
       Welcome to Campus Connect! To complete your login or action on our platform,
@@ -229,26 +248,29 @@ const getOtp = async (req, res) => {
       The Campus Connect Team
     </h3>
   `,
-});
+    });
 
-    res.json({ success: true, message: "OTP sent" ,otp});
+    res.json({ success: true, message: "OTP sent", otp });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: err.message });
   }
-};const getOtpforforgot = async (req, res) => {
+};
+const getOtpforforgot = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return res.status(400).json({ success: false, message: "Email required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Email required" });
     }
 
     const otp = generateOTP();
 
     await sendEmail({
-  to: email,
-  subject: "[Campus Connect] Reset your Campus Connect password",
-  html: `
+      to: email,
+      subject: "[Campus Connect] Reset your Campus Connect password",
+      html: `
     <h4>Hi User,</h4>
 
     <h3>
@@ -276,9 +298,9 @@ const getOtp = async (req, res) => {
       Empowering students to build a better campus.
     </h3>
   `,
-});
+    });
 
-    res.json({ success: true, message: "OTP sent" ,otp});
+    res.json({ success: true, message: "OTP sent", otp });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: err.message });
@@ -295,7 +317,7 @@ const deleteAccount = async (req, res) => {
     }
 
     await Promise.all(
-      user.posts.map((postId) => PostModel.findByIdAndDelete(postId))
+      user.posts.map((postId) => PostModel.findByIdAndDelete(postId)),
     );
 
     await userModel.findByIdAndDelete(userId);
@@ -306,114 +328,128 @@ const deleteAccount = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
-const resolvePost=async(req,res)=>{
+const resolvePost = async (req, res) => {
   try {
-    const {userId,postId}=req.body;
-    const post=await PostModel.findByIdAndUpdate(postId,{resolvedByStudent:true});
-    res.json({success:true,message:"Post has been resolved"})
+    const { userId, postId } = req.body;
+    const post = await PostModel.findByIdAndUpdate(postId, {
+      resolvedByStudent: true,
+    });
+    res.json({ success: true, message: "Post has been resolved" });
   } catch (error) {
     console.log(error);
-    res.json({success:false,message:error})
+    res.json({ success: false, message: error });
   }
-}
-const checkPassword=async(req,res)=>{
+};
+const checkPassword = async (req, res) => {
   try {
-     const {userId,add_no,password}=req.body;
-  const user=await userModel.findById(userId);
-  if(!user){
-   return  res.json({success:false,message:"User not found"})
-  }
-  const isCorrect= await bcrypt.compare(password,user.password);
-  if(isCorrect){
-    res.json({success:true});
-  }
-  else{
-    res.json({success:false,message:"Wrong credential"})
-  }
-
+    const { userId, add_no, password } = req.body;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    const isCorrect = await bcrypt.compare(password, user.password);
+    if (isCorrect) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false, message: "Wrong credential" });
+    }
   } catch (error) {
     console.log(error);
-    res.json({success:false,message:"Wrong credential"})
+    res.json({ success: false, message: "Wrong credential" });
   }
- }
- const changePassword=async(req,res)=>{
+};
+const changePassword = async (req, res) => {
   try {
-    const {newPass,userId}=req.body;
-  const user=await userModel.findById(userId);
-  if(!user){
-    return res.json({success:false,message:"User not found"})
-  }
-  const salt=await bcrypt.genSalt(10);
-  const newPassword=await bcrypt.hash(newPass,salt);
-  await userModel.findByIdAndUpdate(userId,{password:newPassword});
-  res.json({success:true,message:"Password Changed"});
+    const { newPass, userId } = req.body;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash(newPass, salt);
+    await userModel.findByIdAndUpdate(userId, { password: newPassword });
+    res.json({ success: true, message: "Password Changed" });
   } catch (error) {
     console.log(error);
-    res.json({success:false,message:error.message})
+    res.json({ success: false, message: error.message });
   }
- }
- const getNotification=async(req,res)=>{
-try {
-    const {userId}=req.body;
-  const user=await userModel.findById(userId).populate("notification");
-  res.json({success:true,notification:user.notification})
-} catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message})
-}
- }
- const deleteNotification=async(req,res)=>{
-  try{
-   const {userId}=req.body;
-const user = await userModel.findByIdAndUpdate(
-  userId,
-  { $set: { notification: [] } }
-);
-    res.json({success:true,notification:user.notification})
-  }
-catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message})
-}
- }
- const Feedback=async(req,res)=>{
+};
+const getNotification = async (req, res) => {
   try {
-    
-  const {userId,data}=req.body;
-  const user=await userModel.findById(userId);
-  const email=user.email;
-  console.log(email);
-  await sendEmail({
-  to: "campusconnect743@gmail.com",
-    replyTo: user.email,
-subject: "Feedback sent",
+    const { userId } = req.body;
+    const user = await userModel.findById(userId).populate("notification");
+    res.json({ success: true, notification: user.notification });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+const deleteNotification = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await userModel.findByIdAndUpdate(userId, {
+      $set: { notification: [] },
+    });
+    res.json({ success: true, notification: user.notification });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+const Feedback = async (req, res) => {
+  try {
+    const { userId, data } = req.body;
+    const user = await userModel.findById(userId);
+    const email = user.email;
+    console.log(email);
+    await sendEmail({
+      to: "campusconnect743@gmail.com",
+      replyTo: user.email,
+      subject: "Feedback sent",
       html: `<h2>${user.name} has sent you the feedback</h2></br>
       <h2>Data :</h2>
       <h3>${data}</h3>
       `,
     });
-    res.json({success:true,message:"feedback sent"});
+    res.json({ success: true, message: "feedback sent" });
   } catch (error) {
     console.log(error);
-    res.json({success:false,message:error.message})
+    res.json({ success: false, message: error.message });
   }
- }
- 
- const changeforgotPassword=async(req,res)=>{
-  try {
-    const {newPass,email}=req.body;
-  const user=await userModel.findOne({email});
-  if(!user){
-    return res.json({success:false,message:"User not found"})
-  }
-  const salt=await bcrypt.genSalt(10);
-  const newPassword=await bcrypt.hash(newPass,salt);
-  await userModel.findByIdAndUpdate(user._id,{password:newPassword});
-  res.json({success:true,message:"Password Changed"});
-  } catch (error) {
-    console.log(error);
-    res.json({success:false,message:error.message})
-  }
- }
+};
 
-export { Userlogin, regiser, getProfile, editProfile, deletePost,uploadPost,getOtp,deleteAccount,resolvePost,checkPassword ,changePassword,getNotification,deleteNotification,Feedback,changeforgotPassword,getOtpforforgot};
+const changeforgotPassword = async (req, res) => {
+  try {
+    const { newPass, email } = req.body;
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash(newPass, salt);
+    await userModel.findByIdAndUpdate(user._id, { password: newPassword });
+    res.json({ success: true, message: "Password Changed" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export {
+  Userlogin,
+  regiser,
+  getProfile,
+  editProfile,
+  deletePost,
+  uploadPost,
+  getOtp,
+  deleteAccount,
+  resolvePost,
+  checkPassword,
+  changePassword,
+  getNotification,
+  deleteNotification,
+  Feedback,
+  changeforgotPassword,
+  getOtpforforgot,
+};

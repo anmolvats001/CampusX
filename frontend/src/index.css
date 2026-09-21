@@ -1,6 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 @import "tailwindcss";
 @import "@flaticon/flaticon-uicons/css/all/all";
-@import url('https://fonts.googleapis.com/css2?family=Delius&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 html::-webkit-scrollbar, 
 body::-webkit-scrollbar,
 .scroller::-webkit-scrollbar {
@@ -73,15 +73,48 @@ button:hover {
   gap: 10px;
   font-size:20px
 }
-.light{
-  background-color: white;
-  color: black;
+.light {
+  background-color: #FFFFFF;
+  color: #0F172A;
 }
-.dark{
-  background-color: black;
-  color: white;
+.dark {
+  background-color: #0B0F17;
+  color: #F8FAFC;
 }
-.pos{
+.dark .border-theme {
+  border-color: #1F2937;
+}
+.light .border-theme {
+  border-color: #E2E8F0;
+}
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.badge-resolved {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+}
+.badge-inprocess {
+  background: rgba(245, 158, 11, 0.12);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+}
+.badge-pending {
+  background: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+.pos {
   top: -70px;
 }
 .issues-nav .active {

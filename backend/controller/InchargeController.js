@@ -2,8 +2,9 @@ import InchargeModel from "../models/incharge.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import PostModel from "../models/posts.js";
-import{v2 as cloudinary}from "cloudinary"
+import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/user.js";
+import fs from "fs";
 const login = async (req, res) => {
   try {
 
@@ -49,10 +50,9 @@ const getProfile = async (req, res) => {
   }
 };
 const editProfile = async (req, res) => {
+  const imageFile = req.file;
   try {
     const { inchargeId, name, address, dob, gender, phone,bio } = req.body;
-    const imageFile = req.file;
-    console.log(name,address)
     await InchargeModel.findByIdAndUpdate(inchargeId, {
       name,
       phone,
@@ -63,7 +63,11 @@ const editProfile = async (req, res) => {
     });
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        folder: "campus_connect/incharge",
         resource_type: "image",
+        fetch_format: "auto",
+        quality: "auto:good",
+        transformation: [{ width: 500, height: 500, crop: "fill" }]
       });
       const imageUrl = imageUpload.secure_url;
       await InchargeModel.findByIdAndUpdate(inchargeId, { profile: imageUrl });
@@ -76,6 +80,10 @@ const editProfile = async (req, res) => {
       success: false,
       message: error.message,
     });
+  } finally {
+    if (imageFile && imageFile.path) {
+      fs.promises.unlink(imageFile.path).catch(() => {});
+    }
   }
 };
 
@@ -116,17 +124,20 @@ const checkPassword=async(req,res)=>{
   }
  }
 const resolvePost=async(req,res)=>{
+  const imageFile = req.file;
   try {
   const {inchargeId,postId}=req.body;
-  const imageFile = req.file;
-  console.log(imageFile)
   if(!postId){
    return res.json({success:false,message:"Post not found"});
   }
   await PostModel.findByIdAndUpdate(postId,{resolvedByIncharge:true});
   if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+        folder: "campus_connect/resolved",
         resource_type: "image",
+        fetch_format: "auto",
+        quality: "auto:good",
+        transformation: [{ width: 1600, height: 1600, crop: "limit" }]
       });
       const imageUrl = imageUpload.secure_url;
       await PostModel.findByIdAndUpdate(postId, {verifiedImage: imageUrl });
@@ -135,9 +146,12 @@ const resolvePost=async(req,res)=>{
   res.json({success:true,message:"Post has been resolved"});
   AddToNotification(postId);
   } catch (error) {
-    
     console.log(error);
     res.json({success:false,message:error.message})
+  } finally {
+    if (imageFile && imageFile.path) {
+      fs.promises.unlink(imageFile.path).catch(() => {});
+    }
   }
 }
 const AddToNotification=async(postId)=>{

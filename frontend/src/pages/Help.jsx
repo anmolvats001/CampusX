@@ -4,21 +4,9 @@ import { AppContext } from "../Context/context";
 import Shrimmer from "../components/Shrimmer";
 
 const Help = () => {
-  const [loader,setShowLoader]=useState(true);
-    const {setDark}=useContext(AppContext)
-      useEffect(() => {
-        setDark(false)
-          const timer = setTimeout(() => {
-            setShowLoader(false);
-            setDark(true);
-          }, 2000); 
-      
-          return () => {clearTimeout(timer);}
-        }, []);
-   
   return (
     <div className="w-full px-3 sm:px-6 md:px-12 lg:px-20 pt-20 flex justify-center bg-[#F9FAFB]">
-      {loader?<Shrimmer/>:<div className="border border-gray-300 shadow-lg px-4 sm:px-6 md:px-8 py-6 md:py-10 rounded-2xl bg-transparent w-full max-w-7xl">
+      <div className="border border-gray-300 shadow-lg px-4 sm:px-6 md:px-8 py-6 md:py-10 rounded-2xl bg-transparent w-full max-w-7xl">
         
         <h1 className="text-center text-[#1E293B] text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wide mb-6">
           UNDERSTAND THE WEBSITE
@@ -42,7 +30,7 @@ const Help = () => {
             </div>
           </div>
         </div>
-      </div>}
+      </div>
     </div>
   );
 };
