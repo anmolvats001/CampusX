@@ -41,19 +41,24 @@ const Forgot = () => {
       ? emaildata.current?.value 
       : emaildataMobile.current?.value;
     
-    if (emailValue && emailValue !== "") {
+    if (emailValue && emailValue.trim() !== "") {
       setotpverify(true);
-      const {data}=await axios.post(backendUrl+"/api/user/forgototp",{email:emailValue});
-      if(!data.success){
-        toast.error(data.message);
-      }
-      else{
-
-       setotpfromback(data.otp);
-       toast.success("OTP sent successfully");
+      try {
+        const { data } = await axios.post(backendUrl + "/api/user/forgototp", { email: emailValue.trim() });
+        if (!data.success) {
+          toast.error(data.message || "Failed to send reset code");
+          setotpverify(false);
+        } else {
+          setotpfromback(data.otp);
+          toast.success("OTP sent successfully");
+        }
+      } catch (error) {
+        console.error("Forgot OTP Error:", error);
+        toast.error(error.response?.data?.message || "Failed to send OTP. Please check your connection.");
+        setotpverify(false);
       }
     } else {
-      toast.error(data.message);
+      toast.error("Please enter your email first");
     }
   };
   const handleSubmit=async()=>{

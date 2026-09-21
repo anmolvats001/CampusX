@@ -76,24 +76,28 @@ const Login = () => {
       ? emaildata.current?.value 
       : emaildataMobile.current?.value;
     
-    if (emailValue && emailValue !== "") {
+    if (emailValue && emailValue.trim() !== "") {
       setotpverify(true);
       setloading(true);
-      const {data}=await axios.post(backendUrl+"/api/user/otp",{email:emailValue});
-      if(!data.success){
-        toast.error(data.message);
+      try {
+        const { data } = await axios.post(backendUrl + "/api/user/otp", { email: emailValue.trim() });
+        if (!data.success) {
+          toast.error(data.message || "Failed to send OTP");
+          setotpverify(false);
+        } else {
+          setotpfromback(data.otp);
+          toast.success("OTP sent successfully");
+        }
+      } catch (error) {
+        console.error("OTP Error:", error);
+        toast.error(error.response?.data?.message || "Failed to send OTP. Please check your connection.");
+        setotpverify(false);
+      } finally {
+        setloading(false);
       }
-      else{
-
-       setotpfromback(data.otp);
-       toast.success("OTP sent successfully");
-             
-      }
-      setloading(false);
     } else {
-      toast.error(data.message);
-       setloginloading(false)
-
+      toast.error("Please enter your email first");
+      setloginloading(false);
     }
   };
   const handleSubmit=async()=>{
